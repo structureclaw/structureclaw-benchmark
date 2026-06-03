@@ -52,5 +52,23 @@
         { "type": "has_analysis" }
       ]
     }
+  },
+  {
+    "id": "portal-frame-with-mezzanine",
+    "description": "带夹层门式刚架静力分析",
+    "category": "static-analysis",
+    "tags": ["portal-frame", "static", "zh", "mezzanine"],
+    "message": "门式刚架，跨度18m，檐口高度7m，一侧设3m高夹层，屋面荷载6kN/m，夹层荷载4kN/m2，做静力分析",
+    "locale": "zh",
+    "maxRetries": 2,
+    "expect": {
+      "skills": { "primary": "portal-frame", "mayAlsoMatch": ["frame", "generic"] },
+      "assertions": [
+        { "type": "structural_type", "expected": "portal-frame" },
+        { "type": "skill_match", "primary": "portal-frame", "mayAlsoMatch": ["frame", "generic"] },
+        { "type": "has_model", "minNodes": 4, "minElements": 4 },
+        { "type": "has_analysis" }
+      ]
+    }
   }
 ]

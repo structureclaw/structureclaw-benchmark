@@ -61,6 +61,22 @@ function buildFeedbackFromEvaluation(evaluation, locale = "zh") {
     : `上次尝试失败：${details}。请修正以上问题。`;
 }
 
+function resolveAttachmentPaths(scenario, rootDir) {
+  const resolve = (attachments) => {
+    if (!attachments) return attachments;
+    return attachments.map((a) => {
+      if (path.isAbsolute(a.relPath)) return a;
+      // Treat relative paths as relative to the project root
+      return { ...a, relPath: path.resolve(rootDir, a.relPath) };
+    });
+  };
+  return {
+    ...scenario,
+    attachments: resolve(scenario.attachments),
+    turns: (scenario.turns || []).map((t) => ({ ...t, attachments: resolve(t.attachments) })),
+  };
+}
+
 function normalizeScenario(scenario) {
   if (scenario.turns) {
     return { ...scenario, _multiTurn: true };
@@ -72,6 +88,7 @@ function normalizeScenario(scenario) {
       {
         message: scenario.message,
         assertions: scenario.expect?.assertions,
+        attachments: scenario.attachments,
       },
     ],
   };
@@ -159,7 +176,7 @@ async function runBenchmark(rootDir, args) {
   const results = [];
 
   for (const rawScenario of scenarios) {
-    const scenario = normalizeScenario(rawScenario);
+    const scenario = normalizeScenario(resolveAttachmentPaths(rawScenario, rootDir));
     const maxRetries = Math.max(0, typeof scenario.maxRetries === "number" ? scenario.maxRetries : 0);
     let attempt = 0;
     let lastEvaluation = null;
@@ -202,7 +219,10 @@ async function runBenchmark(rootDir, args) {
           const state = await service.runFull({
             message: messageWithFeedback,
             conversationId,
-            context: { locale: scenario.locale || "zh" },
+            context: {
+              locale: scenario.locale || "zh",
+              attachments: turn.attachments || scenario.attachments,
+            },
           });
 
           const turnDurationMs = Date.now() - turnStart;

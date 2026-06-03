@@ -1,0 +1,34 @@
+[
+  {
+    "id": "error-frame-negative-dimensions",
+    "description": "框架负层高错误恢复",
+    "category": "error-recovery",
+    "tags": ["frame", "error-recovery", "zh"],
+    "message": "3层框架，层高-3m，跨度6m，做静力分析",
+    "locale": "zh",
+    "maxRetries": 2,
+    "expect": {
+      "skills": { "primary": "frame", "mayAlsoMatch": ["generic"] },
+      "assertions": [
+        { "type": "has_interaction_questions" },
+        { "type": "natural_language", "description": "Agent should detect the negative story height (-3m) and ask the user to provide a valid positive dimension" }
+      ]
+    }
+  },
+  {
+    "id": "error-vague-description",
+    "description": "模糊结构描述错误恢复",
+    "category": "error-recovery",
+    "tags": ["error-recovery", "zh", "vague"],
+    "message": "帮我分析一个结构",
+    "locale": "zh",
+    "maxRetries": 2,
+    "expect": {
+      "skills": { "primary": "generic" },
+      "assertions": [
+        { "type": "has_interaction_questions" },
+        { "type": "natural_language", "description": "Agent should ask the user to clarify the structural type, dimensions, and loading conditions since the description is too vague" }
+      ]
+    }
+  }
+]
