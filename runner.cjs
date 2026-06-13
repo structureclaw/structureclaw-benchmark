@@ -5,9 +5,28 @@ const { pathToFileURL } = require("node:url");
 const { evaluateScenario } = require("./lib/evaluate.cjs");
 const { printScenarioResult, printSummary, writeJsonOutput } = require("./lib/report.cjs");
 
-async function importBackendModules(rootDir) {
-  const runtimePath = path.join(rootDir, "backend", "dist", "agent-runtime", "index.js");
-  const servicePath = path.join(rootDir, "backend", "dist", "agent-langgraph", "agent-service.js");
+// Resolve the System-Under-Test root (the structureclaw main repo).
+// Priority: SCLAW_ROOT env > parent-of-parent (works when this repo is checked
+// out as a submodule under <main>/tests/llm-benchmark).
+const BENCH_ROOT = __dirname;
+const SCLAW_ROOT = process.env.SCLAW_ROOT
+  || path.resolve(BENCH_ROOT, "../..");
+
+function resolveSutRoot(explicit) {
+  const root = explicit || SCLAW_ROOT;
+  const marker = path.join(root, "backend", "package.json");
+  if (!fs.existsSync(marker)) {
+    throw new Error(
+      `SCLAW_ROOT does not look like a structureclaw checkout: ${root}\n` +
+      `Set SCLAW_ROOT env var to the structureclaw repo root.`,
+    );
+  }
+  return root;
+}
+
+async function importBackendModules(sutRoot) {
+  const runtimePath = path.join(sutRoot, "backend", "dist", "agent-runtime", "index.js");
+  const servicePath = path.join(sutRoot, "backend", "dist", "agent-langgraph", "agent-service.js");
 
   const runtimeMod = await import(pathToFileURL(runtimePath).href);
   const serviceMod = await import(`${pathToFileURL(servicePath).href}?bench=${Date.now()}`);
@@ -18,8 +37,8 @@ async function importBackendModules(rootDir) {
   };
 }
 
-function loadScenarios(rootDir, options) {
-  const scenariosDir = path.join(rootDir, "tests", "llm-benchmark", "scenarios");
+function loadScenarios(options) {
+  const scenariosDir = path.join(BENCH_ROOT, "scenarios");
   const files = fs.readdirSync(scenariosDir).filter((f) => f.endsWith(".json")).sort();
   let all = [];
   for (const file of files) {
@@ -35,14 +54,17 @@ function loadScenarios(rootDir, options) {
 function parseBenchmarkOptions(args) {
   let scenarioId;
   let outputPath;
+  let sutRoot;
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--scenario" && args[i + 1]) {
       scenarioId = args[++i];
     } else if (args[i] === "--output" && args[i + 1]) {
       outputPath = args[++i];
+    } else if (args[i] === "--sut-root" && args[i + 1]) {
+      sutRoot = args[++i];
     }
   }
-  return { scenarioId, outputPath };
+  return { scenarioId, outputPath, sutRoot };
 }
 
 function buildFeedbackFromEvaluation(evaluation, locale = "zh") {
@@ -61,13 +83,15 @@ function buildFeedbackFromEvaluation(evaluation, locale = "zh") {
     : `上次尝试失败：${details}。请修正以上问题。`;
 }
 
-function resolveAttachmentPaths(scenario, rootDir) {
+function resolveAttachmentPaths(scenario) {
   const resolve = (attachments) => {
     if (!attachments) return attachments;
     return attachments.map((a) => {
       if (path.isAbsolute(a.relPath)) return a;
-      // Treat relative paths as relative to the project root
-      return { ...a, relPath: path.resolve(rootDir, a.relPath) };
+      // Strip legacy "tests/llm-benchmark/" prefix if present, then resolve
+      // relative to this benchmark repo root.
+      const rel = a.relPath.replace(/^tests\/llm-benchmark\//, "");
+      return { ...a, relPath: path.resolve(BENCH_ROOT, rel) };
     });
   };
   return {
@@ -101,7 +125,6 @@ function mergeTurnResults(scenario, turnResults, totalDurationMs) {
   let total = 0;
 
   for (const { evaluation } of turnResults) {
-    // Keep per-turn toolCalls and duration as informational
     const coreMetrics = evaluation.metrics.filter(
       (m) => m.metric !== "toolCalls" && m.metric !== "duration",
     );
@@ -111,7 +134,6 @@ function mergeTurnResults(scenario, turnResults, totalDurationMs) {
     if (!evaluation.allPassed) allPassed = false;
   }
 
-  // Add overall informational metrics
   allMetrics.push({
     metric: "duration",
     pass: true,
@@ -131,32 +153,31 @@ function mergeTurnResults(scenario, turnResults, totalDurationMs) {
   };
 }
 
-async function runBenchmark(rootDir, args) {
+async function runBenchmark(args) {
   const options = parseBenchmarkOptions(args);
-  const { resolveRegressionContext } = require("../regression/shared.js");
-  const context = resolveRegressionContext(rootDir);
+  const sutRoot = resolveSutRoot(options.sutRoot);
 
-  // Inject LLM env vars
+  // Reuse SUT's regression helpers for env setup and backend build.
+  const regressionSharedPath = path.join(sutRoot, "tests", "regression", "shared.js");
+  const { resolveRegressionContext, runBackendBuildOnce } = require(regressionSharedPath);
+  const context = resolveRegressionContext(sutRoot);
+
   for (const [k, v] of Object.entries(context.env)) {
     if (v !== undefined && v !== "") {
       process.env[k] = v;
     }
   }
 
-  // Ensure backend is built
-  const { runBackendBuildOnce } = require("../regression/shared.js");
   await runBackendBuildOnce(context);
 
-  // Ensure DB is ready
   const { execSync } = require("node:child_process");
   execSync("npx prisma db push --accept-data-loss", {
-    cwd: path.join(rootDir, "backend"),
+    cwd: path.join(sutRoot, "backend"),
     env: { ...process.env, ...context.env },
     stdio: "pipe",
   });
 
-  // Load scenarios
-  const scenarios = loadScenarios(rootDir, options);
+  const scenarios = loadScenarios(options);
   if (scenarios.length === 0) {
     process.stdout.write("No benchmark scenarios matched.\n");
     return;
@@ -164,26 +185,25 @@ async function runBenchmark(rootDir, args) {
 
   process.stdout.write(`\n${"=".repeat(60)}\n`);
   process.stdout.write(`LangGraph Agent Benchmark: ${scenarios.length} scenario(s)\n`);
+  process.stdout.write(`SUT root: ${sutRoot}\n`);
   process.stdout.write(`Model: ${context.env.LLM_MODEL || "(default)"}\n`);
   process.stdout.write(`Base URL: ${context.env.LLM_BASE_URL || "(default)"}\n`);
   process.stdout.write(`${"=".repeat(60)}\n`);
 
-  // Import and instantiate
-  const { AgentSkillRuntime, LangGraphAgentService } = await importBackendModules(rootDir);
+  const { AgentSkillRuntime, LangGraphAgentService } = await importBackendModules(sutRoot);
   const runtime = new AgentSkillRuntime();
   const service = new LangGraphAgentService(runtime);
 
   const results = [];
 
   for (const rawScenario of scenarios) {
-    const scenario = normalizeScenario(resolveAttachmentPaths(rawScenario, rootDir));
+    const scenario = normalizeScenario(resolveAttachmentPaths(rawScenario));
     const maxRetries = Math.max(0, typeof scenario.maxRetries === "number" ? scenario.maxRetries : 0);
     let attempt = 0;
     let lastEvaluation = null;
     const retryRounds = [];
 
     while (attempt <= maxRetries) {
-      // Build feedback from previous evaluation for retry
       let feedbackPrefix = "";
       if (attempt > 0 && lastEvaluation) {
         feedbackPrefix = buildFeedbackFromEvaluation(lastEvaluation, scenario.locale || "zh");
@@ -203,7 +223,6 @@ async function runBenchmark(rootDir, args) {
       const turnResults = [];
       const conversationId = `bench-${scenario.id}-${scenarioStart}-${attempt}`;
 
-      // Suppress noisy agent logs during execution
       const prevLogLevel = process.env.LOG_LEVEL;
       process.env.LOG_LEVEL = "warn";
 
@@ -315,3 +334,10 @@ async function runBenchmark(rootDir, args) {
 }
 
 module.exports = { runBenchmark };
+
+if (require.main === module) {
+  runBenchmark(process.argv.slice(2)).catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
