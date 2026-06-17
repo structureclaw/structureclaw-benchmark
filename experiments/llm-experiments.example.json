@@ -1,0 +1,54 @@
+{
+  "testModel": "glm-5-turbo",
+  "multimodalModel": "glm-4.5V",
+  "judgeModel": "DeepSeek-V4-Pro",
+  "models": {
+    "glm-5-turbo": {
+      "provider": "zhipu",
+      "model": "glm-5-turbo",
+      "baseUrl": "https://open.bigmodel.cn/api/coding/paas/v4",
+      "apiKeyEnv": "ZHIPU_API_KEY"
+    },
+    "glm-5.2": {
+      "provider": "zhipu",
+      "model": "glm-5.2",
+      "baseUrl": "https://open.bigmodel.cn/api/coding/paas/v4",
+      "apiKeyEnv": "ZHIPU_API_KEY"
+    },
+    "glm-4.5V": {
+      "provider": "paratera",
+      "model": "GLM-4.5V",
+      "baseUrl": "https://llmapi.paratera.com/v1",
+      "apiKeyEnv": "PARATERA_API_KEY"
+    },
+    "DeepSeek-V4-Pro": {
+      "provider": "paratera",
+      "model": "DeepSeek-V4-Pro",
+      "baseUrl": "https://llmapi.paratera.com/v1",
+      "apiKeyEnv": "PARATERA_API_KEY"
+    },
+    "DeepSeek-V4-Flash": {
+      "provider": "paratera",
+      "model": "DeepSeek-V4-Flash",
+      "baseUrl": "https://llmapi.paratera.com/v1",
+      "apiKeyEnv": "PARATERA_API_KEY"
+    },
+    "gpt-4o-mini": {
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "baseUrl": "https://api.openai.com/v1",
+      "apiKeyEnv": "OPENAI_API_KEY"
+    },
+    "gpt-4.1-mini": {
+      "provider": "openai",
+      "model": "gpt-4.1-mini",
+      "baseUrl": "https://api.openai.com/v1",
+      "apiKeyEnv": "OPENAI_API_KEY"
+    }
+  },
+  "defaults": {
+    "suite": "smoke-text",
+    "mode": "auto",
+    "outputDir": "results"
+  }
+}

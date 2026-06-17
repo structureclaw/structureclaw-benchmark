@@ -1,6 +1,9 @@
 node_modules/
 *.log
 benchmark-results.json
+results/
+runtime/
+experiments/llm-experiments.local.json
 .env
 .env.local
 .DS_Store

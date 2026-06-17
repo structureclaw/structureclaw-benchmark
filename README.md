@@ -89,6 +89,7 @@ scenarios/           # One JSON file per scenario, grouped by task family
   interactive_robustness/
   multimodal_reverse_engineering/
 runner.cjs           # Entry point
+scripts/             # Experiment runners and helper scripts
 ```
 
 ## Running
@@ -118,6 +119,58 @@ npm run validate:scenarios
 
 The runner reads LLM config (`LLM_API_KEY`, `LLM_MODEL`, `LLM_BASE_URL`) from the
 SUT's regression context — see `tests/regression/shared.js` in the main repo.
+
+## Experiment LLM configuration
+
+Use the experiment wrapper when comparing multiple model roles. For normal use,
+edit only these three selectors in `experiments/llm-experiments.local.json`:
+
+```json
+{
+  "testModel": "glm-5-turbo",
+  "multimodalModel": "glm-4.5V",
+  "judgeModel": "DeepSeek-V4-Pro"
+}
+```
+
+- `test` — the main text model used by standard and interactive suites.
+- `multimodal` — the main model used by multimodal suites. StructureClaw currently
+  receives image inputs through the same agent LLM path, so this role is mapped to
+  `LLM_MODEL`, `LLM_BASE_URL`, and `LLM_API_KEY` when a multimodal suite runs.
+- `judge` — the LLM-as-Judge model, mapped to `LLM_JUDGE_MODEL`,
+  `LLM_JUDGE_BASE_URL`, and `LLM_JUDGE_API_KEY`.
+
+The template config stores model names, base URLs, and the environment variable
+that holds each API key. It does not store secrets.
+
+```bash
+npm run experiment:init
+
+export ZHIPU_API_KEY=...
+export PARATERA_API_KEY=...
+export OPENAI_API_KEY=...
+
+npm run experiment:list
+npm run experiment -- --suite smoke-text --dry-run
+npm run experiment -- --suite smoke-text
+npm run experiment -- --suite smoke-multimodal --multimodal-model glm-4.5V --judge-model DeepSeek-V4-Pro
+npm run experiment -- --suite standard --test-model glm-5-turbo --judge-model DeepSeek-V4-Pro
+npm run experiment -- --suite multimodal --multimodal-model glm-4.5V --judge-model DeepSeek-V4-Pro
+```
+
+Available suite names in the example config are `smoke-text`,
+`smoke-multimodal`, `standard`, `interactive`, `core`, `multimodal`,
+`all-auto`, and `all-modes`. The full-corpus suites use the `multimodal` role
+because they include image tasks. Additional runner filters can be appended, for
+example:
+
+```bash
+npm run experiment -- --suite standard --scenario std-beam-4m-point-mid --mode all
+```
+
+Results are written under `results/` by default, with the suite, primary model,
+judge model, and timestamp in the file name. Use `--output <file>` to override
+the path.
 
 ## Regenerating fixtures
 
