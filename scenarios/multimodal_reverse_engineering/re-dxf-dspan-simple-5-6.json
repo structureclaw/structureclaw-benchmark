@@ -1,0 +1,68 @@
+{
+  "id": "re-dxf-dspan-simple-5-6",
+  "description": "DXF反问题：双跨连续梁5+6m",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "dxf",
+  "structureType": "double-span-beam",
+  "benchmarkStructureType": "continuous-beam",
+  "difficulty": "L3",
+  "skillTarget": "double-span-beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "double-span-beam",
+    "dxf"
+  ],
+  "message": "请根据这个DXF结构图纸建立计算模型并进行分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-dxf-dspan-simple",
+      "originalName": "dspan-simple-5-6.dxf",
+      "relPath": "fixtures/drawings/dspan-simple-5-6.dxf",
+      "mimeType": "application/dxf"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "double-span-beam",
+      "mayAlsoMatch": [
+        "beam",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "double-span-beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "double-span-beam",
+        "mayAlsoMatch": [
+          "beam",
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "dspan-simple-5-6",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.25
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

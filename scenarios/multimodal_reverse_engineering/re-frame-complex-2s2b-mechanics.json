@@ -1,0 +1,68 @@
+{
+  "id": "re-frame-complex-2s2b-mechanics",
+  "description": "反问题：力学简图重建2层2跨框架",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L2",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "frame",
+    "mechanics-diagram"
+  ],
+  "message": "请根据这张力学简图建立计算模型并进行分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-frame-complex-2s2b-m",
+      "originalName": "frame-complex-2s2b-mechanics.png",
+      "relPath": "fixtures/drawings/frame-complex-2s2b-mechanics.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "concrete-frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "concrete-frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame-complex-2s2b",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.3
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

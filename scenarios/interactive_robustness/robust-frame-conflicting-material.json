@@ -1,0 +1,59 @@
+{
+  "id": "robust-frame-conflicting-material",
+  "description": "Steel frame with conflicting material description",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L3",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "conflicting-requirements",
+  "tags": [
+    "frame",
+    "interactive",
+    "conflicting-requirements",
+    "l3",
+    "en"
+  ],
+  "message": "A two-story steel frame is described as using both C30 concrete and Q355 steel. Span is 6m and story height is 3.6m. Please analyze it.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

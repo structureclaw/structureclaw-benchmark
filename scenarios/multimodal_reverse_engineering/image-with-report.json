@@ -1,0 +1,68 @@
+{
+  "id": "image-with-report",
+  "description": "上传图片+分析+生成报告",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L2",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "report"
+  ],
+  "category": "multimodal",
+  "tags": [
+    "multimodal",
+    "beam",
+    "image",
+    "report",
+    "zh"
+  ],
+  "message": "请根据这张图片识别结构类型，提取参数，进行静力分析，并生成计算报告",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "bench-beam-report",
+      "originalName": "beam-sketch.png",
+      "relPath": "../../tests/llm-benchmark/fixtures/beam-sketch.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 2,
+        "minElements": 1
+      },
+      {
+        "type": "has_analysis"
+      },
+      {
+        "type": "has_report"
+      }
+    ]
+  }
+}

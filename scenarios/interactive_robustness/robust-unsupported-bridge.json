@@ -1,0 +1,51 @@
+{
+  "id": "robust-unsupported-bridge",
+  "description": "Bridge system outside current benchmark scope",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "generic",
+  "benchmarkStructureType": "generic",
+  "difficulty": "L3",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "unsupported",
+  "tags": [
+    "generic",
+    "interactive",
+    "unsupported",
+    "l3",
+    "en"
+  ],
+  "message": "Build a full bridge model for a three-span continuous girder bridge, including moving vehicle loads and support settlement.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "generic",
+      "mayAlsoMatch": []
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": []
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

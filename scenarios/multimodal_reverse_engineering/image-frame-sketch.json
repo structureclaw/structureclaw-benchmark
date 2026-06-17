@@ -1,0 +1,65 @@
+{
+  "id": "image-frame-sketch",
+  "description": "上传框架简图，识别并分析",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L2",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "multimodal",
+  "tags": [
+    "multimodal",
+    "frame",
+    "image",
+    "zh"
+  ],
+  "message": "请根据这张结构图识别类型并分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "bench-frame-sketch",
+      "originalName": "frame-sketch.png",
+      "relPath": "../../tests/llm-benchmark/fixtures/frame-sketch.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "concrete-frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "concrete-frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 4,
+        "minElements": 6
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

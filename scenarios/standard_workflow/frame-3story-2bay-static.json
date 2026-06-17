@@ -1,0 +1,60 @@
+{
+  "id": "frame-3story-2bay-static",
+  "description": "3层2跨框架静力分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L2",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "frame",
+    "static",
+    "zh",
+    "multi-bay"
+  ],
+  "message": "3层2跨框架，层高3.3m，跨度5.4m和6m，每层楼面荷载15kN/m，请进行静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 12,
+        "minElements": 12
+      },
+      {
+        "type": "has_analysis"
+      },
+      {
+        "type": "natural_language",
+        "description": "Model should represent a 3-story 2-bay frame with correct node and element count"
+      }
+    ]
+  }
+}

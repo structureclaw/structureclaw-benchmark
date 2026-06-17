@@ -1,0 +1,55 @@
+{
+  "id": "frame-braced-1story-static",
+  "description": "Single-story braced steel frame static analysis",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L1",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "frame",
+    "braced",
+    "static",
+    "en"
+  ],
+  "message": "A single-story braced steel frame has a 6m span, 4.5m height, cross bracing between columns, and 8kN/m2 roof load. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 4,
+        "minElements": 5
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

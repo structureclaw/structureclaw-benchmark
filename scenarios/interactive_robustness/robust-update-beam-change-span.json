@@ -1,0 +1,74 @@
+{
+  "id": "robust-update-beam-change-span",
+  "description": "多轮：梁修改跨度",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L3",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic",
+    "interaction"
+  ],
+  "category": "multi-turn-update",
+  "tags": [
+    "beam",
+    "interactive",
+    "multi-turn-update",
+    "zh",
+    "l3"
+  ],
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "turns": [
+    {
+      "message": "简支梁跨度6m，均布荷载20kN/m，请分析",
+      "assertions": [
+        {
+          "type": "structural_type",
+          "expected": "beam"
+        },
+        {
+          "type": "skill_match",
+          "primary": "beam",
+          "mayAlsoMatch": [
+            "generic"
+          ]
+        },
+        {
+          "type": "has_model",
+          "minNodes": 2,
+          "minElements": 1
+        },
+        {
+          "type": "has_analysis"
+        }
+      ]
+    },
+    {
+      "message": "跨度改成8m，荷载不变，重新分析",
+      "assertions": [
+        {
+          "type": "has_model",
+          "minNodes": 2,
+          "minElements": 1
+        },
+        {
+          "type": "has_analysis"
+        },
+        {
+          "type": "natural_language",
+          "description": "The updated model should use the revised 8m span."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "id": "re-arch-frame3d-complex",
+  "description": "建筑平面图反问题：2层复杂空间框架",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "dxf",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L3",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "frame",
+    "3d",
+    "architectural",
+    "dxf"
+  ],
+  "message": "请根据这张建筑平面图DXF建立3D结构计算模型并进行分析，图中有墙体、门窗、家具等建筑元素",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-arch-frame3d-complex",
+      "originalName": "arch-frame3d-complex.dxf",
+      "relPath": "fixtures/drawings/arch-frame3d-complex.dxf",
+      "mimeType": "application/dxf"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "concrete-frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "concrete-frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame3d-complex",
+        "tolerances": {
+          "span": 1,
+          "load": 0.3
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

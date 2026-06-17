@@ -1,0 +1,59 @@
+{
+  "id": "robust-concrete-frame-missing-material",
+  "description": "Concrete frame missing material and load information",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L2",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "missing-parameters",
+  "tags": [
+    "concrete-frame",
+    "interactive",
+    "missing-parameters",
+    "l2",
+    "en"
+  ],
+  "message": "A three-story concrete frame has a 6m span. Please run structural analysis.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "concrete-frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "concrete-frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "id": "image-multi-turn-en",
+  "description": "Upload image identify then add params and analyze",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "semantic",
+    "modeling",
+    "analysis"
+  ],
+  "category": "multimodal",
+  "tags": [
+    "multimodal",
+    "multi-turn",
+    "image",
+    "en"
+  ],
+  "locale": "en",
+  "maxRetries": 1,
+  "attachments": [
+    {
+      "fileId": "bench-truss-diagram-mt",
+      "originalName": "truss-diagram.png",
+      "relPath": "../../tests/llm-benchmark/fixtures/truss-diagram.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "turns": [
+    {
+      "message": "What type of structure is shown in this image?",
+      "assertions": [
+        {
+          "type": "skill_match",
+          "primary": "truss",
+          "mayAlsoMatch": [
+            "generic"
+          ]
+        },
+        {
+          "type": "natural_language",
+          "description": "The agent should identify the image shows a truss structure"
+        }
+      ]
+    },
+    {
+      "message": "The span is 12m, height 3m, node load 20kN. Please run a static analysis.",
+      "assertions": [
+        {
+          "type": "has_model",
+          "minNodes": 3,
+          "minElements": 3
+        },
+        {
+          "type": "has_analysis"
+        }
+      ]
+    }
+  ]
+}

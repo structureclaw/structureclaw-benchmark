@@ -1,0 +1,71 @@
+{
+  "id": "re-arch-frame3d-simple",
+  "description": "Architectural DXF reverse engineering: simple 2-story 3D steel frame",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "dxf",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L3",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "frame",
+    "3d",
+    "architectural",
+    "dxf",
+    "en"
+  ],
+  "message": "Use this architectural DXF to build a 3D calculation model for the simple 2-story steel frame, filtering out walls, doors, windows, and furniture.",
+  "locale": "en",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-arch-frame3d-simple",
+      "originalName": "arch-frame3d-simple.dxf",
+      "relPath": "fixtures/drawings/arch-frame3d-simple.dxf",
+      "mimeType": "application/dxf"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "concrete-frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "concrete-frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame3d-simple",
+        "tolerances": {
+          "span": 1,
+          "load": 0.3
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

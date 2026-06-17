@@ -1,0 +1,59 @@
+{
+  "id": "robust-frame-unit-area-line-load",
+  "description": "Frame load unit ambiguity between area and line load",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L2",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "unit-ambiguity",
+  "tags": [
+    "frame",
+    "interactive",
+    "unit-ambiguity",
+    "l2",
+    "en"
+  ],
+  "message": "A two-story two-bay frame has 3.6m story height, 6m spans, and floor load 10. Please analyze it.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

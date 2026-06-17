@@ -1,0 +1,60 @@
+{
+  "id": "std-truss-pratt-15m",
+  "description": "Pratt桁架15m分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "truss",
+    "standard",
+    "zh",
+    "l2"
+  ],
+  "message": "Pratt桁架，跨度15m，高2.5m，5个节间，每个上弦节点竖向荷载10kN，请分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 6,
+        "minElements": 5
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "truss-simple-tri"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

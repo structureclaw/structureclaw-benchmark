@@ -1,0 +1,69 @@
+{
+  "id": "re-frame3d-concrete-mechanics",
+  "description": "反问题：轴测力学图重建3D混凝土框架",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L3",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "concrete-frame",
+    "3d",
+    "mechanics-diagram"
+  ],
+  "message": "请根据这张空间混凝土框架力学简图建立3D计算模型并进行分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-frame3d-concrete-m",
+      "originalName": "frame3d-concrete-mechanics.png",
+      "relPath": "fixtures/drawings/frame3d-concrete-mechanics.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "concrete-frame",
+      "mayAlsoMatch": [
+        "frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "concrete-frame",
+        "mayAlsoMatch": [
+          "frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame3d-concrete",
+        "tolerances": {
+          "span": 1,
+          "load": 0.3
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

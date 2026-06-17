@@ -1,0 +1,59 @@
+{
+  "id": "robust-portal-negative-roof-load",
+  "description": "门刚荷载方向/数值异常",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "portal-frame",
+  "benchmarkStructureType": "portal-frame",
+  "difficulty": "L2",
+  "skillTarget": "portal-frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "invalid-values",
+  "tags": [
+    "portal-frame",
+    "interactive",
+    "invalid-values",
+    "zh",
+    "l2"
+  ],
+  "message": "门式刚架跨度18m，柱高7m，屋面荷载-999kN/m，请分析",
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "portal-frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "portal-frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "portal-frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "id": "beam-error-impossible-values",
+  "description": "Unrealistic beam values recovery - huge span and tiny section",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L2",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "interaction",
+    "semantic"
+  ],
+  "category": "error-recovery",
+  "tags": [
+    "beam",
+    "error-recovery",
+    "en"
+  ],
+  "message": "A steel beam spans 100000m, has a 1mm section depth, and carries 999999999kN/m. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "natural_language",
+        "description": "Agent should recognize the unrealistic dimensions and ask the user to confirm or correct the values"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

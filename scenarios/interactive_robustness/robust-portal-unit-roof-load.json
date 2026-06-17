@@ -1,0 +1,59 @@
+{
+  "id": "robust-portal-unit-roof-load",
+  "description": "Portal frame roof load unit ambiguity",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "portal-frame",
+  "benchmarkStructureType": "portal-frame",
+  "difficulty": "L2",
+  "skillTarget": "portal-frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "unit-ambiguity",
+  "tags": [
+    "portal-frame",
+    "interactive",
+    "unit-ambiguity",
+    "l2",
+    "en"
+  ],
+  "message": "An 18m-span portal frame has roof load 0.5. Please analyze it.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "portal-frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "portal-frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "portal-frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

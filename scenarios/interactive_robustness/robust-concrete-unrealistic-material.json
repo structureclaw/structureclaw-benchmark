@@ -1,0 +1,59 @@
+{
+  "id": "robust-concrete-unrealistic-material",
+  "description": "Concrete frame with unrealistic material grade",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L2",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "unrealistic-values",
+  "tags": [
+    "concrete-frame",
+    "interactive",
+    "unrealistic-values",
+    "l2",
+    "en"
+  ],
+  "message": "A two-story concrete frame uses C500 concrete and HRB400 reinforcement, with 6m span and 3.6m story height. Please analyze it.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "concrete-frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "concrete-frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

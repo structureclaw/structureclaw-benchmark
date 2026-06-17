@@ -1,0 +1,74 @@
+{
+  "id": "robust-update-concrete-material",
+  "description": "多轮：混凝土框架修改材料",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L3",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic",
+    "interaction"
+  ],
+  "category": "multi-turn-update",
+  "tags": [
+    "concrete-frame",
+    "interactive",
+    "multi-turn-update",
+    "zh",
+    "l3"
+  ],
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "turns": [
+    {
+      "message": "两层两跨混凝土框架，C30混凝土，HRB400钢筋，跨度6m，层高3.6m，请分析",
+      "assertions": [
+        {
+          "type": "structural_type",
+          "expected": "frame"
+        },
+        {
+          "type": "skill_match",
+          "primary": "concrete-frame",
+          "mayAlsoMatch": [
+            "generic"
+          ]
+        },
+        {
+          "type": "has_model",
+          "minNodes": 6,
+          "minElements": 5
+        },
+        {
+          "type": "has_analysis"
+        }
+      ]
+    },
+    {
+      "message": "混凝土等级改成C40，重新分析",
+      "assertions": [
+        {
+          "type": "has_model",
+          "minNodes": 6,
+          "minElements": 5
+        },
+        {
+          "type": "has_analysis"
+        },
+        {
+          "type": "natural_language",
+          "description": "The updated model should use C40 concrete."
+        }
+      ]
+    }
+  ]
+}

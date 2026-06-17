@@ -1,0 +1,57 @@
+{
+  "id": "double-span-beam-static",
+  "description": "Two-span continuous beam static analysis",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "double-span-beam",
+  "benchmarkStructureType": "continuous-beam",
+  "difficulty": "L1",
+  "skillTarget": "double-span-beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "beam",
+    "continuous",
+    "static",
+    "en"
+  ],
+  "message": "A two-span continuous beam has spans of 5m and 6m with a 12kN/m uniformly distributed load. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "double-span-beam",
+      "mayAlsoMatch": [
+        "beam",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "double-span-beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "double-span-beam",
+        "mayAlsoMatch": [
+          "beam",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 3,
+        "minElements": 2
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

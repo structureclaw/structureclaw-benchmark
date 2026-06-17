@@ -1,0 +1,62 @@
+{
+  "id": "std-dspan-3span-gt",
+  "description": "Three-span continuous beam ground-truth match",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "double-span-beam",
+  "benchmarkStructureType": "continuous-beam",
+  "difficulty": "L2",
+  "skillTarget": "double-span-beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "double-span-beam",
+    "standard",
+    "l2",
+    "en"
+  ],
+  "message": "A three-span continuous beam has spans of 4m, 5m, and 4m with a 15kN/m uniformly distributed load. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "double-span-beam",
+      "mayAlsoMatch": [
+        "beam",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "double-span-beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "double-span-beam",
+        "mayAlsoMatch": [
+          "beam",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 4,
+        "minElements": 3
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "dspan-complex-3span"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

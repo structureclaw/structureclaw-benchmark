@@ -1,0 +1,60 @@
+{
+  "id": "beam-overhanging-static",
+  "description": "外伸梁静力分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L1",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "beam",
+    "static",
+    "zh",
+    "overhanging"
+  ],
+  "message": "外伸梁，简支跨度5m，外伸1.5m，均布荷载15kN/m，请进行静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 3,
+        "minElements": 2
+      },
+      {
+        "type": "has_analysis"
+      },
+      {
+        "type": "natural_language",
+        "description": "Analysis results should include deflection at the overhanging end and mid-span"
+      }
+    ]
+  }
+}

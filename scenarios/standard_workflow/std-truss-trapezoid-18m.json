@@ -1,0 +1,60 @@
+{
+  "id": "std-truss-trapezoid-18m",
+  "description": "梯形桁架18m分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "truss",
+    "standard",
+    "zh",
+    "l2"
+  ],
+  "message": "梯形屋架跨度18m，高2.5m，6个节间，上弦节点荷载12kN，请进行静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 7,
+        "minElements": 6
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "truss-complex-trap"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

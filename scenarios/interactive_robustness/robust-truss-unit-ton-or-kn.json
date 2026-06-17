@@ -1,0 +1,59 @@
+{
+  "id": "robust-truss-unit-ton-or-kn",
+  "description": "Truss nodal load unit ambiguity",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "unit-ambiguity",
+  "tags": [
+    "truss",
+    "interactive",
+    "unit-ambiguity",
+    "l2",
+    "en"
+  ],
+  "message": "This 15m truss has nodal loads of either 10 tons or 10kN; I am not sure. Please analyze it first.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

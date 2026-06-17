@@ -1,0 +1,64 @@
+{
+  "id": "robust-beam-missing-span-load",
+  "description": "简支梁缺跨度和荷载",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L2",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "interaction",
+    "semantic"
+  ],
+  "category": "missing-parameters",
+  "tags": [
+    "beam",
+    "interactive",
+    "missing-parameters",
+    "zh",
+    "l2"
+  ],
+  "message": "帮我分析一根简支梁",
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      },
+      {
+        "type": "natural_language",
+        "description": "Agent should ask for span, load, and key section/support parameters before analysis."
+      }
+    ]
+  }
+}

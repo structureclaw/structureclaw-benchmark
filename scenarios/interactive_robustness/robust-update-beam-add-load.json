@@ -1,0 +1,74 @@
+{
+  "id": "robust-update-beam-add-load",
+  "description": "多轮：梁追加集中力",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L3",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic",
+    "interaction"
+  ],
+  "category": "multi-turn-update",
+  "tags": [
+    "beam",
+    "interactive",
+    "multi-turn-update",
+    "zh",
+    "l3"
+  ],
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "turns": [
+    {
+      "message": "简支梁跨度6m，均布荷载20kN/m，请分析",
+      "assertions": [
+        {
+          "type": "structural_type",
+          "expected": "beam"
+        },
+        {
+          "type": "skill_match",
+          "primary": "beam",
+          "mayAlsoMatch": [
+            "generic"
+          ]
+        },
+        {
+          "type": "has_model",
+          "minNodes": 2,
+          "minElements": 1
+        },
+        {
+          "type": "has_analysis"
+        }
+      ]
+    },
+    {
+      "message": "在跨中再增加一个30kN集中力，重新分析",
+      "assertions": [
+        {
+          "type": "has_model",
+          "minNodes": 2,
+          "minElements": 1
+        },
+        {
+          "type": "has_analysis"
+        },
+        {
+          "type": "natural_language",
+          "description": "The updated analysis should reflect an added mid-span point load."
+        }
+      ]
+    }
+  ]
+}

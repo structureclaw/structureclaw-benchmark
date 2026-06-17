@@ -1,0 +1,60 @@
+{
+  "id": "std-beam-12m-combo-gt",
+  "description": "Beam with UDL and point load ground-truth match",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L2",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "beam",
+    "standard",
+    "l2",
+    "en"
+  ],
+  "message": "A simply supported beam spans 12m, carries a 15kN/m UDL, and has a 50kN point load 4m from the left support. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 3,
+        "minElements": 2
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "beam-complex-12m"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

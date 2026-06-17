@@ -1,0 +1,55 @@
+{
+  "id": "truss-roof-en",
+  "description": "Steel roof truss static analysis",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "truss",
+    "static",
+    "en",
+    "roof"
+  ],
+  "message": "A steel roof truss spans 18m with 6 panels, 3m height, and 12kN nodal loads. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 7,
+        "minElements": 6
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

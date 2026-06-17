@@ -1,0 +1,50 @@
+{
+  "id": "independent-column-static",
+  "description": "独立混凝土柱静力分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "column",
+  "benchmarkStructureType": "column",
+  "difficulty": "L1",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "column",
+    "static",
+    "zh"
+  ],
+  "message": "独立混凝土柱，截面400x400mm，高度4.5m，柱顶轴向荷载500kN，做静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "generic",
+      "mayAlsoMatch": [
+        "beam"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": [
+          "beam"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 2,
+        "minElements": 1
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

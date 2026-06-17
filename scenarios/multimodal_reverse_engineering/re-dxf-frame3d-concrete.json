@@ -1,0 +1,69 @@
+{
+  "id": "re-dxf-frame3d-concrete",
+  "description": "DXF反问题：3D混凝土框架",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "dxf",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L3",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "concrete-frame",
+    "3d",
+    "dxf"
+  ],
+  "message": "请根据这个DXF空间混凝土框架图建立3D计算模型并进行分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-dxf-frame3d-concrete",
+      "originalName": "frame3d-concrete.dxf",
+      "relPath": "fixtures/drawings/frame3d-concrete.dxf",
+      "mimeType": "application/dxf"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "concrete-frame",
+      "mayAlsoMatch": [
+        "frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "concrete-frame",
+        "mayAlsoMatch": [
+          "frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame3d-concrete",
+        "tolerances": {
+          "span": 1,
+          "load": 0.3
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

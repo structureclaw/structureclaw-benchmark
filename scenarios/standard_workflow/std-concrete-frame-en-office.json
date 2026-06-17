@@ -1,0 +1,55 @@
+{
+  "id": "std-concrete-frame-en-office",
+  "description": "2D reinforced concrete office frame in English",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L2",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "concrete-frame",
+    "standard",
+    "en",
+    "l2"
+  ],
+  "message": "A 2-story 3-bay reinforced concrete office frame, C30 concrete, 3.6m story height and 6m bays, floor load 8kN/m. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "concrete-frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "concrete-frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "concrete-frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 9,
+        "minElements": 8
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

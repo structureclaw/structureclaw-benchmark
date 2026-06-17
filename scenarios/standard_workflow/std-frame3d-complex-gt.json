@@ -1,0 +1,60 @@
+{
+  "id": "std-frame3d-complex-gt",
+  "description": "复杂空间钢框架真值匹配",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L3",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "frame",
+    "standard",
+    "zh",
+    "l3"
+  ],
+  "message": "2层空间钢框架，X向2跨6m+6m，Y向2跨5m+5m，层高3.6m，请进行静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 18,
+        "minElements": 20
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame3d-complex"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": "robust-truss-unrealistic-panel",
+  "description": "桁架节间极端",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "unrealistic-values",
+  "tags": [
+    "truss",
+    "interactive",
+    "unrealistic-values",
+    "zh",
+    "l2"
+  ],
+  "message": "桁架跨度1m，高度50m，100个节间，节点荷载10000kN，请分析",
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

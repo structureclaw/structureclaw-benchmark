@@ -1,0 +1,61 @@
+{
+  "id": "concrete-frame-2story-static",
+  "description": "2层混凝土框架静力分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L2",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "concrete-frame",
+    "static",
+    "zh"
+  ],
+  "message": "2层混凝土框架，层高3.6m，跨度6m，C30混凝土，每层楼面荷载12kN/m2，请进行静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "concrete-frame",
+      "mayAlsoMatch": [
+        "frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "concrete-frame",
+        "mayAlsoMatch": [
+          "frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 6,
+        "minElements": 6
+      },
+      {
+        "type": "has_analysis"
+      },
+      {
+        "type": "natural_language",
+        "description": "Analysis results should include story drift or displacement values for a 2-story concrete frame"
+      }
+    ]
+  }
+}

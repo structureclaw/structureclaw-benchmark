@@ -1,0 +1,62 @@
+{
+  "id": "std-portal-double-gt",
+  "description": "Double-span portal frame ground-truth match",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "portal-frame",
+  "benchmarkStructureType": "portal-frame",
+  "difficulty": "L3",
+  "skillTarget": "portal-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "portal-frame",
+    "standard",
+    "l3",
+    "en"
+  ],
+  "message": "A double-span portal frame has two 18m spans, 9m column height, and 6kN/m roof load. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "portal-frame",
+      "mayAlsoMatch": [
+        "frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "portal-frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "portal-frame",
+        "mayAlsoMatch": [
+          "frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 6,
+        "minElements": 5
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "portal-complex-ds"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

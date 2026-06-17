@@ -1,0 +1,66 @@
+{
+  "id": "re-beam-complex-12m-mechanics",
+  "description": "反问题：力学简图重建简支梁12m+集中力",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L2",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "beam",
+    "mechanics-diagram"
+  ],
+  "message": "请根据这张力学简图建立计算模型并进行分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-beam-complex-12m-m",
+      "originalName": "beam-complex-12m-mechanics.png",
+      "relPath": "fixtures/drawings/beam-complex-12m-mechanics.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "beam-complex-12m",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.25
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

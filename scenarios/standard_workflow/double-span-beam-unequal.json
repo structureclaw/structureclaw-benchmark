@@ -1,0 +1,58 @@
+{
+  "id": "double-span-beam-unequal",
+  "description": "不等跨连续梁+集中力静力分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "double-span-beam",
+  "benchmarkStructureType": "continuous-beam",
+  "difficulty": "L1",
+  "skillTarget": "double-span-beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "double-span-beam",
+    "continuous",
+    "static",
+    "zh",
+    "point-load"
+  ],
+  "message": "不等跨连续梁，跨度4m和7m，均布荷载10kN/m，在长跨跨中作用集中力30kN，做静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "double-span-beam",
+      "mayAlsoMatch": [
+        "beam",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "double-span-beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "double-span-beam",
+        "mayAlsoMatch": [
+          "beam",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 3,
+        "minElements": 2
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "robust-generic-too-vague",
+  "description": "Generic structural request is too vague",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "generic",
+  "benchmarkStructureType": "generic",
+  "difficulty": "L2",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "interaction",
+    "semantic"
+  ],
+  "category": "missing-parameters",
+  "tags": [
+    "generic",
+    "interactive",
+    "missing-parameters",
+    "l2",
+    "en"
+  ],
+  "message": "Please calculate whether this structure is safe.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "generic",
+      "mayAlsoMatch": []
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": []
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      },
+      {
+        "type": "natural_language",
+        "description": "Agent should ask for structural type, geometry, material, boundary conditions, and loads."
+      }
+    ]
+  }
+}

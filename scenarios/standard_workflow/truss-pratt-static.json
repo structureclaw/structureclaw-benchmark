@@ -1,0 +1,55 @@
+{
+  "id": "truss-pratt-static",
+  "description": "Pratt truss static analysis",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L1",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "truss",
+    "static",
+    "pratt",
+    "en"
+  ],
+  "message": "A Pratt truss spans 15m, has 2.5m height and 5 panels, with 10kN loads at top chord nodes. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 5,
+        "minElements": 8
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

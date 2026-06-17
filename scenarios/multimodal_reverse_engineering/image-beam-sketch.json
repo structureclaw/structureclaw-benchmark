@@ -1,0 +1,68 @@
+{
+  "id": "image-beam-sketch",
+  "description": "Image input: simply supported beam sketch",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L2",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic"
+  ],
+  "category": "multimodal",
+  "tags": [
+    "multimodal",
+    "beam",
+    "image",
+    "en"
+  ],
+  "message": "Identify the simply supported beam from this sketch, extract the span and load labels, and run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "bench-beam-sketch",
+      "originalName": "beam-sketch.png",
+      "relPath": "../../tests/llm-benchmark/fixtures/beam-sketch.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 2,
+        "minElements": 1
+      },
+      {
+        "type": "has_analysis"
+      },
+      {
+        "type": "natural_language",
+        "description": "The agent should identify the structure as a simply supported beam from the image and extract the span and load values"
+      }
+    ]
+  }
+}

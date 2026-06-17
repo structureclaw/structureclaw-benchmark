@@ -1,0 +1,70 @@
+{
+  "id": "re-frame3d-simple-mechanics",
+  "description": "Reverse engineering: axonometric mechanics diagram of simple 3D steel frame",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L3",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "frame",
+    "3d",
+    "mechanics-diagram",
+    "en"
+  ],
+  "message": "Use this axonometric mechanics diagram of the simple 2-story 3D steel frame to build a 3D calculation model and run analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-frame3d-simple-m",
+      "originalName": "frame3d-simple-mechanics.png",
+      "relPath": "fixtures/drawings/frame3d-simple-mechanics.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "concrete-frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "concrete-frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame3d-simple",
+        "tolerances": {
+          "span": 1,
+          "load": 0.3
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

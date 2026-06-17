@@ -1,0 +1,60 @@
+{
+  "id": "std-frame3d-simple-gt",
+  "description": "2层空间钢框架真值匹配",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L2",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "frame",
+    "standard",
+    "zh",
+    "l2"
+  ],
+  "message": "2层3D空间钢框架，X向1跨6m，Y向1跨5m，层高3.6m，楼面荷载10kN/m²，请分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 8,
+        "minElements": 8
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame3d-simple"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

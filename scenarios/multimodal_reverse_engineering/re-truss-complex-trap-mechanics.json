@@ -1,0 +1,66 @@
+{
+  "id": "re-truss-complex-trap-mechanics",
+  "description": "反问题：力学简图重建梯形桁架",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "truss",
+    "mechanics-diagram"
+  ],
+  "message": "请根据这张力学简图建立计算模型并进行分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-truss-complex-trap-m",
+      "originalName": "truss-complex-trap-mechanics.png",
+      "relPath": "fixtures/drawings/truss-complex-trap-mechanics.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "truss-complex-trap",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.3
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

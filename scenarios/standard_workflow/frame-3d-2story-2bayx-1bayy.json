@@ -1,0 +1,61 @@
+{
+  "id": "frame-3d-2story-2bayx-1bayy",
+  "description": "2-story 3D steel frame static analysis",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L2",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "frame",
+    "static",
+    "3d",
+    "multi-story",
+    "en"
+  ],
+  "message": "A 2-story 3D steel frame has X spans of 6m+6m, one Y span of 5m, 3.6m story height, and 8kN/m2 floor load. Run 3D static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 12,
+        "minElements": 20
+      },
+      {
+        "type": "has_analysis"
+      },
+      {
+        "type": "natural_language",
+        "description": "The model should be a 3D spatial frame with nodes having non-zero Y coordinates, not a planar 2D frame"
+      }
+    ]
+  }
+}

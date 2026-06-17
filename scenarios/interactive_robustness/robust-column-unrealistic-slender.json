@@ -1,0 +1,55 @@
+{
+  "id": "robust-column-unrealistic-slender",
+  "description": "Column with extreme slenderness",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "column",
+  "benchmarkStructureType": "column",
+  "difficulty": "L2",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "unrealistic-values",
+  "tags": [
+    "column",
+    "interactive",
+    "unrealistic-values",
+    "l2",
+    "en"
+  ],
+  "message": "A standalone steel column is 80m high with a 50x50mm section and 1000kN axial compression at the top. Please analyze it.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "generic",
+      "mayAlsoMatch": []
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "column"
+      },
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": []
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

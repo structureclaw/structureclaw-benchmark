@@ -1,0 +1,74 @@
+{
+  "id": "robust-update-portal-height",
+  "description": "多轮：门刚修改柱高",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "portal-frame",
+  "benchmarkStructureType": "portal-frame",
+  "difficulty": "L3",
+  "skillTarget": "portal-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic",
+    "interaction"
+  ],
+  "category": "multi-turn-update",
+  "tags": [
+    "portal-frame",
+    "interactive",
+    "multi-turn-update",
+    "zh",
+    "l3"
+  ],
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "turns": [
+    {
+      "message": "门式刚架跨度18m，柱高7m，屋面荷载6kN/m，请分析",
+      "assertions": [
+        {
+          "type": "structural_type",
+          "expected": "portal-frame"
+        },
+        {
+          "type": "skill_match",
+          "primary": "portal-frame",
+          "mayAlsoMatch": [
+            "generic"
+          ]
+        },
+        {
+          "type": "has_model",
+          "minNodes": 4,
+          "minElements": 3
+        },
+        {
+          "type": "has_analysis"
+        }
+      ]
+    },
+    {
+      "message": "柱高改成9m，重新分析",
+      "assertions": [
+        {
+          "type": "has_model",
+          "minNodes": 4,
+          "minElements": 3
+        },
+        {
+          "type": "has_analysis"
+        },
+        {
+          "type": "natural_language",
+          "description": "The updated model should reflect the revised 9m column height."
+        }
+      ]
+    }
+  ]
+}

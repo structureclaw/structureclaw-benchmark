@@ -1,0 +1,46 @@
+{
+  "id": "image-unclear-quality",
+  "description": "Blurry image should trigger clarification",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L2",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "semantic"
+  ],
+  "category": "multimodal",
+  "tags": [
+    "multimodal",
+    "error-recovery",
+    "image",
+    "en"
+  ],
+  "message": "Try to interpret this blurry structural image and decide whether a clearer image or text dimensions are needed before analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "bench-blurry",
+      "originalName": "blurry-image.png",
+      "relPath": "../../tests/llm-benchmark/fixtures/blurry-image.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "natural_language",
+        "description": "The agent should mention the image quality is poor or blurry and either try to extract what it can or ask the user to provide a clearer image or supplement with text"
+      }
+    ]
+  }
+}

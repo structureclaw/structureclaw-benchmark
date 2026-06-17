@@ -1,0 +1,69 @@
+{
+  "id": "re-dspan-complex-3span-construction",
+  "description": "Reverse engineering: construction drawing of 4+5+4m continuous beam",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "double-span-beam",
+  "benchmarkStructureType": "continuous-beam",
+  "difficulty": "L2",
+  "skillTarget": "double-span-beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "double-span-beam",
+    "construction-plan",
+    "en"
+  ],
+  "message": "Use this construction drawing of the 4m+5m+4m three-span continuous beam to build the calculation model and run analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-dspan-complex-3span-c",
+      "originalName": "dspan-complex-3span-construction.png",
+      "relPath": "fixtures/drawings/dspan-complex-3span-construction.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "double-span-beam",
+      "mayAlsoMatch": [
+        "beam",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "double-span-beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "double-span-beam",
+        "mayAlsoMatch": [
+          "beam",
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "dspan-complex-3span",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.25
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

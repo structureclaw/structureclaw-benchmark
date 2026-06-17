@@ -1,0 +1,59 @@
+{
+  "id": "robust-beam-conflicting-supports",
+  "description": "Beam support condition conflict",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L3",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "conflicting-requirements",
+  "tags": [
+    "beam",
+    "interactive",
+    "conflicting-requirements",
+    "l3",
+    "en"
+  ],
+  "message": "This beam is both simply supported and fixed at both ends. Span is 6m and UDL is 20kN/m. Please analyze it.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

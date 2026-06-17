@@ -1,0 +1,59 @@
+{
+  "id": "robust-portal-missing-height",
+  "description": "Portal frame missing height and load information",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "portal-frame",
+  "benchmarkStructureType": "portal-frame",
+  "difficulty": "L2",
+  "skillTarget": "portal-frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "missing-parameters",
+  "tags": [
+    "portal-frame",
+    "interactive",
+    "missing-parameters",
+    "l2",
+    "en"
+  ],
+  "message": "A single-span portal frame has a 24m span. Please analyze it.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "portal-frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "portal-frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "portal-frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

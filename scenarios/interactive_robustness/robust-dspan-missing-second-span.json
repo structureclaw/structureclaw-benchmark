@@ -1,0 +1,59 @@
+{
+  "id": "robust-dspan-missing-second-span",
+  "description": "Continuous beam missing second span",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "double-span-beam",
+  "benchmarkStructureType": "continuous-beam",
+  "difficulty": "L2",
+  "skillTarget": "double-span-beam",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "missing-parameters",
+  "tags": [
+    "double-span-beam",
+    "interactive",
+    "missing-parameters",
+    "l2",
+    "en"
+  ],
+  "message": "A two-span continuous beam has a 5m first span and 10kN/m UDL. Please analyze it.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "double-span-beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "double-span-beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "double-span-beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

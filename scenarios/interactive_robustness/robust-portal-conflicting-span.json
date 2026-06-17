@@ -1,0 +1,59 @@
+{
+  "id": "robust-portal-conflicting-span",
+  "description": "门刚跨度冲突",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "portal-frame",
+  "benchmarkStructureType": "portal-frame",
+  "difficulty": "L3",
+  "skillTarget": "portal-frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "conflicting-requirements",
+  "tags": [
+    "portal-frame",
+    "interactive",
+    "conflicting-requirements",
+    "zh",
+    "l3"
+  ],
+  "message": "门式刚架跨度18m，同时总宽度又是12m，屋面荷载6kN/m，请分析",
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "portal-frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "portal-frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "portal-frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

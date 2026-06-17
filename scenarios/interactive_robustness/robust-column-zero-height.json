@@ -1,0 +1,55 @@
+{
+  "id": "robust-column-zero-height",
+  "description": "柱高度为零",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "column",
+  "benchmarkStructureType": "column",
+  "difficulty": "L2",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "invalid-values",
+  "tags": [
+    "column",
+    "interactive",
+    "invalid-values",
+    "zh",
+    "l2"
+  ],
+  "message": "独立柱高度0m，柱顶压力500kN，请分析",
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "generic",
+      "mayAlsoMatch": []
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "column"
+      },
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": []
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

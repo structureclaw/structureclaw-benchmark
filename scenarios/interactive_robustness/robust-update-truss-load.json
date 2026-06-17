@@ -1,0 +1,74 @@
+{
+  "id": "robust-update-truss-load",
+  "description": "Multi-turn: update truss nodal load",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L3",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic",
+    "interaction"
+  ],
+  "category": "multi-turn-update",
+  "tags": [
+    "truss",
+    "interactive",
+    "multi-turn-update",
+    "l3",
+    "en"
+  ],
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "turns": [
+    {
+      "message": "A Pratt truss spans 15m, has 2.5m height, 5 panels, and 10kN nodal loads. Please analyze it.",
+      "assertions": [
+        {
+          "type": "structural_type",
+          "expected": "truss"
+        },
+        {
+          "type": "skill_match",
+          "primary": "truss",
+          "mayAlsoMatch": [
+            "generic"
+          ]
+        },
+        {
+          "type": "has_model",
+          "minNodes": 6,
+          "minElements": 5
+        },
+        {
+          "type": "has_analysis"
+        }
+      ]
+    },
+    {
+      "message": "Change the nodal load to 15kN and rerun the analysis.",
+      "assertions": [
+        {
+          "type": "has_model",
+          "minNodes": 6,
+          "minElements": 5
+        },
+        {
+          "type": "has_analysis"
+        },
+        {
+          "type": "natural_language",
+          "description": "The updated analysis should use 15kN nodal loads."
+        }
+      ]
+    }
+  ]
+}

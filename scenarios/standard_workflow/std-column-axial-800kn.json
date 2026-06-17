@@ -1,0 +1,51 @@
+{
+  "id": "std-column-axial-800kn",
+  "description": "Reinforced concrete column with combined axial and lateral load",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "column",
+  "benchmarkStructureType": "column",
+  "difficulty": "L2",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "column",
+    "standard",
+    "l2",
+    "en"
+  ],
+  "message": "A standalone reinforced concrete column is 4.2m high with a 450x450mm section, 600kN axial compression, and 30kN lateral load at the top. Build the model and run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "generic",
+      "mayAlsoMatch": []
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "column"
+      },
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": []
+      },
+      {
+        "type": "has_model",
+        "minNodes": 2,
+        "minElements": 1
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

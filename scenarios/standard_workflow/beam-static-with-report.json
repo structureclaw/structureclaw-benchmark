@@ -1,0 +1,59 @@
+{
+  "id": "beam-static-with-report",
+  "description": "简支梁分析+生成报告",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L1",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "report"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "beam",
+    "static",
+    "zh",
+    "report"
+  ],
+  "message": "简支梁跨度8m，均布荷载18kN/m，请进行静力分析并生成计算报告",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 2,
+        "minElements": 1
+      },
+      {
+        "type": "has_analysis"
+      },
+      {
+        "type": "has_report"
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": "robust-truss-conflicting-topology",
+  "description": "Truss topology conflict",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L3",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "conflicting-requirements",
+  "tags": [
+    "truss",
+    "interactive",
+    "conflicting-requirements",
+    "l3",
+    "en"
+  ],
+  "message": "Please analyze a Pratt truss with no web members. It spans 15m, has 2.5m height, and 10kN nodal loads.",
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

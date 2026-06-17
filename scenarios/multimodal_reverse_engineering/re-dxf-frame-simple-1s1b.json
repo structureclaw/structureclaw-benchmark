@@ -1,0 +1,66 @@
+{
+  "id": "re-dxf-frame-simple-1s1b",
+  "description": "DXF反问题：单层单跨框架",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "dxf",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L3",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "frame",
+    "dxf"
+  ],
+  "message": "请根据这个DXF结构图纸建立计算模型并进行分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-dxf-frame-simple",
+      "originalName": "frame-simple-1s1b.dxf",
+      "relPath": "fixtures/drawings/frame-simple-1s1b.dxf",
+      "mimeType": "application/dxf"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame-simple-1s1b",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.25
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

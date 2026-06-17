@@ -1,0 +1,64 @@
+{
+  "id": "re-portal-complex-ds-mechanics",
+  "description": "反问题：力学简图重建双跨门刚",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "portal-frame",
+  "benchmarkStructureType": "portal-frame",
+  "difficulty": "L2",
+  "skillTarget": "portal-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "portal-frame",
+    "mechanics-diagram"
+  ],
+  "message": "请根据这张力学简图建立计算模型并进行分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-portal-complex-ds-m",
+      "originalName": "portal-complex-ds-mechanics.png",
+      "relPath": "fixtures/drawings/portal-complex-ds-mechanics.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "portal-frame",
+      "mayAlsoMatch": [
+        "frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "portal-frame",
+        "mayAlsoMatch": [
+          "frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "portal-complex-ds",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.25
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

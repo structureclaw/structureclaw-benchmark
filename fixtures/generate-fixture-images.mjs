@@ -166,12 +166,33 @@ const incompleteDimensions = svg(`
   <text x="320" y="105" text-anchor="middle" font-size="24" fill="#c0392b">?</text>
 `);
 
+// 6. cropped-frame-sketch.png — partial frame drawing with missing labels
+const croppedFrameSketch = svg(`
+  <text x="${W / 2}" y="28" text-anchor="middle" class="title">Partial Frame Drawing</text>
+  <rect x="0" y="0" width="${W}" height="${H}" fill="#fff"/>
+  <g transform="translate(-70, 20)">
+    <line x1="160" y1="110" x2="160" y2="315" class="member"/>
+    <line x1="440" y1="110" x2="440" y2="315" class="member"/>
+    <line x1="160" y1="110" x2="440" y2="110" class="member"/>
+    <line x1="160" y1="210" x2="440" y2="210" class="member"/>
+    <line x1="145" y1="318" x2="175" y2="318" stroke="#333" stroke-width="3"/>
+    <line x1="425" y1="318" x2="455" y2="318" stroke="#333" stroke-width="3"/>
+    ${[205, 285, 365].map(x => `<line x1="${x}" y1="82" x2="${x}" y2="105" class="load-arrow"/>`).join("\n    ")}
+  </g>
+  <rect x="420" y="0" width="220" height="${H}" fill="#fff"/>
+  <rect x="0" y="300" width="${W}" height="100" fill="#fff"/>
+  <text x="78" y="190" text-anchor="middle" font-size="22" fill="#c0392b">?</text>
+  <text x="300" y="82" text-anchor="middle" class="dim">load?</text>
+  <text x="300" y="350" text-anchor="middle" class="dim">span label cropped</text>
+`);
+
 const fixtures = [
   { name: "beam-sketch.png", svg: beamSketch },
   { name: "frame-sketch.png", svg: frameSketch },
   { name: "truss-diagram.png", svg: trussDiagram },
   { name: "portal-frame-photo.png", svg: portalFrame },
   { name: "incomplete-dimensions.png", svg: incompleteDimensions },
+  { name: "cropped-frame-sketch.png", svg: croppedFrameSketch },
 ];
 
 async function generateAll() {
@@ -182,7 +203,7 @@ async function generateAll() {
     console.log(`  ${name}: ${info.width}x${info.height}, ${info.size} bytes`);
   }
 
-  // 6. blurry-image.png — blur the beam sketch
+  // 7. blurry-image.png — blur the beam sketch
   const beamPath = join(outDir, "beam-sketch.png");
   const blurryPath = join(outDir, "blurry-image.png");
   await sharp(beamPath).blur(8).toFile(blurryPath);

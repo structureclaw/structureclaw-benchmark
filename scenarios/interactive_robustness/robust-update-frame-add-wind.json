@@ -1,0 +1,74 @@
+{
+  "id": "robust-update-frame-add-wind",
+  "description": "Multi-turn: add wind load to steel frame",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L3",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic",
+    "interaction"
+  ],
+  "category": "multi-turn-update",
+  "tags": [
+    "frame",
+    "interactive",
+    "multi-turn-update",
+    "l3",
+    "en"
+  ],
+  "locale": "en",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "turns": [
+    {
+      "message": "A two-story two-bay steel frame has 3.6m story height, 6m spans, and 10kN/m floor line load. Please analyze it.",
+      "assertions": [
+        {
+          "type": "structural_type",
+          "expected": "frame"
+        },
+        {
+          "type": "skill_match",
+          "primary": "frame",
+          "mayAlsoMatch": [
+            "generic"
+          ]
+        },
+        {
+          "type": "has_model",
+          "minNodes": 6,
+          "minElements": 5
+        },
+        {
+          "type": "has_analysis"
+        }
+      ]
+    },
+    {
+      "message": "Now include a horizontal wind load with basic wind pressure 0.5kN/m2 and rerun the analysis.",
+      "assertions": [
+        {
+          "type": "has_model",
+          "minNodes": 6,
+          "minElements": 5
+        },
+        {
+          "type": "has_analysis"
+        },
+        {
+          "type": "natural_language",
+          "description": "The updated analysis should include wind load effects in addition to gravity loads."
+        }
+      ]
+    }
+  ]
+}

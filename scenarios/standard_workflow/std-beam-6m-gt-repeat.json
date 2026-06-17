@@ -1,0 +1,60 @@
+{
+  "id": "std-beam-6m-gt-repeat",
+  "description": "简支梁6m标准真值匹配",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L1",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "beam",
+    "standard",
+    "zh",
+    "l1"
+  ],
+  "message": "简支梁6m，均布荷载20kN/m，请建立模型并分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 3,
+        "minElements": 2
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "beam-simple-6m"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

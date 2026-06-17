@@ -1,0 +1,67 @@
+{
+  "id": "re-dxf-beam-simple-6m",
+  "description": "DXF reverse engineering: 6m simply supported beam",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "dxf",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L3",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "beam",
+    "dxf",
+    "en"
+  ],
+  "message": "Use this DXF structural drawing of a 6m simply supported beam to build the calculation model and run analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-dxf-beam-simple",
+      "originalName": "beam-simple-6m.dxf",
+      "relPath": "fixtures/drawings/beam-simple-6m.dxf",
+      "mimeType": "application/dxf"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "beam-simple-6m",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.2
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

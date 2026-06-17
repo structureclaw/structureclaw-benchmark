@@ -1,0 +1,59 @@
+{
+  "id": "std-beam-report-en",
+  "description": "Beam analysis with report in English",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L1",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "report"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "beam",
+    "standard",
+    "en",
+    "l1"
+  ],
+  "message": "Analyze a simply supported beam, span 7.5m, UDL 18kN/m, and generate a calculation report.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 2,
+        "minElements": 1
+      },
+      {
+        "type": "has_analysis"
+      },
+      {
+        "type": "has_report"
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "robust-unsupported-tower",
+  "description": "复杂塔架暂不支持",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "generic",
+  "benchmarkStructureType": "generic",
+  "difficulty": "L3",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "unsupported",
+  "tags": [
+    "generic",
+    "interactive",
+    "unsupported",
+    "zh",
+    "l3"
+  ],
+  "message": "请分析一个120m通信塔，包含风振和地震时程",
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "generic",
+      "mayAlsoMatch": []
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": []
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

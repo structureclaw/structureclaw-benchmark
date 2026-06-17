@@ -1,0 +1,67 @@
+{
+  "id": "re-truss-complex-trap-construction",
+  "description": "Reverse engineering: construction drawing of trapezoidal truss",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "truss",
+    "construction-plan",
+    "en"
+  ],
+  "message": "Use this construction drawing of the trapezoidal roof truss to build the calculation model and run analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-truss-complex-trap-c",
+      "originalName": "truss-complex-trap-construction.png",
+      "relPath": "fixtures/drawings/truss-complex-trap-construction.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "truss-complex-trap",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.3
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

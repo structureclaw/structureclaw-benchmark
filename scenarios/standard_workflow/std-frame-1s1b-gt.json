@@ -1,0 +1,60 @@
+{
+  "id": "std-frame-1s1b-gt",
+  "description": "Single-story single-bay steel frame ground-truth match",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L2",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "frame",
+    "standard",
+    "l2",
+    "en"
+  ],
+  "message": "A single-story single-bay steel frame has 4.5m story height, 6m span, and 10kN/m vertical line load on the beam. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 4,
+        "minElements": 3
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame-simple-1s1b"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

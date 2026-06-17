@@ -1,0 +1,55 @@
+{
+  "id": "error-frame-negative-dimensions",
+  "description": "框架负层高错误恢复",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L2",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction",
+    "semantic"
+  ],
+  "category": "error-recovery",
+  "tags": [
+    "frame",
+    "error-recovery",
+    "zh"
+  ],
+  "message": "3层框架，层高-3m，跨度6m，做静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "natural_language",
+        "description": "Agent should detect the negative story height (-3m) and ask the user to provide a valid positive dimension"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

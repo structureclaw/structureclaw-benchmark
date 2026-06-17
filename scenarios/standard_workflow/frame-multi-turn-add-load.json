@@ -1,0 +1,69 @@
+{
+  "id": "frame-multi-turn-add-load",
+  "description": "框架先基本分析→追加风荷载→再分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L2",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "semantic"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "frame",
+    "static",
+    "zh",
+    "multi-turn"
+  ],
+  "locale": "zh",
+  "maxRetries": 1,
+  "turns": [
+    {
+      "message": "2层单跨钢框架，层高3.6m，跨度6m，每层楼面荷载10kN/m2，请进行静力分析",
+      "assertions": [
+        {
+          "type": "structural_type",
+          "expected": "frame"
+        },
+        {
+          "type": "skill_match",
+          "primary": "frame",
+          "mayAlsoMatch": [
+            "generic"
+          ]
+        },
+        {
+          "type": "has_model",
+          "minNodes": 6,
+          "minElements": 6
+        },
+        {
+          "type": "has_analysis"
+        }
+      ]
+    },
+    {
+      "message": "现在还需要考虑风荷载，基本风压0.5kN/m2，B类地面粗糙度，请重新分析",
+      "assertions": [
+        {
+          "type": "has_model",
+          "minNodes": 6,
+          "minElements": 6
+        },
+        {
+          "type": "has_analysis"
+        },
+        {
+          "type": "natural_language",
+          "description": "The updated analysis should reflect wind load effects in addition to gravity loads"
+        }
+      ]
+    }
+  ]
+}

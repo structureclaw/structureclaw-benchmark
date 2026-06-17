@@ -1,0 +1,62 @@
+{
+  "id": "std-dspan-5-6-gt",
+  "description": "双跨连续梁真值匹配",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "double-span-beam",
+  "benchmarkStructureType": "continuous-beam",
+  "difficulty": "L2",
+  "skillTarget": "double-span-beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "double-span-beam",
+    "standard",
+    "zh",
+    "l2"
+  ],
+  "message": "双跨连续梁，跨度5m和6m，均布荷载12kN/m，请分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "double-span-beam",
+      "mayAlsoMatch": [
+        "beam",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "double-span-beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "double-span-beam",
+        "mayAlsoMatch": [
+          "beam",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 3,
+        "minElements": 2
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "dspan-simple-5-6"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "id": "std-portal-18m-gt",
+  "description": "门式刚架18m真值匹配",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "portal-frame",
+  "benchmarkStructureType": "portal-frame",
+  "difficulty": "L2",
+  "skillTarget": "portal-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "portal-frame",
+    "standard",
+    "zh",
+    "l2"
+  ],
+  "message": "单跨门式刚架，跨度18m，檐口高度7m，屋面荷载6kN/m，请分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "portal-frame",
+      "mayAlsoMatch": [
+        "frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "portal-frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "portal-frame",
+        "mayAlsoMatch": [
+          "frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 4,
+        "minElements": 3
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "portal-simple-18m"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

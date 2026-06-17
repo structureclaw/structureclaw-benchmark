@@ -1,0 +1,60 @@
+{
+  "id": "std-truss-tri-en",
+  "description": "Triangular truss analysis in English",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "truss",
+    "standard",
+    "en",
+    "l2"
+  ],
+  "message": "A triangular roof truss spans 15m with 5 panels and 10kN vertical nodal loads. Run static analysis.",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 6,
+        "minElements": 5
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "truss-simple-tri"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

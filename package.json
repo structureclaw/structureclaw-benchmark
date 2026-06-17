@@ -8,6 +8,8 @@
   "scripts": {
     "benchmark": "node runner.cjs",
     "benchmark:single": "node runner.cjs --scenario",
+    "benchmark:all-modes": "node runner.cjs --mode all",
+    "validate:scenarios": "node lib/validate-scenarios.cjs",
     "regen-fixtures": "node fixtures/generate-fixture-images.mjs && node fixtures/model-factory.mjs && node fixtures/plan-renderer.mjs && node fixtures/dxf-generator.mjs && node fixtures/arch-dxf-generator.mjs"
   },
   "engines": {

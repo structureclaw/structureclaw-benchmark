@@ -1,0 +1,59 @@
+{
+  "id": "robust-concrete-conflicting-dimension",
+  "description": "混凝土框架维度冲突",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L3",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "conflicting-requirements",
+  "tags": [
+    "concrete-frame",
+    "interactive",
+    "conflicting-requirements",
+    "zh",
+    "l3"
+  ],
+  "message": "三层混凝土框架，X向2跨，Y向也没有跨度，是2D还是3D都可以，请直接分析",
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "concrete-frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "concrete-frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

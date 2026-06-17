@@ -1,0 +1,51 @@
+{
+  "id": "robust-unsupported-slab",
+  "description": "暂不支持楼板壳单元",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "generic",
+  "benchmarkStructureType": "generic",
+  "difficulty": "L3",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "interaction"
+  ],
+  "category": "unsupported",
+  "tags": [
+    "generic",
+    "interactive",
+    "unsupported",
+    "zh",
+    "l3"
+  ],
+  "message": "请用壳单元精细分析一块双向楼板，考虑板柱节点冲切",
+  "locale": "zh",
+  "maxRetries": 1,
+  "benchmarkModes": [
+    "auto"
+  ],
+  "expect": {
+    "skills": {
+      "primary": "generic",
+      "mayAlsoMatch": []
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": []
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

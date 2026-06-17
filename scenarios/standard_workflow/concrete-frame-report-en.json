@@ -1,0 +1,59 @@
+{
+  "id": "concrete-frame-report-en",
+  "description": "Concrete frame analysis + generate report",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L1",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis",
+    "report"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "concrete-frame",
+    "static",
+    "en",
+    "report"
+  ],
+  "message": "2-story single-bay reinforced concrete frame, C30 concrete and HRB400 reinforcement, story height 3.6m, bay width 6m, floor load 10kN/m2, please run a static analysis and generate a report",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "concrete-frame",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "concrete-frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "concrete-frame",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 6,
+        "minElements": 6
+      },
+      {
+        "type": "has_analysis"
+      },
+      {
+        "type": "has_report"
+      }
+    ]
+  }
+}

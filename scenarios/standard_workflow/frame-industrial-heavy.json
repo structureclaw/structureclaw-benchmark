@@ -1,0 +1,57 @@
+{
+  "id": "frame-industrial-heavy",
+  "description": "单层工业重型厂房框架静力分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
+  "difficulty": "L1",
+  "skillTarget": "frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "frame",
+    "static",
+    "zh",
+    "industrial"
+  ],
+  "message": "单层工业重型厂房钢框架，跨度24m，高度12m，设10t吊车，屋面荷载1.5kN/m2，请进行静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "frame",
+      "mayAlsoMatch": [
+        "portal-frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "frame",
+        "mayAlsoMatch": [
+          "portal-frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 4,
+        "minElements": 3
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "error-vague-description",
+  "description": "模糊结构描述错误恢复",
+  "split": "core",
+  "taskFamily": "interactive_robustness",
+  "inputModality": "text",
+  "structureType": "generic",
+  "benchmarkStructureType": "generic",
+  "difficulty": "L2",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "interaction",
+    "semantic"
+  ],
+  "category": "error-recovery",
+  "tags": [
+    "error-recovery",
+    "zh",
+    "vague"
+  ],
+  "message": "帮我分析一个结构",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "generic"
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": []
+      },
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "natural_language",
+        "description": "Agent should ask the user to clarify the structural type, dimensions, and loading conditions since the description is too vague"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      }
+    ]
+  }
+}

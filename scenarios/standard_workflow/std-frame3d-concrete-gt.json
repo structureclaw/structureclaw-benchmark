@@ -1,0 +1,62 @@
+{
+  "id": "std-frame3d-concrete-gt",
+  "description": "3D混凝土框架真值匹配",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "concrete-frame",
+  "benchmarkStructureType": "concrete-frame",
+  "difficulty": "L3",
+  "skillTarget": "concrete-frame",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "concrete-frame",
+    "standard",
+    "zh",
+    "l3"
+  ],
+  "message": "2层3D混凝土框架，X向2跨6m+6m，Y向1跨5m，层高3.6m，C30混凝土，HRB400钢筋，请分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "concrete-frame",
+      "mayAlsoMatch": [
+        "frame",
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "frame"
+      },
+      {
+        "type": "skill_match",
+        "primary": "concrete-frame",
+        "mayAlsoMatch": [
+          "frame",
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 12,
+        "minElements": 14
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame3d-concrete"
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

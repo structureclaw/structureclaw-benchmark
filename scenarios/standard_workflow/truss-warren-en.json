@@ -1,0 +1,55 @@
+{
+  "id": "truss-warren-en",
+  "description": "Warren truss static analysis",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L1",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "static-analysis",
+  "tags": [
+    "truss",
+    "static",
+    "en",
+    "warren"
+  ],
+  "message": "Warren truss, span 12m, height 2m, 6 panels, node load 8kN on bottom chord, please run a static analysis",
+  "locale": "en",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 7,
+        "minElements": 11
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

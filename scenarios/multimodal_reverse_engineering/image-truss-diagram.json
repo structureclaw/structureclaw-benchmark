@@ -1,0 +1,63 @@
+{
+  "id": "image-truss-diagram",
+  "description": "上传桁架结构图，识别并分析",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "truss",
+  "benchmarkStructureType": "truss",
+  "difficulty": "L2",
+  "skillTarget": "truss",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "multimodal",
+  "tags": [
+    "multimodal",
+    "truss",
+    "image",
+    "zh"
+  ],
+  "message": "根据这张图识别结构类型并做静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "bench-truss-diagram",
+      "originalName": "truss-diagram.png",
+      "relPath": "../../tests/llm-benchmark/fixtures/truss-diagram.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "truss",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "truss"
+      },
+      {
+        "type": "skill_match",
+        "primary": "truss",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "has_model",
+        "minNodes": 3,
+        "minElements": 3
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

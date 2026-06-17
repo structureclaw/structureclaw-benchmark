@@ -1,0 +1,47 @@
+{
+  "id": "std-generic-braced-bay",
+  "description": "通用支撑单元结构分析",
+  "split": "core",
+  "taskFamily": "standard_workflow",
+  "inputModality": "text",
+  "structureType": "generic",
+  "benchmarkStructureType": "generic",
+  "difficulty": "L3",
+  "skillTarget": "generic",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "analysis"
+  ],
+  "category": "standard-workflow",
+  "tags": [
+    "generic",
+    "standard",
+    "zh",
+    "l3"
+  ],
+  "message": "建立一个单层带斜撑的平面结构，宽6m，高4m，顶部水平荷载50kN，请进行静力分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "expect": {
+    "skills": {
+      "primary": "generic",
+      "mayAlsoMatch": []
+    },
+    "assertions": [
+      {
+        "type": "skill_match",
+        "primary": "generic",
+        "mayAlsoMatch": []
+      },
+      {
+        "type": "has_model",
+        "minNodes": 4,
+        "minElements": 4
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}

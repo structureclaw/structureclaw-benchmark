@@ -1,0 +1,66 @@
+{
+  "id": "re-beam-simple-6m-construction",
+  "description": "反问题：施工图重建简支梁6m",
+  "split": "auxiliary",
+  "taskFamily": "multimodal_reverse_engineering",
+  "inputModality": "image",
+  "structureType": "beam",
+  "benchmarkStructureType": "beam",
+  "difficulty": "L2",
+  "skillTarget": "beam",
+  "evaluationFocus": [
+    "routing",
+    "modeling",
+    "model_match",
+    "analysis"
+  ],
+  "category": "reverse-engineering",
+  "tags": [
+    "reverse-engineering",
+    "beam",
+    "construction-plan"
+  ],
+  "message": "请根据这张结构施工图建立计算模型并进行分析",
+  "locale": "zh",
+  "maxRetries": 2,
+  "attachments": [
+    {
+      "fileId": "re-beam-simple-6m-c",
+      "originalName": "beam-simple-6m-construction.png",
+      "relPath": "fixtures/drawings/beam-simple-6m-construction.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "expect": {
+    "skills": {
+      "primary": "beam",
+      "mayAlsoMatch": [
+        "generic"
+      ]
+    },
+    "assertions": [
+      {
+        "type": "structural_type",
+        "expected": "beam"
+      },
+      {
+        "type": "skill_match",
+        "primary": "beam",
+        "mayAlsoMatch": [
+          "generic"
+        ]
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "beam-simple-6m",
+        "tolerances": {
+          "span": 0.5,
+          "load": 0.2
+        }
+      },
+      {
+        "type": "has_analysis"
+      }
+    ]
+  }
+}
