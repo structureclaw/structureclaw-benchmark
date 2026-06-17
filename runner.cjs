@@ -247,11 +247,14 @@ function resolveAttachmentPaths(scenario) {
       return { ...a, relPath: path.resolve(BENCH_ROOT, rel) };
     });
   };
-  return {
+  const resolved = {
     ...scenario,
     attachments: resolve(scenario.attachments),
-    turns: (scenario.turns || []).map((t) => ({ ...t, attachments: resolve(t.attachments) })),
   };
+  if (Array.isArray(scenario.turns)) {
+    resolved.turns = scenario.turns.map((t) => ({ ...t, attachments: resolve(t.attachments) }));
+  }
+  return resolved;
 }
 
 function normalizeScenario(scenario) {
@@ -269,6 +272,10 @@ function normalizeScenario(scenario) {
       },
     ],
   };
+}
+
+function safeConversationIdPart(value) {
+  return String(value || "scenario").replace(/[^A-Za-z0-9_-]/g, "-");
 }
 
 function modesForScenario(scenario) {
@@ -436,7 +443,7 @@ async function runBenchmark(args) {
       const scenarioStart = Date.now();
       let executionError = false;
       const turnResults = [];
-      const conversationId = `bench-${scenario.id}-${scenarioStart}-${attempt}`;
+      const conversationId = `bench-${safeConversationIdPart(scenario.id)}-${scenarioStart}-${attempt}`;
 
       const prevLogLevel = process.env.LOG_LEVEL;
       process.env.LOG_LEVEL = "warn";
