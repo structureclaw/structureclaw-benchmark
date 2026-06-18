@@ -1,6 +1,6 @@
 {
-  "id": "robust-update-generic-add-brace",
-  "description": "多轮：通用结构增加支撑",
+  "id": "robust-update-generic-increase-load",
+  "description": "多轮：通用结构增大水平荷载",
   "split": "core",
   "taskFamily": "interactive_robustness",
   "inputModality": "text",
@@ -40,7 +40,7 @@
         {
           "type": "has_model",
           "minNodes": 4,
-          "minElements": 4
+          "minElements": 3
         },
         {
           "type": "has_analysis"
@@ -48,19 +48,19 @@
       ]
     },
     {
-      "message": "增加一根从左下到右上的斜撑，重新分析",
+      "message": "将顶部水平荷载增加到80kN，重新分析",
       "assertions": [
         {
           "type": "has_model",
           "minNodes": 4,
-          "minElements": 4
+          "minElements": 3
         },
         {
           "type": "has_analysis"
         },
         {
           "type": "natural_language",
-          "description": "The updated model should include the added diagonal brace."
+          "description": "The updated analysis should reflect the increased top horizontal load."
         }
       ]
     }

@@ -1,6 +1,6 @@
 {
-  "id": "frame-braced-1story-static",
-  "description": "Single-story braced steel frame static analysis",
+  "id": "frame-1story-yjk-static",
+  "description": "Single-story steel frame static analysis with YJK",
   "split": "core",
   "taskFamily": "standard_workflow",
   "inputModality": "text",
@@ -19,11 +19,11 @@
   "category": "static-analysis",
   "tags": [
     "frame",
-    "braced",
+    "single-story",
     "static",
     "en"
   ],
-  "message": "Use YJK to run static analysis for a single-story braced steel frame with a 6m span, 4.5m height, cross bracing between columns, and 8kN/m2 roof load.",
+  "message": "Use YJK to run static analysis for a single-story single-bay steel frame with a 6m span, 4.5m height, and 8kN/m2 roof load.",
   "locale": "en",
   "maxRetries": 2,
   "expect": {
@@ -48,7 +48,7 @@
       {
         "type": "has_model",
         "minNodes": 4,
-        "minElements": 5
+        "minElements": 3
       },
       {
         "type": "has_analysis"
