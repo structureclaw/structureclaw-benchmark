@@ -8,10 +8,13 @@
   "benchmarkStructureType": "steel-frame",
   "difficulty": "L2",
   "skillTarget": "frame",
+  "analysisSkillTarget": "opensees-static",
+  "analysisEngineTarget": "builtin-opensees",
   "evaluationFocus": [
     "routing",
     "modeling",
     "analysis",
+    "engine_match",
     "semantic"
   ],
   "category": "static-analysis",
@@ -21,7 +24,7 @@
     "multi-story",
     "en"
   ],
-  "message": "A 2-story single-bay steel frame has 3.6m story height, 6m bay width, and 10kN/m2 floor load on each level. Run static analysis.",
+  "message": "Use OpenSees to run static analysis for a 2-story single-bay steel frame with 3.6m story height, 6m bay width, and 10kN/m2 floor load on each level.",
   "locale": "en",
   "maxRetries": 2,
   "expect": {
@@ -50,6 +53,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-opensees",
+        "skillId": "opensees-static"
       },
       {
         "type": "natural_language",

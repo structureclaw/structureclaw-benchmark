@@ -8,10 +8,13 @@
   "benchmarkStructureType": "steel-frame",
   "difficulty": "L1",
   "skillTarget": "frame",
+  "analysisSkillTarget": "opensees-static",
+  "analysisEngineTarget": "builtin-opensees",
   "evaluationFocus": [
     "routing",
     "modeling",
-    "analysis"
+    "analysis",
+    "engine_match"
   ],
   "category": "static-analysis",
   "tags": [
@@ -20,7 +23,7 @@
     "zh",
     "industrial"
   ],
-  "message": "单层工业重型厂房钢框架，跨度24m，高度12m，设10t吊车，屋面荷载1.5kN/m2，请进行静力分析",
+  "message": "单层工业重型厂房钢框架，跨度24m，高度12m，设10t吊车，屋面荷载1.5kN/m2，请使用OpenSees进行静力分析",
   "locale": "zh",
   "maxRetries": 2,
   "expect": {
@@ -51,6 +54,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-opensees",
+        "skillId": "opensees-static"
       }
     ]
   }

@@ -8,10 +8,13 @@
   "benchmarkStructureType": "steel-frame",
   "difficulty": "L2",
   "skillTarget": "frame",
+  "analysisSkillTarget": "pkpm-static",
+  "analysisEngineTarget": "builtin-pkpm",
   "evaluationFocus": [
     "routing",
     "modeling",
     "analysis",
+    "engine_match",
     "semantic"
   ],
   "category": "static-analysis",
@@ -22,7 +25,7 @@
     "multi-story",
     "en"
   ],
-  "message": "A 2-story 3D steel frame has X spans of 6m+6m, one Y span of 5m, 3.6m story height, and 8kN/m2 floor load. Run 3D static analysis.",
+  "message": "Use PKPM to run 3D static analysis for a 2-story 3D steel frame with X spans of 6m+6m, one Y span of 5m, 3.6m story height, and 8kN/m2 floor load.",
   "locale": "en",
   "maxRetries": 2,
   "expect": {
@@ -51,6 +54,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-pkpm",
+        "skillId": "pkpm-static"
       },
       {
         "type": "natural_language",

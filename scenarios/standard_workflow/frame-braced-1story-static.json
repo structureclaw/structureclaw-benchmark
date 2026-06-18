@@ -8,10 +8,13 @@
   "benchmarkStructureType": "steel-frame",
   "difficulty": "L1",
   "skillTarget": "frame",
+  "analysisSkillTarget": "yjk-static",
+  "analysisEngineTarget": "builtin-yjk",
   "evaluationFocus": [
     "routing",
     "modeling",
-    "analysis"
+    "analysis",
+    "engine_match"
   ],
   "category": "static-analysis",
   "tags": [
@@ -20,7 +23,7 @@
     "static",
     "en"
   ],
-  "message": "A single-story braced steel frame has a 6m span, 4.5m height, cross bracing between columns, and 8kN/m2 roof load. Run static analysis.",
+  "message": "Use YJK to run static analysis for a single-story braced steel frame with a 6m span, 4.5m height, cross bracing between columns, and 8kN/m2 roof load.",
   "locale": "en",
   "maxRetries": 2,
   "expect": {
@@ -49,6 +52,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-yjk",
+        "skillId": "yjk-static"
       }
     ]
   }

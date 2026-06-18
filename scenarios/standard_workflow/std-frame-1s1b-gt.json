@@ -8,11 +8,14 @@
   "benchmarkStructureType": "steel-frame",
   "difficulty": "L2",
   "skillTarget": "frame",
+  "analysisSkillTarget": "pkpm-static",
+  "analysisEngineTarget": "builtin-pkpm",
   "evaluationFocus": [
     "routing",
     "modeling",
     "model_match",
-    "analysis"
+    "analysis",
+    "engine_match"
   ],
   "category": "standard-workflow",
   "tags": [
@@ -21,7 +24,7 @@
     "l2",
     "en"
   ],
-  "message": "A single-story single-bay steel frame has 4.5m story height, 6m span, and 10kN/m vertical line load on the beam. Run static analysis.",
+  "message": "Use PKPM to run static analysis for a single-story single-bay steel frame with 4.5m story height, 6m span, and 10kN/m vertical line load on the beam.",
   "locale": "en",
   "maxRetries": 2,
   "expect": {
@@ -54,6 +57,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-pkpm",
+        "skillId": "pkpm-static"
       }
     ]
   }

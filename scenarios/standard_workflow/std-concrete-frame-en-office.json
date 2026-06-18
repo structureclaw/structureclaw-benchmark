@@ -8,10 +8,13 @@
   "benchmarkStructureType": "concrete-frame",
   "difficulty": "L2",
   "skillTarget": "concrete-frame",
+  "analysisSkillTarget": "pkpm-static",
+  "analysisEngineTarget": "builtin-pkpm",
   "evaluationFocus": [
     "routing",
     "modeling",
-    "analysis"
+    "analysis",
+    "engine_match"
   ],
   "category": "standard-workflow",
   "tags": [
@@ -20,7 +23,7 @@
     "en",
     "l2"
   ],
-  "message": "A 2-story 3-bay reinforced concrete office frame, C30 concrete, 3.6m story height and 6m bays, floor load 8kN/m. Run static analysis.",
+  "message": "Use PKPM to run static analysis for a 2-story 3-bay reinforced concrete office frame with C30 concrete, 3.6m story height, 6m bays, and 8kN/m floor load.",
   "locale": "en",
   "maxRetries": 2,
   "expect": {
@@ -49,6 +52,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-pkpm",
+        "skillId": "pkpm-static"
       }
     ]
   }

@@ -8,11 +8,14 @@
   "benchmarkStructureType": "concrete-frame",
   "difficulty": "L3",
   "skillTarget": "concrete-frame",
+  "analysisSkillTarget": "yjk-static",
+  "analysisEngineTarget": "builtin-yjk",
   "evaluationFocus": [
     "routing",
     "modeling",
     "model_match",
-    "analysis"
+    "analysis",
+    "engine_match"
   ],
   "category": "standard-workflow",
   "tags": [
@@ -21,7 +24,7 @@
     "zh",
     "l3"
   ],
-  "message": "2层3D混凝土框架，X向2跨6m+6m，Y向1跨5m，层高3.6m，C30混凝土，HRB400钢筋，请分析",
+  "message": "2层3D混凝土框架，X向2跨6m+6m，Y向1跨5m，层高3.6m，C30混凝土，HRB400钢筋，请使用YJK进行静力分析",
   "locale": "zh",
   "maxRetries": 2,
   "expect": {
@@ -56,6 +59,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-yjk",
+        "skillId": "yjk-static"
       }
     ]
   }

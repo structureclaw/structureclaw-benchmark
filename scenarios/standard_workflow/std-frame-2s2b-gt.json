@@ -8,11 +8,14 @@
   "benchmarkStructureType": "steel-frame",
   "difficulty": "L2",
   "skillTarget": "frame",
+  "analysisSkillTarget": "yjk-static",
+  "analysisEngineTarget": "builtin-yjk",
   "evaluationFocus": [
     "routing",
     "modeling",
     "model_match",
-    "analysis"
+    "analysis",
+    "engine_match"
   ],
   "category": "standard-workflow",
   "tags": [
@@ -21,7 +24,7 @@
     "zh",
     "l2"
   ],
-  "message": "2层2跨钢框架，层高3.6m，跨度5.4m和6m，楼面线荷载10kN/m，请分析",
+  "message": "2层2跨钢框架，层高3.6m，跨度5.4m和6m，楼面线荷载10kN/m，请使用YJK进行静力分析",
   "locale": "zh",
   "maxRetries": 2,
   "expect": {
@@ -54,6 +57,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-yjk",
+        "skillId": "yjk-static"
       }
     ]
   }

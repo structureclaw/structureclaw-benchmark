@@ -8,11 +8,14 @@
   "benchmarkStructureType": "steel-frame",
   "difficulty": "L3",
   "skillTarget": "frame",
+  "analysisSkillTarget": "pkpm-static",
+  "analysisEngineTarget": "builtin-pkpm",
   "evaluationFocus": [
     "routing",
     "modeling",
     "model_match",
-    "analysis"
+    "analysis",
+    "engine_match"
   ],
   "category": "standard-workflow",
   "tags": [
@@ -21,7 +24,7 @@
     "zh",
     "l3"
   ],
-  "message": "2层空间钢框架，X向2跨6m+6m，Y向2跨5m+5m，层高3.6m，请进行静力分析",
+  "message": "2层空间钢框架，X向2跨6m+6m，Y向2跨5m+5m，层高3.6m，请使用PKPM进行静力分析",
   "locale": "zh",
   "maxRetries": 2,
   "expect": {
@@ -54,6 +57,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-pkpm",
+        "skillId": "pkpm-static"
       }
     ]
   }

@@ -70,7 +70,9 @@ function inferEvaluationFocus(assertions = []) {
         focus.add("model_match");
         break;
       case "has_analysis":
+      case "engine_match":
         focus.add("analysis");
+        if (assertion?.type === "engine_match") focus.add("engine_match");
         break;
       case "has_interaction_questions":
       case "should_not_analyze":
@@ -302,10 +304,11 @@ function assertionsForMode(assertions, mode) {
 }
 
 function applyBenchmarkMode(scenario, mode) {
+  const analysisSkillTarget = scenario.analysisSkillTarget || "opensees-static";
   const scopedSkillIds = mode === "oracle-specialist"
-    ? [scenario.skillTarget, "opensees-static"].filter(Boolean)
+    ? [scenario.skillTarget, analysisSkillTarget].filter(Boolean)
     : mode === "generic-only"
-      ? ["generic", "opensees-static"]
+      ? ["generic", analysisSkillTarget]
       : undefined;
   const clone = {
     ...scenario,
@@ -363,6 +366,8 @@ function mergeTurnResults(scenario, turnResults, totalDurationMs) {
     benchmarkStructureType: scenario.benchmarkStructureType || null,
     difficulty: scenario.difficulty || null,
     skillTarget: scenario.skillTarget || null,
+    analysisSkillTarget: scenario.analysisSkillTarget || null,
+    analysisEngineTarget: scenario.analysisEngineTarget || null,
     mode: scenario.mode || "auto",
     evaluationFocus: Array.isArray(scenario.evaluationFocus) ? scenario.evaluationFocus : [],
     passed,

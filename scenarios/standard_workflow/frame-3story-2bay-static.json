@@ -8,10 +8,13 @@
   "benchmarkStructureType": "steel-frame",
   "difficulty": "L2",
   "skillTarget": "frame",
+  "analysisSkillTarget": "pkpm-static",
+  "analysisEngineTarget": "builtin-pkpm",
   "evaluationFocus": [
     "routing",
     "modeling",
     "analysis",
+    "engine_match",
     "semantic"
   ],
   "category": "static-analysis",
@@ -21,7 +24,7 @@
     "zh",
     "multi-bay"
   ],
-  "message": "3层2跨框架，层高3.3m，跨度5.4m和6m，每层楼面荷载15kN/m，请进行静力分析",
+  "message": "3层2跨钢框架，层高3.3m，跨度5.4m和6m，每层楼面荷载15kN/m，请使用PKPM进行静力分析",
   "locale": "zh",
   "maxRetries": 2,
   "expect": {
@@ -50,6 +53,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-pkpm",
+        "skillId": "pkpm-static"
       },
       {
         "type": "natural_language",

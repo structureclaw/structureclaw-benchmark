@@ -8,10 +8,13 @@
   "benchmarkStructureType": "concrete-frame",
   "difficulty": "L1",
   "skillTarget": "concrete-frame",
+  "analysisSkillTarget": "yjk-static",
+  "analysisEngineTarget": "builtin-yjk",
   "evaluationFocus": [
     "routing",
     "modeling",
     "analysis",
+    "engine_match",
     "report"
   ],
   "category": "static-analysis",
@@ -21,7 +24,7 @@
     "en",
     "report"
   ],
-  "message": "2-story single-bay reinforced concrete frame, C30 concrete and HRB400 reinforcement, story height 3.6m, bay width 6m, floor load 10kN/m2, please run a static analysis and generate a report",
+  "message": "Use YJK to run static analysis and generate a report for a 2-story single-bay reinforced concrete frame with C30 concrete, HRB400 reinforcement, 3.6m story height, 6m bay width, and 10kN/m2 floor load.",
   "locale": "en",
   "maxRetries": 2,
   "expect": {
@@ -50,6 +53,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-yjk",
+        "skillId": "yjk-static"
       },
       {
         "type": "has_report"

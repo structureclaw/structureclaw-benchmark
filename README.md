@@ -36,6 +36,7 @@ dimensions stay separate and are expressed as typed assertions:
 - `structural_type` — inferred runtime structure type (beam / frame / truss / ...)
 - `has_model` — produced a computable StructureModel
 - `has_analysis` — ran analysis
+- `engine_match` — ran analysis with the requested analysis skill/engine
 - `has_report` — generated a report
 - `skill_match` — routed to the expected skill
 - `model_matches` — geometry matches a ground-truth model (node/element counts, span, load)
@@ -43,6 +44,16 @@ dimensions stay separate and are expressed as typed assertions:
 - `should_not_analyze` — did not run analysis for unsafe or under-specified input
 - `no_bad_model` — did not create a computable model for unsafe or under-specified input
 - `natural_language` — LLM-as-Judge semantic check
+
+Standard steel-frame and concrete-frame scenarios may also request a specific
+analysis backend. Use `analysisSkillTarget` for the skill ID and
+`analysisEngineTarget` for the runtime engine ID:
+
+| Skill target | Engine target |
+| --- | --- |
+| `opensees-static` | `builtin-opensees` |
+| `pkpm-static` | `builtin-pkpm` |
+| `yjk-static` | `builtin-yjk` |
 
 Each scenario can retry with structured feedback (maxRetries).
 
@@ -67,8 +78,8 @@ The default run uses the real system behavior:
 
 For experiment tables, the runner can also expand into controlled skill modes:
 
-- `oracle-specialist` — scopes the run to the scenario's `skillTarget` plus static analysis.
-- `generic-only` — scopes the run to the generic structure skill plus static analysis.
+- `oracle-specialist` — scopes the run to the scenario's `skillTarget` plus the requested static-analysis skill.
+- `generic-only` — scopes the run to the generic structure skill plus the requested static-analysis skill.
 
 These produce the comparison columns used for specialist lift and routing gap:
 

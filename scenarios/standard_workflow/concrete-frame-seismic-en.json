@@ -8,10 +8,13 @@
   "benchmarkStructureType": "concrete-frame",
   "difficulty": "L2",
   "skillTarget": "concrete-frame",
+  "analysisSkillTarget": "opensees-static",
+  "analysisEngineTarget": "builtin-opensees",
   "evaluationFocus": [
     "routing",
     "modeling",
-    "analysis"
+    "analysis",
+    "engine_match"
   ],
   "category": "static-analysis",
   "tags": [
@@ -19,7 +22,7 @@
     "static",
     "en"
   ],
-  "message": "3-story concrete frame, story height 3.3m, bay width 6m, C35 concrete, floor load 10kN/m2, please run a static analysis",
+  "message": "Use OpenSees to run static analysis for a 3-story concrete frame with 3.3m story height, 6m bay width, C35 concrete, and 10kN/m2 floor load.",
   "locale": "en",
   "maxRetries": 2,
   "expect": {
@@ -50,6 +53,11 @@
       },
       {
         "type": "has_analysis"
+      },
+      {
+        "type": "engine_match",
+        "expected": "builtin-opensees",
+        "skillId": "opensees-static"
       }
     ]
   }
