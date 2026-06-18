@@ -1187,13 +1187,6 @@ models.push(buildBeamModel("beam-overhang-5m-1p5m-udl15", "外伸梁，简支跨
   restraintsByX: { 0: pinned, 5: roller },
   udl: 15,
 }));
-models.push(buildBeamModel("beam-continuous-3span-4-5-4-udl15", "三跨连续梁4m+5m+4m，均布荷载15kN/m", {
-  inferredType: "beam",
-  supportPositions: [0, 4, 9, 13],
-  endPosition: 13,
-  restraintsByX: { 0: pinned, 4: roller, 9: roller, 13: roller },
-  udl: 15,
-}));
 models.push(buildBeamModel("dspan-unequal-4-7-udl10-point30", "不等跨连续梁4m+7m，均布荷载10kN/m，长跨跨中集中力30kN", {
   inferredType: "double-span-beam",
   supportPositions: [0, 4, 11],
