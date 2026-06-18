@@ -12,6 +12,7 @@
     "routing",
     "semantic",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "multimodal",
@@ -55,6 +56,10 @@
           "type": "has_model",
           "minNodes": 3,
           "minElements": 3
+        },
+        {
+          "type": "model_matches",
+          "groundTruthId": "truss-triangle-12m-3m-20k"
         },
         {
           "type": "has_analysis"

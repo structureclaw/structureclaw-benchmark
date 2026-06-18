@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "standard-workflow",
@@ -38,6 +39,10 @@
         "type": "has_model",
         "minNodes": 4,
         "minElements": 3
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "generic-single-bay-6m-4m-lateral50"
       },
       {
         "type": "has_analysis"

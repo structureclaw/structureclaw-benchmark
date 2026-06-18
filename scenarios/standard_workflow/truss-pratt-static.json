@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "static-analysis",
@@ -46,6 +47,10 @@
         "type": "has_model",
         "minNodes": 5,
         "minElements": 8
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "truss-simple-tri"
       },
       {
         "type": "has_analysis"

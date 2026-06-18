@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Generates 10 ground-truth structural models for reverse-engineering benchmarks.
+// Generates ground-truth structural models for benchmark model-match assertions.
 // Output: tests/llm-benchmark/fixtures/ground-truth-models.json
 // Usage: node tests/llm-benchmark/fixtures/model-factory.mjs
 
@@ -602,6 +602,651 @@ models.push(build3dFrame("frame3d-concrete", "2层3D混凝土框架，X向2跨6m
       properties: { A: 0.18, Iy: 0.0054, Iz: 0.00135, J: 0.00224, G: 12500 },
     },
   ],
+}));
+
+// --- additional standard-workflow models ---
+
+function q345(id = "1") {
+  return { id, name: "Q345", grade: "Q345", category: "steel", E: 206000, nu: 0.3, rho: 7850, fy: 345 };
+}
+
+function concrete(id = "1", grade = "C30") {
+  return {
+    id,
+    name: grade,
+    grade,
+    category: "concrete",
+    E: grade === "C35" ? 31500 : 30000,
+    nu: 0.2,
+    rho: 2500,
+    fc: grade === "C35" ? 16.7 : 14.3,
+  };
+}
+
+function hSection(id, name, purpose = "beam") {
+  return {
+    id,
+    name,
+    type: "H",
+    purpose,
+    shape: { kind: "H", H: 0.35, B: 0.25, tw: 0.01, tf: 0.016 },
+    properties: { A: 0.012, Iy: 0.0003, Iz: 0.00008, J: 0.00001, G: 79000 },
+  };
+}
+
+function rectSection(id, name, width, depth, purpose = "beam") {
+  return {
+    id,
+    name,
+    type: "rect",
+    purpose,
+    shape: { kind: "rect", B: width, H: depth },
+    properties: {
+      A: width * depth,
+      Iy: width * depth ** 3 / 12,
+      Iz: depth * width ** 3 / 12,
+      J: width * depth * (width ** 2 + depth ** 2) / 12,
+      G: 12500,
+    },
+  };
+}
+
+function uniqueSorted(values) {
+  return [...new Set(values.map((value) => Number(value.toFixed(6))))].sort((a, b) => a - b);
+}
+
+function buildBeamModel(id, description, opts) {
+  const {
+    inferredType = "beam",
+    supportPositions,
+    endPosition,
+    restraintsByX = {},
+    udl = null,
+    pointLoads = [],
+    material = steel(),
+    section = beamSection(),
+  } = opts;
+  const pointPositions = pointLoads.map((load) => load.x);
+  const isSingleSpanSimpleUdl = udl !== null
+    && supportPositions.length === 2
+    && supportPositions.includes(0)
+    && supportPositions.includes(endPosition);
+  const positions = uniqueSorted([
+    0,
+    endPosition,
+    ...supportPositions,
+    ...pointPositions,
+    ...(isSingleSpanSimpleUdl ? [endPosition / 2] : []),
+  ]);
+  const nodes = positions.map((x, index) => {
+    const node = { id: `N${index + 1}`, x, y: 0, z: 0 };
+    const restraint = restraintsByX[x];
+    if (restraint) node.restraints = restraint;
+    return node;
+  });
+  const elements = [];
+  for (let i = 0; i < nodes.length - 1; i++) {
+    elements.push({ id: `E${i + 1}`, type: "beam", nodes: [nodes[i].id, nodes[i + 1].id], material: "1", section: "1" });
+  }
+  const loads = [];
+  if (udl !== null) {
+    for (const element of elements) loads.push({ type: "distributed", element: element.id, wz: -udl, wy: 0 });
+  }
+  for (const load of pointLoads) {
+    const node = nodes.find((item) => item.x === load.x);
+    if (node) loads.push({ node: node.id, fz: -load.fz });
+  }
+  return {
+    id,
+    inferredType,
+    description,
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes,
+      elements,
+      materials: [material],
+      sections: [section],
+      load_cases: [{ id: "LC1", type: "dead", loads }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType, frameDimension: "2d" },
+    },
+  };
+}
+
+function build2dFrame(id, description, opts) {
+  const {
+    inferredType = "frame",
+    bayWidths,
+    storyHeights,
+    floorLoads = [],
+    lateralLoads = [],
+    pointLoads = [],
+    material = q345(),
+    sections = [hSection("1", "HW350x350", "column"), hSection("2", "HN500x200", "beam")],
+  } = opts;
+  const xCoords = [0];
+  for (const width of bayWidths) xCoords.push(xCoords[xCoords.length - 1] + width);
+  const zCoords = [0];
+  for (const height of storyHeights) zCoords.push(zCoords[zCoords.length - 1] + height);
+  const nodes = [];
+  const elements = [];
+  const loads = [];
+
+  for (let si = 0; si < zCoords.length; si++) {
+    for (let xi = 0; xi < xCoords.length; xi++) {
+      const node = { id: `N${si}_${xi}`, x: xCoords[xi], y: 0, z: zCoords[si] };
+      if (si === 0) node.restraints = fixed;
+      nodes.push(node);
+    }
+  }
+
+  for (let si = 1; si < zCoords.length; si++) {
+    for (let xi = 0; xi < xCoords.length; xi++) {
+      elements.push({
+        id: `C${si}_${xi}`,
+        type: "column",
+        nodes: [`N${si - 1}_${xi}`, `N${si}_${xi}`],
+        material: "1",
+        section: "1",
+        story: `F${si}`,
+      });
+    }
+    for (let xi = 0; xi < bayWidths.length; xi++) {
+      const beam = {
+        id: `B${si}_${xi}`,
+        type: "beam",
+        nodes: [`N${si}_${xi}`, `N${si}_${xi + 1}`],
+        material: "1",
+        section: "2",
+        story: `F${si}`,
+      };
+      elements.push(beam);
+      const floorLoad = floorLoads[si - 1] ?? 0;
+      if (floorLoad > 0) loads.push({ type: "distributed", element: beam.id, wz: -floorLoad, wy: 0 });
+    }
+  }
+
+  for (const load of lateralLoads) {
+    for (const xi of load.xIndices || [xCoords.length - 1]) {
+      loads.push({ node: `N${load.storyIndex}_${xi}`, fx: load.fx });
+    }
+  }
+  for (const load of pointLoads) {
+    const nodeLoad = { node: `N${load.storyIndex}_${load.xIndex}` };
+    for (const key of ["fx", "fy", "fz"]) {
+      if (Number.isFinite(Number(load[key]))) nodeLoad[key] = load[key];
+    }
+    loads.push(nodeLoad);
+  }
+
+  const stories = storyHeights.map((height, index) => ({
+    id: `F${index + 1}`,
+    height,
+    floorLoad: floorLoads[index] ?? 0,
+  }));
+
+  return {
+    id,
+    inferredType,
+    description,
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes,
+      elements,
+      materials: [material],
+      sections,
+      stories,
+      load_cases: [{ id: "D", type: "dead", loads }],
+      load_combinations: [{ id: "ULS", factors: { D: 1.0 } }],
+      metadata: {
+        source: "ground-truth",
+        inferredType,
+        frameDimension: "2d",
+        storyCount: storyHeights.length,
+        bayCount: bayWidths.length,
+        geometry: { storyHeightsM: storyHeights, bayWidthsM: bayWidths },
+      },
+    },
+  };
+}
+
+function buildColumn(id, description, opts) {
+  const { inferredType = "column", height, axial = 0, lateral = 0, material, section } = opts;
+  const loads = [];
+  if (axial) loads.push({ node: "N2", fz: -axial });
+  if (lateral) loads.push({ node: "N2", fx: lateral });
+  return {
+    id,
+    inferredType,
+    description,
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes: [
+        { id: "N1", x: 0, y: 0, z: 0, restraints: fixed },
+        { id: "N2", x: 0, y: 0, z: height },
+      ],
+      elements: [{ id: "C1", type: "column", nodes: ["N1", "N2"], material: "1", section: "1" }],
+      materials: [material],
+      sections: [section],
+      load_cases: [{ id: "LC1", type: "dead", loads }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType, frameDimension: "2d" },
+    },
+  };
+}
+
+function buildPortalSingle(id, description, opts) {
+  const { span, height, roofLoad, material = q345(), section = hSection("1", "H600x250", "portal") } = opts;
+  return {
+    id,
+    inferredType: "portal-frame",
+    description,
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes: [
+        { id: "N1", x: 0, y: 0, z: 0, restraints: fixed },
+        { id: "N2", x: span, y: 0, z: 0, restraints: fixed },
+        { id: "N3", x: 0, y: 0, z: height },
+        { id: "N4", x: span, y: 0, z: height },
+      ],
+      elements: [
+        { id: "C1", type: "column", nodes: ["N1", "N3"], material: "1", section: "1" },
+        { id: "R1", type: "beam", nodes: ["N3", "N4"], material: "1", section: "1" },
+        { id: "C2", type: "column", nodes: ["N4", "N2"], material: "1", section: "1" },
+      ],
+      materials: [material],
+      sections: [section],
+      load_cases: [{ id: "LC1", type: "dead", loads: [{ type: "distributed", element: "R1", wz: -roofLoad, wy: 0 }] }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType: "portal-frame", frameDimension: "2d" },
+    },
+  };
+}
+
+function buildPortalDouble(id, description, opts) {
+  const { span = 18, height, roofLoad, craneTons = 0 } = opts;
+  const craneLoad = craneTons > 0 ? craneTons * 9.8 : 0;
+  const loads = [
+    { type: "distributed", element: "R1", wz: -roofLoad, wy: 0 },
+    { type: "distributed", element: "R2", wz: -roofLoad, wy: 0 },
+  ];
+  if (craneLoad) {
+    loads.push({ node: "N5", fz: -craneLoad, fx: craneLoad * 0.1 });
+  }
+  return {
+    id,
+    inferredType: "portal-frame",
+    description,
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes: [
+        { id: "N1", x: 0, y: 0, z: 0, restraints: fixed },
+        { id: "N2", x: span, y: 0, z: 0, restraints: fixed },
+        { id: "N3", x: span * 2, y: 0, z: 0, restraints: fixed },
+        { id: "N4", x: 0, y: 0, z: height },
+        { id: "N5", x: span, y: 0, z: height },
+        { id: "N6", x: span * 2, y: 0, z: height },
+      ],
+      elements: [
+        { id: "C1", type: "column", nodes: ["N1", "N4"], material: "1", section: "1" },
+        { id: "R1", type: "beam", nodes: ["N4", "N5"], material: "1", section: "1" },
+        { id: "R2", type: "beam", nodes: ["N5", "N6"], material: "1", section: "1" },
+        { id: "C2", type: "column", nodes: ["N6", "N3"], material: "1", section: "1" },
+        { id: "C3", type: "column", nodes: ["N5", "N2"], material: "1", section: "1" },
+      ],
+      materials: [q345()],
+      sections: [hSection("1", "H700x300", "portal")],
+      load_cases: [{ id: "LC1", type: "dead", loads }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType: "portal-frame", frameDimension: "2d" },
+    },
+  };
+}
+
+function buildMezzaninePortal() {
+  return {
+    id: "portal-mezzanine-18m-7m",
+    inferredType: "portal-frame",
+    description: "18m门式刚架，一侧3m夹层，屋面荷载6kN/m，夹层荷载4kN/m2",
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes: [
+        { id: "N1", x: 0, y: 0, z: 0, restraints: fixed },
+        { id: "N2", x: 18, y: 0, z: 0, restraints: fixed },
+        { id: "N3", x: 0, y: 0, z: 3 },
+        { id: "N4", x: 6, y: 0, z: 3 },
+        { id: "N5", x: 0, y: 0, z: 7 },
+        { id: "N6", x: 18, y: 0, z: 7 },
+      ],
+      elements: [
+        { id: "C1a", type: "column", nodes: ["N1", "N3"], material: "1", section: "1" },
+        { id: "C1b", type: "column", nodes: ["N3", "N5"], material: "1", section: "1" },
+        { id: "M1", type: "beam", nodes: ["N3", "N4"], material: "1", section: "1" },
+        { id: "R1", type: "beam", nodes: ["N5", "N6"], material: "1", section: "1" },
+        { id: "C2", type: "column", nodes: ["N6", "N2"], material: "1", section: "1" },
+      ],
+      materials: [q345()],
+      sections: [hSection("1", "H600x250", "portal")],
+      load_cases: [{ id: "LC1", type: "dead", loads: [
+        { type: "distributed", element: "R1", wz: -6, wy: 0 },
+        { type: "distributed", element: "M1", wz: -4, wy: 0 },
+      ] }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType: "portal-frame", frameDimension: "2d" },
+    },
+  };
+}
+
+function buildPanelTruss(id, description, opts) {
+  const { span, height, panels, nodeLoad, loadChord = "top", inferredType = "truss" } = opts;
+  const dx = span / panels;
+  const nodes = [];
+  const elements = [];
+  for (let i = 0; i <= panels; i++) {
+    nodes.push({ id: `B${i}`, x: i * dx, y: 0, z: 0, ...(i === 0 ? { restraints: fixed } : i === panels ? { restraints: roller } : {}) });
+    nodes.push({ id: `T${i}`, x: i * dx, y: 0, z: height });
+  }
+  for (let i = 0; i < panels; i++) {
+    elements.push({ id: `BC${i}`, type: "truss", nodes: [`B${i}`, `B${i + 1}`], material: "1", section: "1" });
+    elements.push({ id: `TC${i}`, type: "truss", nodes: [`T${i}`, `T${i + 1}`], material: "1", section: "1" });
+    elements.push({ id: `D${i}`, type: "truss", nodes: [i % 2 === 0 ? `B${i}` : `T${i}`, i % 2 === 0 ? `T${i + 1}` : `B${i + 1}`], material: "1", section: "1" });
+  }
+  const loads = [];
+  for (let i = 1; i < panels; i++) {
+    loads.push({ node: `${loadChord === "top" ? "T" : "B"}${i}`, fz: -nodeLoad });
+  }
+  return {
+    id,
+    inferredType,
+    description,
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes,
+      elements,
+      materials: [steel()],
+      sections: [rodSection()],
+      load_cases: [{ id: "LC1", type: "dead", loads }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType, frameDimension: "2d" },
+    },
+  };
+}
+
+function buildTriangularTruss12() {
+  return {
+    id: "truss-triangle-12m-3m-20k",
+    inferredType: "truss",
+    description: "三角桁架，跨度12m，高3m，节点荷载20kN",
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes: [
+        { id: "B0", x: 0, y: 0, z: 0, restraints: fixed },
+        { id: "B1", x: 6, y: 0, z: 0 },
+        { id: "B2", x: 12, y: 0, z: 0, restraints: roller },
+        { id: "T0", x: 3, y: 0, z: 1.5 },
+        { id: "T1", x: 6, y: 0, z: 3 },
+        { id: "T2", x: 9, y: 0, z: 1.5 },
+      ],
+      elements: [
+        { id: "BC1", type: "truss", nodes: ["B0", "B1"], material: "1", section: "1" },
+        { id: "BC2", type: "truss", nodes: ["B1", "B2"], material: "1", section: "1" },
+        { id: "TC1", type: "truss", nodes: ["B0", "T0"], material: "1", section: "1" },
+        { id: "TC2", type: "truss", nodes: ["T0", "T1"], material: "1", section: "1" },
+        { id: "TC3", type: "truss", nodes: ["T1", "T2"], material: "1", section: "1" },
+        { id: "TC4", type: "truss", nodes: ["T2", "B2"], material: "1", section: "1" },
+        { id: "W1", type: "truss", nodes: ["T0", "B1"], material: "1", section: "1" },
+        { id: "W2", type: "truss", nodes: ["B1", "T2"], material: "1", section: "1" },
+        { id: "W3", type: "truss", nodes: ["B1", "T1"], material: "1", section: "1" },
+        { id: "W4", type: "truss", nodes: ["T0", "T2"], material: "1", section: "1" },
+      ],
+      materials: [steel()],
+      sections: [rodSection()],
+      load_cases: [{ id: "LC1", type: "dead", loads: [
+        { node: "T0", fz: -20 },
+        { node: "T1", fz: -20 },
+        { node: "T2", fz: -20 },
+      ] }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType: "truss", frameDimension: "2d" },
+    },
+  };
+}
+
+models.push(buildBeamModel("beam-simple-8m-udl15", "简支梁8m，均布荷载15kN/m", {
+  supportPositions: [0, 8],
+  endPosition: 8,
+  restraintsByX: { 0: pinned, 8: roller },
+  udl: 15,
+}));
+models.push(buildBeamModel("beam-simple-8m-udl18", "简支梁8m，均布荷载18kN/m", {
+  supportPositions: [0, 8],
+  endPosition: 8,
+  restraintsByX: { 0: pinned, 8: roller },
+  udl: 18,
+}));
+models.push(buildBeamModel("beam-simple-7p5m-udl18", "简支梁7.5m，均布荷载18kN/m", {
+  supportPositions: [0, 7.5],
+  endPosition: 7.5,
+  restraintsByX: { 0: pinned, 7.5: roller },
+  udl: 18,
+}));
+models.push(buildBeamModel("beam-simple-4m-point25", "简支梁4m，跨中集中力25kN", {
+  supportPositions: [0, 4],
+  endPosition: 4,
+  restraintsByX: { 0: pinned, 4: roller },
+  pointLoads: [{ x: 2, fz: 25 }],
+}));
+models.push(buildBeamModel("beam-cantilever-3m-point10", "悬臂梁3m，自由端集中力10kN", {
+  supportPositions: [0],
+  endPosition: 3,
+  restraintsByX: { 0: fixed },
+  pointLoads: [{ x: 3, fz: 10 }],
+}));
+models.push(buildBeamModel("beam-overhang-5m-1p5m-udl15", "外伸梁，简支跨5m，外伸1.5m，均布荷载15kN/m", {
+  supportPositions: [0, 5],
+  endPosition: 6.5,
+  restraintsByX: { 0: pinned, 5: roller },
+  udl: 15,
+}));
+models.push(buildBeamModel("beam-continuous-3span-4-5-4-udl15", "三跨连续梁4m+5m+4m，均布荷载15kN/m", {
+  inferredType: "beam",
+  supportPositions: [0, 4, 9, 13],
+  endPosition: 13,
+  restraintsByX: { 0: pinned, 4: roller, 9: roller, 13: roller },
+  udl: 15,
+}));
+models.push(buildBeamModel("dspan-unequal-4-7-udl10-point30", "不等跨连续梁4m+7m，均布荷载10kN/m，长跨跨中集中力30kN", {
+  inferredType: "double-span-beam",
+  supportPositions: [0, 4, 11],
+  endPosition: 11,
+  restraintsByX: { 0: pinned, 4: roller, 11: roller },
+  udl: 10,
+  pointLoads: [{ x: 7.5, fz: 30 }],
+}));
+
+models.push(build2dFrame("frame-simple-1s1b-10k", "单层单跨钢框架，H=4.5m，L=6m，梁线荷载10kN/m", {
+  bayWidths: [6],
+  storyHeights: [4.5],
+  floorLoads: [10],
+}));
+models.push(build2dFrame("frame-2s1b-6m-10k", "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m", {
+  bayWidths: [6],
+  storyHeights: [3.6, 3.6],
+  floorLoads: [10, 10],
+}));
+models.push(build2dFrame("frame-2s1b-6m-10k-wind", "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m，风荷载0.5kN/m2", {
+  bayWidths: [6],
+  storyHeights: [3.6, 3.6],
+  floorLoads: [10, 10],
+  lateralLoads: [
+    { storyIndex: 1, xIndices: [1], fx: 10 },
+    { storyIndex: 2, xIndices: [1], fx: 15 },
+  ],
+}));
+models.push(build2dFrame("frame-2s2b-5p4-6-10k", "2层2跨钢框架，层高3.6m，跨度5.4m+6m，楼面线荷载10kN/m", {
+  bayWidths: [5.4, 6],
+  storyHeights: [3.6, 3.6],
+  floorLoads: [10, 10],
+}));
+models.push(build2dFrame("frame-3s2b-5p4-6-15k", "3层2跨钢框架，层高3.3m，跨度5.4m+6m，楼面线荷载15kN/m", {
+  bayWidths: [5.4, 6],
+  storyHeights: [3.3, 3.3, 3.3],
+  floorLoads: [15, 15, 15],
+}));
+models.push(build2dFrame("frame-3s2b-6m-10k-wind", "3层2跨钢框架，层高3.6m，6m等跨，楼面线荷载10kN/m，水平风荷载", {
+  bayWidths: [6, 6],
+  storyHeights: [3.6, 3.6, 3.6],
+  floorLoads: [10, 10, 10],
+  lateralLoads: [
+    { storyIndex: 1, xIndices: [2], fx: 10 },
+    { storyIndex: 2, xIndices: [2], fx: 15 },
+    { storyIndex: 3, xIndices: [2], fx: 20 },
+  ],
+}));
+models.push(build2dFrame("frame-industrial-24m-12m-crane10t", "单层工业重型厂房钢框架，跨度24m，高度12m，10t吊车，屋面荷载1.5kN/m2", {
+  bayWidths: [24],
+  storyHeights: [12],
+  floorLoads: [1.5],
+  lateralLoads: [{ storyIndex: 1, xIndices: [1], fx: 10 }],
+  pointLoads: [{ storyIndex: 1, xIndex: 1, fz: -98 }],
+}));
+
+models.push(build2dFrame("concrete-frame-2s1b-6m-12k", "2层混凝土框架，层高3.6m，跨度6m，楼面荷载12kN/m2", {
+  inferredType: "frame",
+  bayWidths: [6],
+  storyHeights: [3.6, 3.6],
+  floorLoads: [12, 12],
+  material: concrete("1", "C30"),
+  sections: [rectSection("1", "C30 500x500", 0.5, 0.5, "column"), rectSection("2", "C30 300x600", 0.3, 0.6, "beam")],
+}));
+models.push(build2dFrame("concrete-frame-2s1b-6m-10k", "2层混凝土框架，层高3.6m，跨度6m，楼面荷载10kN/m2", {
+  inferredType: "frame",
+  bayWidths: [6],
+  storyHeights: [3.6, 3.6],
+  floorLoads: [10, 10],
+  material: concrete("1", "C30"),
+  sections: [rectSection("1", "C30 500x500", 0.5, 0.5, "column"), rectSection("2", "C30 300x600", 0.3, 0.6, "beam")],
+}));
+models.push(build2dFrame("concrete-frame-3s1b-6m-10k", "3层混凝土框架，层高3.3m，跨度6m，楼面荷载10kN/m2", {
+  inferredType: "frame",
+  bayWidths: [6],
+  storyHeights: [3.3, 3.3, 3.3],
+  floorLoads: [10, 10, 10],
+  material: concrete("1", "C35"),
+  sections: [rectSection("1", "C35 500x500", 0.5, 0.5, "column"), rectSection("2", "C35 300x600", 0.3, 0.6, "beam")],
+}));
+models.push(build2dFrame("concrete-frame-2s3b-6m-8k", "2层3跨混凝土框架，6m等跨，楼面荷载8kN/m", {
+  inferredType: "frame",
+  bayWidths: [6, 6, 6],
+  storyHeights: [3.6, 3.6],
+  floorLoads: [8, 8],
+  material: concrete("1", "C30"),
+  sections: [rectSection("1", "C30 500x500", 0.5, 0.5, "column"), rectSection("2", "C30 300x600", 0.3, 0.6, "beam")],
+}));
+models.push(build3dFrame("frame3d-concrete-2s-2x1y-12k", "2层3D混凝土框架，X向2跨6m+6m，Y向1跨5m，层高3.6m，楼面荷载12kN/m2", {
+  bayWidthsX: [6, 6],
+  bayWidthsY: [5],
+  storyHeights: [3.6, 3.6],
+  floorLoads: [
+    { storyIndex: 1, loadPerArea: 12 },
+    { storyIndex: 2, loadPerArea: 12 },
+  ],
+  material: concrete("1", "C30"),
+  sections: [rectSection("1", "C30 500x500", 0.5, 0.5, "column"), rectSection("2", "C30 300x600", 0.3, 0.6, "beam")],
+}));
+models.push(build3dFrame("frame3d-steel-2s-2x1y-8k", "2层3D钢框架，X向2跨6m+6m，Y向1跨5m，层高3.6m，楼面荷载8kN/m2", {
+  bayWidthsX: [6, 6],
+  bayWidthsY: [5],
+  storyHeights: [3.6, 3.6],
+  floorLoads: [
+    { storyIndex: 1, loadPerArea: 8 },
+    { storyIndex: 2, loadPerArea: 8 },
+  ],
+  material: q345(),
+  sections: [hSection("1", "HW350x350", "column"), hSection("2", "HN500x200", "beam")],
+}));
+models.push(build3dFrame("frame3d-steel-3s-1x2y-10k", "3层3D钢框架，X向1跨6m，Y向2跨5m+5m，层高3.3m，楼面荷载10kN/m2", {
+  bayWidthsX: [6],
+  bayWidthsY: [5, 5],
+  storyHeights: [3.3, 3.3, 3.3],
+  floorLoads: [
+    { storyIndex: 1, loadPerArea: 10 },
+    { storyIndex: 2, loadPerArea: 10 },
+    { storyIndex: 3, loadPerArea: 10 },
+  ],
+  material: q345(),
+  sections: [hSection("1", "HW350x350", "column"), hSection("2", "HN500x200", "beam")],
+}));
+
+models.push(buildColumn("column-concrete-4p5-500", "独立混凝土柱，400x400mm，高4.5m，柱顶轴向荷载500kN", {
+  height: 4.5,
+  axial: 500,
+  material: concrete("1", "C30"),
+  section: rectSection("1", "C30 400x400", 0.4, 0.4, "column"),
+}));
+models.push(buildColumn("column-concrete-4p2-600-30", "独立混凝土柱，450x450mm，高4.2m，轴压600kN，水平荷载30kN", {
+  height: 4.2,
+  axial: 600,
+  lateral: 30,
+  material: concrete("1", "C30"),
+  section: rectSection("1", "C30 450x450", 0.45, 0.45, "column"),
+}));
+models.push(buildColumn("column-steel-5m-700", "独立钢柱，H300x300，高5m，轴压700kN", {
+  height: 5,
+  axial: 700,
+  material: q345(),
+  section: hSection("1", "H300x300", "column"),
+}));
+
+models.push(buildPortalSingle("portal-simple-21m-7p5-8k", "单跨门式刚架，跨度21m，高7.5m，屋面荷载8kN/m", {
+  span: 21,
+  height: 7.5,
+  roofLoad: 8,
+}));
+models.push(buildPortalDouble("portal-double-36m-9m-crane5t", "双跨门式刚架，2x18m，高9m，5t吊车，屋面荷载6kN/m", {
+  span: 18,
+  height: 9,
+  roofLoad: 6,
+  craneTons: 5,
+}));
+models.push(buildMezzaninePortal());
+
+models.push(build2dFrame("generic-single-bay-6m-4m-lateral50", "单层单跨平面结构，宽6m，高4m，顶部水平荷载50kN", {
+  inferredType: "generic",
+  bayWidths: [6],
+  storyHeights: [4],
+  lateralLoads: [{ storyIndex: 1, xIndices: [1], fx: 50 }],
+}));
+
+models.push(buildPanelTruss("truss-complex-trap-12k", "梯形屋架近似模型，跨度18m，高2.5m，6节间，节点荷载12kN", {
+  span: 18,
+  height: 2.5,
+  panels: 6,
+  nodeLoad: 12,
+  loadChord: "top",
+}));
+models.push(buildPanelTruss("truss-roof-18m-3m-12k", "钢屋架，跨度18m，高3m，6节间，节点荷载12kN", {
+  span: 18,
+  height: 3,
+  panels: 6,
+  nodeLoad: 12,
+  loadChord: "top",
+}));
+models.push(buildTriangularTruss12());
+models.push(buildPanelTruss("truss-warren-12m-2m-8k", "Warren桁架，跨度12m，高2m，6节间，下弦节点荷载8kN", {
+  span: 12,
+  height: 2,
+  panels: 6,
+  nodeLoad: 8,
+  loadChord: "bottom",
 }));
 
 // --- write output ---

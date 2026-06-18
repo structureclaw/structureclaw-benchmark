@@ -13,6 +13,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis",
     "engine_match",
     "semantic"
@@ -51,6 +52,10 @@
         "type": "has_model",
         "minNodes": 6,
         "minElements": 6
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "concrete-frame-2s1b-6m-12k"
       },
       {
         "type": "has_analysis"

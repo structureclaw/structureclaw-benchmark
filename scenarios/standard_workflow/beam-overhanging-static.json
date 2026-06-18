@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis",
     "semantic"
   ],
@@ -47,6 +48,10 @@
         "type": "has_model",
         "minNodes": 3,
         "minElements": 2
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "beam-overhang-5m-1p5m-udl15"
       },
       {
         "type": "has_analysis"

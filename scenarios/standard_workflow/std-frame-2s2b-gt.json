@@ -53,7 +53,7 @@
       },
       {
         "type": "model_matches",
-        "groundTruthId": "frame-complex-2s2b"
+        "groundTruthId": "frame-2s2b-5p4-6-10k"
       },
       {
         "type": "has_analysis"

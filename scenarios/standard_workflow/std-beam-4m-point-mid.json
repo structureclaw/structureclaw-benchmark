@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "standard-workflow",
@@ -46,6 +47,10 @@
         "type": "has_model",
         "minNodes": 2,
         "minElements": 1
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "beam-simple-4m-point25"
       },
       {
         "type": "has_analysis"

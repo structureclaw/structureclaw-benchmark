@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "static-analysis",
@@ -48,6 +49,13 @@
         "type": "has_model",
         "minNodes": 4,
         "minElements": 4
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "portal-mezzanine-18m-7m",
+        "tolerances": {
+          "load": 0.5
+        }
       },
       {
         "type": "has_analysis"

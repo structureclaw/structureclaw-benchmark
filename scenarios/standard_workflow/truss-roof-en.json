@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "static-analysis",
@@ -46,6 +47,10 @@
         "type": "has_model",
         "minNodes": 7,
         "minElements": 6
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "truss-roof-18m-3m-12k"
       },
       {
         "type": "has_analysis"

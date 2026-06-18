@@ -10,7 +10,8 @@
   "skillTarget": "portal-frame",
   "evaluationFocus": [
     "routing",
-    "modeling"
+    "modeling",
+    "model_match"
   ],
   "category": "multimodal",
   "tags": [
@@ -49,6 +50,10 @@
       },
       {
         "type": "has_model"
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "portal-simple-18m"
       }
     ]
   }

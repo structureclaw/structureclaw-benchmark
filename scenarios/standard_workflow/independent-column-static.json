@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "static-analysis",
@@ -41,6 +42,10 @@
         "type": "has_model",
         "minNodes": 2,
         "minElements": 1
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "column-concrete-4p5-500"
       },
       {
         "type": "has_analysis"

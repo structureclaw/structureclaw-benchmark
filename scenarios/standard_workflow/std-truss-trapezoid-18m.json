@@ -50,7 +50,7 @@
       },
       {
         "type": "model_matches",
-        "groundTruthId": "truss-complex-trap"
+        "groundTruthId": "truss-complex-trap-12k"
       },
       {
         "type": "has_analysis"

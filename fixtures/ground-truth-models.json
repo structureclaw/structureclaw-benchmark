@@ -4105,5 +4105,8514 @@
         }
       }
     }
+  },
+  {
+    "id": "beam-simple-8m-udl15",
+    "inferredType": "beam",
+    "description": "简支梁8m，均布荷载15kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 4,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "N3",
+          "x": 8,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        }
+      ],
+      "elements": [
+        {
+          "id": "E1",
+          "type": "beam",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "E2",
+          "type": "beam",
+          "nodes": [
+            "N2",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "B1",
+          "type": "beam",
+          "properties": {
+            "A": 0.01,
+            "Iy": 0.0001,
+            "Iz": 0.0001,
+            "J": 0.0001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "E1",
+              "wz": -15,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "E2",
+              "wz": -15,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "beam",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "beam-simple-8m-udl18",
+    "inferredType": "beam",
+    "description": "简支梁8m，均布荷载18kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 4,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "N3",
+          "x": 8,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        }
+      ],
+      "elements": [
+        {
+          "id": "E1",
+          "type": "beam",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "E2",
+          "type": "beam",
+          "nodes": [
+            "N2",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "B1",
+          "type": "beam",
+          "properties": {
+            "A": 0.01,
+            "Iy": 0.0001,
+            "Iz": 0.0001,
+            "J": 0.0001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "E1",
+              "wz": -18,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "E2",
+              "wz": -18,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "beam",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "beam-simple-7p5m-udl18",
+    "inferredType": "beam",
+    "description": "简支梁7.5m，均布荷载18kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 3.75,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "N3",
+          "x": 7.5,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        }
+      ],
+      "elements": [
+        {
+          "id": "E1",
+          "type": "beam",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "E2",
+          "type": "beam",
+          "nodes": [
+            "N2",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "B1",
+          "type": "beam",
+          "properties": {
+            "A": 0.01,
+            "Iy": 0.0001,
+            "Iz": 0.0001,
+            "J": 0.0001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "E1",
+              "wz": -18,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "E2",
+              "wz": -18,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "beam",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "beam-simple-4m-point25",
+    "inferredType": "beam",
+    "description": "简支梁4m，跨中集中力25kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 2,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "N3",
+          "x": 4,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        }
+      ],
+      "elements": [
+        {
+          "id": "E1",
+          "type": "beam",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "E2",
+          "type": "beam",
+          "nodes": [
+            "N2",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "B1",
+          "type": "beam",
+          "properties": {
+            "A": 0.01,
+            "Iy": 0.0001,
+            "Iz": 0.0001,
+            "J": 0.0001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "N2",
+              "fz": -25
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "beam",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "beam-cantilever-3m-point10",
+    "inferredType": "beam",
+    "description": "悬臂梁3m，自由端集中力10kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 3,
+          "y": 0,
+          "z": 0
+        }
+      ],
+      "elements": [
+        {
+          "id": "E1",
+          "type": "beam",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "B1",
+          "type": "beam",
+          "properties": {
+            "A": 0.01,
+            "Iy": 0.0001,
+            "Iz": 0.0001,
+            "J": 0.0001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "N2",
+              "fz": -10
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "beam",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "beam-overhang-5m-1p5m-udl15",
+    "inferredType": "beam",
+    "description": "外伸梁，简支跨5m，外伸1.5m，均布荷载15kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 5,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N3",
+          "x": 6.5,
+          "y": 0,
+          "z": 0
+        }
+      ],
+      "elements": [
+        {
+          "id": "E1",
+          "type": "beam",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "E2",
+          "type": "beam",
+          "nodes": [
+            "N2",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "B1",
+          "type": "beam",
+          "properties": {
+            "A": 0.01,
+            "Iy": 0.0001,
+            "Iz": 0.0001,
+            "J": 0.0001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "E1",
+              "wz": -15,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "E2",
+              "wz": -15,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "beam",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "beam-continuous-3span-4-5-4-udl15",
+    "inferredType": "beam",
+    "description": "三跨连续梁4m+5m+4m，均布荷载15kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 4,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N3",
+          "x": 9,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N4",
+          "x": 13,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        }
+      ],
+      "elements": [
+        {
+          "id": "E1",
+          "type": "beam",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "E2",
+          "type": "beam",
+          "nodes": [
+            "N2",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "E3",
+          "type": "beam",
+          "nodes": [
+            "N3",
+            "N4"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "B1",
+          "type": "beam",
+          "properties": {
+            "A": 0.01,
+            "Iy": 0.0001,
+            "Iz": 0.0001,
+            "J": 0.0001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "E1",
+              "wz": -15,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "E2",
+              "wz": -15,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "E3",
+              "wz": -15,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "beam",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "dspan-unequal-4-7-udl10-point30",
+    "inferredType": "double-span-beam",
+    "description": "不等跨连续梁4m+7m，均布荷载10kN/m，长跨跨中集中力30kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 4,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "N3",
+          "x": 7.5,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "N4",
+          "x": 11,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        }
+      ],
+      "elements": [
+        {
+          "id": "E1",
+          "type": "beam",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "E2",
+          "type": "beam",
+          "nodes": [
+            "N2",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "E3",
+          "type": "beam",
+          "nodes": [
+            "N3",
+            "N4"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "B1",
+          "type": "beam",
+          "properties": {
+            "A": 0.01,
+            "Iy": 0.0001,
+            "Iz": 0.0001,
+            "J": 0.0001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "E1",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "E2",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "E3",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "node": "N3",
+              "fz": -30
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "double-span-beam",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "frame-simple-1s1b-10k",
+    "inferredType": "frame",
+    "description": "单层单跨钢框架，H=4.5m，L=6m，梁线荷载10kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 4.5
+        },
+        {
+          "id": "N1_1",
+          "x": 6,
+          "y": 0,
+          "z": 4.5
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 4.5,
+          "floorLoad": 10
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -10,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 1,
+        "bayCount": 1,
+        "geometry": {
+          "storyHeightsM": [
+            4.5
+          ],
+          "bayWidthsM": [
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "frame-2s1b-6m-10k",
+    "inferredType": "frame",
+    "description": "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1",
+          "x": 6,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N2_0",
+          "x": 0,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1",
+          "x": 6,
+          "y": 0,
+          "z": 7.2
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "C2_0",
+          "type": "column",
+          "nodes": [
+            "N1_0",
+            "N2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_1",
+          "type": "column",
+          "nodes": [
+            "N1_1",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "B2_0",
+          "type": "beam",
+          "nodes": [
+            "N2_0",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.6,
+          "floorLoad": 10
+        },
+        {
+          "id": "F2",
+          "height": 3.6,
+          "floorLoad": 10
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_0",
+              "wz": -10,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 2,
+        "bayCount": 1,
+        "geometry": {
+          "storyHeightsM": [
+            3.6,
+            3.6
+          ],
+          "bayWidthsM": [
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "frame-2s1b-6m-10k-wind",
+    "inferredType": "frame",
+    "description": "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m，风荷载0.5kN/m2",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1",
+          "x": 6,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N2_0",
+          "x": 0,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1",
+          "x": 6,
+          "y": 0,
+          "z": 7.2
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "C2_0",
+          "type": "column",
+          "nodes": [
+            "N1_0",
+            "N2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_1",
+          "type": "column",
+          "nodes": [
+            "N1_1",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "B2_0",
+          "type": "beam",
+          "nodes": [
+            "N2_0",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.6,
+          "floorLoad": 10
+        },
+        {
+          "id": "F2",
+          "height": 3.6,
+          "floorLoad": 10
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "node": "N1_1",
+              "fx": 10
+            },
+            {
+              "node": "N2_1",
+              "fx": 15
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 2,
+        "bayCount": 1,
+        "geometry": {
+          "storyHeightsM": [
+            3.6,
+            3.6
+          ],
+          "bayWidthsM": [
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "frame-2s2b-5p4-6-10k",
+    "inferredType": "frame",
+    "description": "2层2跨钢框架，层高3.6m，跨度5.4m+6m，楼面线荷载10kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 5.4,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_2",
+          "x": 11.4,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1",
+          "x": 5.4,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_2",
+          "x": 11.4,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N2_0",
+          "x": 0,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1",
+          "x": 5.4,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_2",
+          "x": 11.4,
+          "y": 0,
+          "z": 7.2
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_2",
+          "type": "column",
+          "nodes": [
+            "N0_2",
+            "N1_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "B1_1",
+          "type": "beam",
+          "nodes": [
+            "N1_1",
+            "N1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "C2_0",
+          "type": "column",
+          "nodes": [
+            "N1_0",
+            "N2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_1",
+          "type": "column",
+          "nodes": [
+            "N1_1",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_2",
+          "type": "column",
+          "nodes": [
+            "N1_2",
+            "N2_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "B2_0",
+          "type": "beam",
+          "nodes": [
+            "N2_0",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "B2_1",
+          "type": "beam",
+          "nodes": [
+            "N2_1",
+            "N2_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.6,
+          "floorLoad": 10
+        },
+        {
+          "id": "F2",
+          "height": 3.6,
+          "floorLoad": 10
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B1_1",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_1",
+              "wz": -10,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 2,
+        "bayCount": 2,
+        "geometry": {
+          "storyHeightsM": [
+            3.6,
+            3.6
+          ],
+          "bayWidthsM": [
+            5.4,
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "frame-3s2b-5p4-6-15k",
+    "inferredType": "frame",
+    "description": "3层2跨钢框架，层高3.3m，跨度5.4m+6m，楼面线荷载15kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 5.4,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_2",
+          "x": 11.4,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.3
+        },
+        {
+          "id": "N1_1",
+          "x": 5.4,
+          "y": 0,
+          "z": 3.3
+        },
+        {
+          "id": "N1_2",
+          "x": 11.4,
+          "y": 0,
+          "z": 3.3
+        },
+        {
+          "id": "N2_0",
+          "x": 0,
+          "y": 0,
+          "z": 6.6
+        },
+        {
+          "id": "N2_1",
+          "x": 5.4,
+          "y": 0,
+          "z": 6.6
+        },
+        {
+          "id": "N2_2",
+          "x": 11.4,
+          "y": 0,
+          "z": 6.6
+        },
+        {
+          "id": "N3_0",
+          "x": 0,
+          "y": 0,
+          "z": 9.899999999999999
+        },
+        {
+          "id": "N3_1",
+          "x": 5.4,
+          "y": 0,
+          "z": 9.899999999999999
+        },
+        {
+          "id": "N3_2",
+          "x": 11.4,
+          "y": 0,
+          "z": 9.899999999999999
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_2",
+          "type": "column",
+          "nodes": [
+            "N0_2",
+            "N1_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "B1_1",
+          "type": "beam",
+          "nodes": [
+            "N1_1",
+            "N1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "C2_0",
+          "type": "column",
+          "nodes": [
+            "N1_0",
+            "N2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_1",
+          "type": "column",
+          "nodes": [
+            "N1_1",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_2",
+          "type": "column",
+          "nodes": [
+            "N1_2",
+            "N2_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "B2_0",
+          "type": "beam",
+          "nodes": [
+            "N2_0",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "B2_1",
+          "type": "beam",
+          "nodes": [
+            "N2_1",
+            "N2_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "C3_0",
+          "type": "column",
+          "nodes": [
+            "N2_0",
+            "N3_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C3_1",
+          "type": "column",
+          "nodes": [
+            "N2_1",
+            "N3_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C3_2",
+          "type": "column",
+          "nodes": [
+            "N2_2",
+            "N3_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "B3_0",
+          "type": "beam",
+          "nodes": [
+            "N3_0",
+            "N3_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        },
+        {
+          "id": "B3_1",
+          "type": "beam",
+          "nodes": [
+            "N3_1",
+            "N3_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.3,
+          "floorLoad": 15
+        },
+        {
+          "id": "F2",
+          "height": 3.3,
+          "floorLoad": 15
+        },
+        {
+          "id": "F3",
+          "height": 3.3,
+          "floorLoad": 15
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -15,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B1_1",
+              "wz": -15,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_0",
+              "wz": -15,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_1",
+              "wz": -15,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B3_0",
+              "wz": -15,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B3_1",
+              "wz": -15,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 3,
+        "bayCount": 2,
+        "geometry": {
+          "storyHeightsM": [
+            3.3,
+            3.3,
+            3.3
+          ],
+          "bayWidthsM": [
+            5.4,
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "frame-3s2b-6m-10k-wind",
+    "inferredType": "frame",
+    "description": "3层2跨钢框架，层高3.6m，6m等跨，楼面线荷载10kN/m，水平风荷载",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_2",
+          "x": 12,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1",
+          "x": 6,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_2",
+          "x": 12,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N2_0",
+          "x": 0,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1",
+          "x": 6,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_2",
+          "x": 12,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N3_0",
+          "x": 0,
+          "y": 0,
+          "z": 10.8
+        },
+        {
+          "id": "N3_1",
+          "x": 6,
+          "y": 0,
+          "z": 10.8
+        },
+        {
+          "id": "N3_2",
+          "x": 12,
+          "y": 0,
+          "z": 10.8
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_2",
+          "type": "column",
+          "nodes": [
+            "N0_2",
+            "N1_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "B1_1",
+          "type": "beam",
+          "nodes": [
+            "N1_1",
+            "N1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "C2_0",
+          "type": "column",
+          "nodes": [
+            "N1_0",
+            "N2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_1",
+          "type": "column",
+          "nodes": [
+            "N1_1",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_2",
+          "type": "column",
+          "nodes": [
+            "N1_2",
+            "N2_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "B2_0",
+          "type": "beam",
+          "nodes": [
+            "N2_0",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "B2_1",
+          "type": "beam",
+          "nodes": [
+            "N2_1",
+            "N2_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "C3_0",
+          "type": "column",
+          "nodes": [
+            "N2_0",
+            "N3_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C3_1",
+          "type": "column",
+          "nodes": [
+            "N2_1",
+            "N3_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C3_2",
+          "type": "column",
+          "nodes": [
+            "N2_2",
+            "N3_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "B3_0",
+          "type": "beam",
+          "nodes": [
+            "N3_0",
+            "N3_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        },
+        {
+          "id": "B3_1",
+          "type": "beam",
+          "nodes": [
+            "N3_1",
+            "N3_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.6,
+          "floorLoad": 10
+        },
+        {
+          "id": "F2",
+          "height": 3.6,
+          "floorLoad": 10
+        },
+        {
+          "id": "F3",
+          "height": 3.6,
+          "floorLoad": 10
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B1_1",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_1",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B3_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B3_1",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "node": "N1_2",
+              "fx": 10
+            },
+            {
+              "node": "N2_2",
+              "fx": 15
+            },
+            {
+              "node": "N3_2",
+              "fx": 20
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 3,
+        "bayCount": 2,
+        "geometry": {
+          "storyHeightsM": [
+            3.6,
+            3.6,
+            3.6
+          ],
+          "bayWidthsM": [
+            6,
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "frame-industrial-24m-12m-crane10t",
+    "inferredType": "frame",
+    "description": "单层工业重型厂房钢框架，跨度24m，高度12m，10t吊车，屋面荷载1.5kN/m2",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 24,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 12
+        },
+        {
+          "id": "N1_1",
+          "x": 24,
+          "y": 0,
+          "z": 12
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 12,
+          "floorLoad": 1.5
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -1.5,
+              "wy": 0
+            },
+            {
+              "node": "N1_1",
+              "fx": 10
+            },
+            {
+              "node": "N1_1",
+              "fz": -98
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 1,
+        "bayCount": 1,
+        "geometry": {
+          "storyHeightsM": [
+            12
+          ],
+          "bayWidthsM": [
+            24
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "concrete-frame-2s1b-6m-12k",
+    "inferredType": "frame",
+    "description": "2层混凝土框架，层高3.6m，跨度6m，楼面荷载12kN/m2",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1",
+          "x": 6,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N2_0",
+          "x": 0,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1",
+          "x": 6,
+          "y": 0,
+          "z": 7.2
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "C2_0",
+          "type": "column",
+          "nodes": [
+            "N1_0",
+            "N2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_1",
+          "type": "column",
+          "nodes": [
+            "N1_1",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "B2_0",
+          "type": "beam",
+          "nodes": [
+            "N2_0",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "C30",
+          "grade": "C30",
+          "category": "concrete",
+          "E": 30000,
+          "nu": 0.2,
+          "rho": 2500,
+          "fc": 14.3
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "C30 500x500",
+          "type": "rect",
+          "purpose": "column",
+          "shape": {
+            "kind": "rect",
+            "B": 0.5,
+            "H": 0.5
+          },
+          "properties": {
+            "A": 0.25,
+            "Iy": 0.005208333333333333,
+            "Iz": 0.005208333333333333,
+            "J": 0.010416666666666666,
+            "G": 12500
+          }
+        },
+        {
+          "id": "2",
+          "name": "C30 300x600",
+          "type": "rect",
+          "purpose": "beam",
+          "shape": {
+            "kind": "rect",
+            "B": 0.3,
+            "H": 0.6
+          },
+          "properties": {
+            "A": 0.18,
+            "Iy": 0.0053999999999999986,
+            "Iz": 0.0013499999999999996,
+            "J": 0.006749999999999999,
+            "G": 12500
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.6,
+          "floorLoad": 12
+        },
+        {
+          "id": "F2",
+          "height": 3.6,
+          "floorLoad": 12
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -12,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_0",
+              "wz": -12,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 2,
+        "bayCount": 1,
+        "geometry": {
+          "storyHeightsM": [
+            3.6,
+            3.6
+          ],
+          "bayWidthsM": [
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "concrete-frame-2s1b-6m-10k",
+    "inferredType": "frame",
+    "description": "2层混凝土框架，层高3.6m，跨度6m，楼面荷载10kN/m2",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1",
+          "x": 6,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N2_0",
+          "x": 0,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1",
+          "x": 6,
+          "y": 0,
+          "z": 7.2
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "C2_0",
+          "type": "column",
+          "nodes": [
+            "N1_0",
+            "N2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_1",
+          "type": "column",
+          "nodes": [
+            "N1_1",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "B2_0",
+          "type": "beam",
+          "nodes": [
+            "N2_0",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "C30",
+          "grade": "C30",
+          "category": "concrete",
+          "E": 30000,
+          "nu": 0.2,
+          "rho": 2500,
+          "fc": 14.3
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "C30 500x500",
+          "type": "rect",
+          "purpose": "column",
+          "shape": {
+            "kind": "rect",
+            "B": 0.5,
+            "H": 0.5
+          },
+          "properties": {
+            "A": 0.25,
+            "Iy": 0.005208333333333333,
+            "Iz": 0.005208333333333333,
+            "J": 0.010416666666666666,
+            "G": 12500
+          }
+        },
+        {
+          "id": "2",
+          "name": "C30 300x600",
+          "type": "rect",
+          "purpose": "beam",
+          "shape": {
+            "kind": "rect",
+            "B": 0.3,
+            "H": 0.6
+          },
+          "properties": {
+            "A": 0.18,
+            "Iy": 0.0053999999999999986,
+            "Iz": 0.0013499999999999996,
+            "J": 0.006749999999999999,
+            "G": 12500
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.6,
+          "floorLoad": 10
+        },
+        {
+          "id": "F2",
+          "height": 3.6,
+          "floorLoad": 10
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_0",
+              "wz": -10,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 2,
+        "bayCount": 1,
+        "geometry": {
+          "storyHeightsM": [
+            3.6,
+            3.6
+          ],
+          "bayWidthsM": [
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "concrete-frame-3s1b-6m-10k",
+    "inferredType": "frame",
+    "description": "3层混凝土框架，层高3.3m，跨度6m，楼面荷载10kN/m2",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.3
+        },
+        {
+          "id": "N1_1",
+          "x": 6,
+          "y": 0,
+          "z": 3.3
+        },
+        {
+          "id": "N2_0",
+          "x": 0,
+          "y": 0,
+          "z": 6.6
+        },
+        {
+          "id": "N2_1",
+          "x": 6,
+          "y": 0,
+          "z": 6.6
+        },
+        {
+          "id": "N3_0",
+          "x": 0,
+          "y": 0,
+          "z": 9.899999999999999
+        },
+        {
+          "id": "N3_1",
+          "x": 6,
+          "y": 0,
+          "z": 9.899999999999999
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "C2_0",
+          "type": "column",
+          "nodes": [
+            "N1_0",
+            "N2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_1",
+          "type": "column",
+          "nodes": [
+            "N1_1",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "B2_0",
+          "type": "beam",
+          "nodes": [
+            "N2_0",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "C3_0",
+          "type": "column",
+          "nodes": [
+            "N2_0",
+            "N3_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C3_1",
+          "type": "column",
+          "nodes": [
+            "N2_1",
+            "N3_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "B3_0",
+          "type": "beam",
+          "nodes": [
+            "N3_0",
+            "N3_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "C35",
+          "grade": "C35",
+          "category": "concrete",
+          "E": 31500,
+          "nu": 0.2,
+          "rho": 2500,
+          "fc": 16.7
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "C35 500x500",
+          "type": "rect",
+          "purpose": "column",
+          "shape": {
+            "kind": "rect",
+            "B": 0.5,
+            "H": 0.5
+          },
+          "properties": {
+            "A": 0.25,
+            "Iy": 0.005208333333333333,
+            "Iz": 0.005208333333333333,
+            "J": 0.010416666666666666,
+            "G": 12500
+          }
+        },
+        {
+          "id": "2",
+          "name": "C35 300x600",
+          "type": "rect",
+          "purpose": "beam",
+          "shape": {
+            "kind": "rect",
+            "B": 0.3,
+            "H": 0.6
+          },
+          "properties": {
+            "A": 0.18,
+            "Iy": 0.0053999999999999986,
+            "Iz": 0.0013499999999999996,
+            "J": 0.006749999999999999,
+            "G": 12500
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.3,
+          "floorLoad": 10
+        },
+        {
+          "id": "F2",
+          "height": 3.3,
+          "floorLoad": 10
+        },
+        {
+          "id": "F3",
+          "height": 3.3,
+          "floorLoad": 10
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_0",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B3_0",
+              "wz": -10,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 3,
+        "bayCount": 1,
+        "geometry": {
+          "storyHeightsM": [
+            3.3,
+            3.3,
+            3.3
+          ],
+          "bayWidthsM": [
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "concrete-frame-2s3b-6m-8k",
+    "inferredType": "frame",
+    "description": "2层3跨混凝土框架，6m等跨，楼面荷载8kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_2",
+          "x": 12,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_3",
+          "x": 18,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1",
+          "x": 6,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_2",
+          "x": 12,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_3",
+          "x": 18,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N2_0",
+          "x": 0,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1",
+          "x": 6,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_2",
+          "x": 12,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_3",
+          "x": 18,
+          "y": 0,
+          "z": 7.2
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_2",
+          "type": "column",
+          "nodes": [
+            "N0_2",
+            "N1_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_3",
+          "type": "column",
+          "nodes": [
+            "N0_3",
+            "N1_3"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "B1_1",
+          "type": "beam",
+          "nodes": [
+            "N1_1",
+            "N1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "B1_2",
+          "type": "beam",
+          "nodes": [
+            "N1_2",
+            "N1_3"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "C2_0",
+          "type": "column",
+          "nodes": [
+            "N1_0",
+            "N2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_1",
+          "type": "column",
+          "nodes": [
+            "N1_1",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_2",
+          "type": "column",
+          "nodes": [
+            "N1_2",
+            "N2_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C2_3",
+          "type": "column",
+          "nodes": [
+            "N1_3",
+            "N2_3"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "B2_0",
+          "type": "beam",
+          "nodes": [
+            "N2_0",
+            "N2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "B2_1",
+          "type": "beam",
+          "nodes": [
+            "N2_1",
+            "N2_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "B2_2",
+          "type": "beam",
+          "nodes": [
+            "N2_2",
+            "N2_3"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "C30",
+          "grade": "C30",
+          "category": "concrete",
+          "E": 30000,
+          "nu": 0.2,
+          "rho": 2500,
+          "fc": 14.3
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "C30 500x500",
+          "type": "rect",
+          "purpose": "column",
+          "shape": {
+            "kind": "rect",
+            "B": 0.5,
+            "H": 0.5
+          },
+          "properties": {
+            "A": 0.25,
+            "Iy": 0.005208333333333333,
+            "Iz": 0.005208333333333333,
+            "J": 0.010416666666666666,
+            "G": 12500
+          }
+        },
+        {
+          "id": "2",
+          "name": "C30 300x600",
+          "type": "rect",
+          "purpose": "beam",
+          "shape": {
+            "kind": "rect",
+            "B": 0.3,
+            "H": 0.6
+          },
+          "properties": {
+            "A": 0.18,
+            "Iy": 0.0053999999999999986,
+            "Iz": 0.0013499999999999996,
+            "J": 0.006749999999999999,
+            "G": 12500
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.6,
+          "floorLoad": 8
+        },
+        {
+          "id": "F2",
+          "height": 3.6,
+          "floorLoad": 8
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "B1_0",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B1_1",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B1_2",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_0",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_1",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "B2_2",
+              "wz": -8,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "2d",
+        "storyCount": 2,
+        "bayCount": 3,
+        "geometry": {
+          "storyHeightsM": [
+            3.6,
+            3.6
+          ],
+          "bayWidthsM": [
+            6,
+            6,
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "frame3d-concrete-2s-2x1y-12k",
+    "inferredType": "frame",
+    "description": "2层3D混凝土框架，X向2跨6m+6m，Y向1跨5m，层高3.6m，楼面荷载12kN/m2",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_2_0",
+          "x": 12,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_2_1",
+          "x": 12,
+          "y": 5,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 3.6
+        },
+        {
+          "id": "N1_2_0",
+          "x": 12,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_2_1",
+          "x": 12,
+          "y": 5,
+          "z": 3.6
+        },
+        {
+          "id": "N2_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 7.2
+        },
+        {
+          "id": "N2_2_0",
+          "x": 12,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_2_1",
+          "x": 12,
+          "y": 5,
+          "z": 7.2
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1",
+          "type": "column",
+          "nodes": [
+            "N0_0_0",
+            "N1_0_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C2",
+          "type": "column",
+          "nodes": [
+            "N0_0_1",
+            "N1_0_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C3",
+          "type": "column",
+          "nodes": [
+            "N0_1_0",
+            "N1_1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C4",
+          "type": "column",
+          "nodes": [
+            "N0_1_1",
+            "N1_1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C5",
+          "type": "column",
+          "nodes": [
+            "N0_2_0",
+            "N1_2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C6",
+          "type": "column",
+          "nodes": [
+            "N0_2_1",
+            "N1_2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C7",
+          "type": "column",
+          "nodes": [
+            "N1_0_0",
+            "N2_0_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C8",
+          "type": "column",
+          "nodes": [
+            "N1_0_1",
+            "N2_0_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C9",
+          "type": "column",
+          "nodes": [
+            "N1_1_0",
+            "N2_1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C10",
+          "type": "column",
+          "nodes": [
+            "N1_1_1",
+            "N2_1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C11",
+          "type": "column",
+          "nodes": [
+            "N1_2_0",
+            "N2_2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C12",
+          "type": "column",
+          "nodes": [
+            "N1_2_1",
+            "N2_2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "BX13",
+          "type": "beam",
+          "nodes": [
+            "N1_0_0",
+            "N1_1_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX14",
+          "type": "beam",
+          "nodes": [
+            "N1_0_1",
+            "N1_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX15",
+          "type": "beam",
+          "nodes": [
+            "N1_1_0",
+            "N1_2_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX16",
+          "type": "beam",
+          "nodes": [
+            "N1_1_1",
+            "N1_2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX17",
+          "type": "beam",
+          "nodes": [
+            "N2_0_0",
+            "N2_1_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BX18",
+          "type": "beam",
+          "nodes": [
+            "N2_0_1",
+            "N2_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BX19",
+          "type": "beam",
+          "nodes": [
+            "N2_1_0",
+            "N2_2_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BX20",
+          "type": "beam",
+          "nodes": [
+            "N2_1_1",
+            "N2_2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY21",
+          "type": "beam",
+          "nodes": [
+            "N1_0_0",
+            "N1_0_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY22",
+          "type": "beam",
+          "nodes": [
+            "N1_1_0",
+            "N1_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY23",
+          "type": "beam",
+          "nodes": [
+            "N1_2_0",
+            "N1_2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY24",
+          "type": "beam",
+          "nodes": [
+            "N2_0_0",
+            "N2_0_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY25",
+          "type": "beam",
+          "nodes": [
+            "N2_1_0",
+            "N2_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY26",
+          "type": "beam",
+          "nodes": [
+            "N2_2_0",
+            "N2_2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "C30",
+          "grade": "C30",
+          "category": "concrete",
+          "E": 30000,
+          "nu": 0.2,
+          "rho": 2500,
+          "fc": 14.3
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "C30 500x500",
+          "type": "rect",
+          "purpose": "column",
+          "shape": {
+            "kind": "rect",
+            "B": 0.5,
+            "H": 0.5
+          },
+          "properties": {
+            "A": 0.25,
+            "Iy": 0.005208333333333333,
+            "Iz": 0.005208333333333333,
+            "J": 0.010416666666666666,
+            "G": 12500
+          }
+        },
+        {
+          "id": "2",
+          "name": "C30 300x600",
+          "type": "rect",
+          "purpose": "beam",
+          "shape": {
+            "kind": "rect",
+            "B": 0.3,
+            "H": 0.6
+          },
+          "properties": {
+            "A": 0.18,
+            "Iy": 0.0053999999999999986,
+            "Iz": 0.0013499999999999996,
+            "J": 0.006749999999999999,
+            "G": 12500
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.6,
+          "floorLoad": 12
+        },
+        {
+          "id": "F2",
+          "height": 3.6,
+          "floorLoad": 12
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "BX13",
+              "wz": -12,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX14",
+              "wz": -12,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX15",
+              "wz": -12,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX16",
+              "wz": -12,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX17",
+              "wz": -12,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX18",
+              "wz": -12,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX19",
+              "wz": -12,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX20",
+              "wz": -12,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1.2
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "3d",
+        "storyCount": 2,
+        "bayCountX": 2,
+        "bayCountY": 1,
+        "geometry": {
+          "storyHeightsM": [
+            3.6,
+            3.6
+          ],
+          "bayWidthsXM": [
+            6,
+            6
+          ],
+          "bayWidthsYM": [
+            5
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "frame3d-steel-2s-2x1y-8k",
+    "inferredType": "frame",
+    "description": "2层3D钢框架，X向2跨6m+6m，Y向1跨5m，层高3.6m，楼面荷载8kN/m2",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_2_0",
+          "x": 12,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_2_1",
+          "x": 12,
+          "y": 5,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 3.6
+        },
+        {
+          "id": "N1_2_0",
+          "x": 12,
+          "y": 0,
+          "z": 3.6
+        },
+        {
+          "id": "N1_2_1",
+          "x": 12,
+          "y": 5,
+          "z": 3.6
+        },
+        {
+          "id": "N2_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 7.2
+        },
+        {
+          "id": "N2_2_0",
+          "x": 12,
+          "y": 0,
+          "z": 7.2
+        },
+        {
+          "id": "N2_2_1",
+          "x": 12,
+          "y": 5,
+          "z": 7.2
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1",
+          "type": "column",
+          "nodes": [
+            "N0_0_0",
+            "N1_0_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C2",
+          "type": "column",
+          "nodes": [
+            "N0_0_1",
+            "N1_0_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C3",
+          "type": "column",
+          "nodes": [
+            "N0_1_0",
+            "N1_1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C4",
+          "type": "column",
+          "nodes": [
+            "N0_1_1",
+            "N1_1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C5",
+          "type": "column",
+          "nodes": [
+            "N0_2_0",
+            "N1_2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C6",
+          "type": "column",
+          "nodes": [
+            "N0_2_1",
+            "N1_2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C7",
+          "type": "column",
+          "nodes": [
+            "N1_0_0",
+            "N2_0_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C8",
+          "type": "column",
+          "nodes": [
+            "N1_0_1",
+            "N2_0_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C9",
+          "type": "column",
+          "nodes": [
+            "N1_1_0",
+            "N2_1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C10",
+          "type": "column",
+          "nodes": [
+            "N1_1_1",
+            "N2_1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C11",
+          "type": "column",
+          "nodes": [
+            "N1_2_0",
+            "N2_2_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C12",
+          "type": "column",
+          "nodes": [
+            "N1_2_1",
+            "N2_2_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "BX13",
+          "type": "beam",
+          "nodes": [
+            "N1_0_0",
+            "N1_1_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX14",
+          "type": "beam",
+          "nodes": [
+            "N1_0_1",
+            "N1_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX15",
+          "type": "beam",
+          "nodes": [
+            "N1_1_0",
+            "N1_2_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX16",
+          "type": "beam",
+          "nodes": [
+            "N1_1_1",
+            "N1_2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX17",
+          "type": "beam",
+          "nodes": [
+            "N2_0_0",
+            "N2_1_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BX18",
+          "type": "beam",
+          "nodes": [
+            "N2_0_1",
+            "N2_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BX19",
+          "type": "beam",
+          "nodes": [
+            "N2_1_0",
+            "N2_2_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BX20",
+          "type": "beam",
+          "nodes": [
+            "N2_1_1",
+            "N2_2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY21",
+          "type": "beam",
+          "nodes": [
+            "N1_0_0",
+            "N1_0_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY22",
+          "type": "beam",
+          "nodes": [
+            "N1_1_0",
+            "N1_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY23",
+          "type": "beam",
+          "nodes": [
+            "N1_2_0",
+            "N1_2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY24",
+          "type": "beam",
+          "nodes": [
+            "N2_0_0",
+            "N2_0_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY25",
+          "type": "beam",
+          "nodes": [
+            "N2_1_0",
+            "N2_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY26",
+          "type": "beam",
+          "nodes": [
+            "N2_2_0",
+            "N2_2_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.6,
+          "floorLoad": 8
+        },
+        {
+          "id": "F2",
+          "height": 3.6,
+          "floorLoad": 8
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "BX13",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX14",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX15",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX16",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX17",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX18",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX19",
+              "wz": -8,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX20",
+              "wz": -8,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1.2
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "3d",
+        "storyCount": 2,
+        "bayCountX": 2,
+        "bayCountY": 1,
+        "geometry": {
+          "storyHeightsM": [
+            3.6,
+            3.6
+          ],
+          "bayWidthsXM": [
+            6,
+            6
+          ],
+          "bayWidthsYM": [
+            5
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "frame3d-steel-3s-1x2y-10k",
+    "inferredType": "frame",
+    "description": "3层3D钢框架，X向1跨6m，Y向2跨5m+5m，层高3.3m，楼面荷载10kN/m2",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_0_2",
+          "x": 0,
+          "y": 10,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1_2",
+          "x": 6,
+          "y": 10,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 3.3
+        },
+        {
+          "id": "N1_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 3.3
+        },
+        {
+          "id": "N1_0_2",
+          "x": 0,
+          "y": 10,
+          "z": 3.3
+        },
+        {
+          "id": "N1_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 3.3
+        },
+        {
+          "id": "N1_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 3.3
+        },
+        {
+          "id": "N1_1_2",
+          "x": 6,
+          "y": 10,
+          "z": 3.3
+        },
+        {
+          "id": "N2_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 6.6
+        },
+        {
+          "id": "N2_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 6.6
+        },
+        {
+          "id": "N2_0_2",
+          "x": 0,
+          "y": 10,
+          "z": 6.6
+        },
+        {
+          "id": "N2_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 6.6
+        },
+        {
+          "id": "N2_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 6.6
+        },
+        {
+          "id": "N2_1_2",
+          "x": 6,
+          "y": 10,
+          "z": 6.6
+        },
+        {
+          "id": "N3_0_0",
+          "x": 0,
+          "y": 0,
+          "z": 9.899999999999999
+        },
+        {
+          "id": "N3_0_1",
+          "x": 0,
+          "y": 5,
+          "z": 9.899999999999999
+        },
+        {
+          "id": "N3_0_2",
+          "x": 0,
+          "y": 10,
+          "z": 9.899999999999999
+        },
+        {
+          "id": "N3_1_0",
+          "x": 6,
+          "y": 0,
+          "z": 9.899999999999999
+        },
+        {
+          "id": "N3_1_1",
+          "x": 6,
+          "y": 5,
+          "z": 9.899999999999999
+        },
+        {
+          "id": "N3_1_2",
+          "x": 6,
+          "y": 10,
+          "z": 9.899999999999999
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1",
+          "type": "column",
+          "nodes": [
+            "N0_0_0",
+            "N1_0_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C2",
+          "type": "column",
+          "nodes": [
+            "N0_0_1",
+            "N1_0_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C3",
+          "type": "column",
+          "nodes": [
+            "N0_0_2",
+            "N1_0_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C4",
+          "type": "column",
+          "nodes": [
+            "N0_1_0",
+            "N1_1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C5",
+          "type": "column",
+          "nodes": [
+            "N0_1_1",
+            "N1_1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C6",
+          "type": "column",
+          "nodes": [
+            "N0_1_2",
+            "N1_1_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C7",
+          "type": "column",
+          "nodes": [
+            "N1_0_0",
+            "N2_0_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C8",
+          "type": "column",
+          "nodes": [
+            "N1_0_1",
+            "N2_0_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C9",
+          "type": "column",
+          "nodes": [
+            "N1_0_2",
+            "N2_0_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C10",
+          "type": "column",
+          "nodes": [
+            "N1_1_0",
+            "N2_1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C11",
+          "type": "column",
+          "nodes": [
+            "N1_1_1",
+            "N2_1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C12",
+          "type": "column",
+          "nodes": [
+            "N1_1_2",
+            "N2_1_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F2"
+        },
+        {
+          "id": "C13",
+          "type": "column",
+          "nodes": [
+            "N2_0_0",
+            "N3_0_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C14",
+          "type": "column",
+          "nodes": [
+            "N2_0_1",
+            "N3_0_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C15",
+          "type": "column",
+          "nodes": [
+            "N2_0_2",
+            "N3_0_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C16",
+          "type": "column",
+          "nodes": [
+            "N2_1_0",
+            "N3_1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C17",
+          "type": "column",
+          "nodes": [
+            "N2_1_1",
+            "N3_1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "C18",
+          "type": "column",
+          "nodes": [
+            "N2_1_2",
+            "N3_1_2"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F3"
+        },
+        {
+          "id": "BX19",
+          "type": "beam",
+          "nodes": [
+            "N1_0_0",
+            "N1_1_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX20",
+          "type": "beam",
+          "nodes": [
+            "N1_0_1",
+            "N1_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX21",
+          "type": "beam",
+          "nodes": [
+            "N1_0_2",
+            "N1_1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BX22",
+          "type": "beam",
+          "nodes": [
+            "N2_0_0",
+            "N2_1_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BX23",
+          "type": "beam",
+          "nodes": [
+            "N2_0_1",
+            "N2_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BX24",
+          "type": "beam",
+          "nodes": [
+            "N2_0_2",
+            "N2_1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BX25",
+          "type": "beam",
+          "nodes": [
+            "N3_0_0",
+            "N3_1_0"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        },
+        {
+          "id": "BX26",
+          "type": "beam",
+          "nodes": [
+            "N3_0_1",
+            "N3_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        },
+        {
+          "id": "BX27",
+          "type": "beam",
+          "nodes": [
+            "N3_0_2",
+            "N3_1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        },
+        {
+          "id": "BY28",
+          "type": "beam",
+          "nodes": [
+            "N1_0_0",
+            "N1_0_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY29",
+          "type": "beam",
+          "nodes": [
+            "N1_0_1",
+            "N1_0_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY30",
+          "type": "beam",
+          "nodes": [
+            "N1_1_0",
+            "N1_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY31",
+          "type": "beam",
+          "nodes": [
+            "N1_1_1",
+            "N1_1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        },
+        {
+          "id": "BY32",
+          "type": "beam",
+          "nodes": [
+            "N2_0_0",
+            "N2_0_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY33",
+          "type": "beam",
+          "nodes": [
+            "N2_0_1",
+            "N2_0_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY34",
+          "type": "beam",
+          "nodes": [
+            "N2_1_0",
+            "N2_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY35",
+          "type": "beam",
+          "nodes": [
+            "N2_1_1",
+            "N2_1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F2"
+        },
+        {
+          "id": "BY36",
+          "type": "beam",
+          "nodes": [
+            "N3_0_0",
+            "N3_0_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        },
+        {
+          "id": "BY37",
+          "type": "beam",
+          "nodes": [
+            "N3_0_1",
+            "N3_0_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        },
+        {
+          "id": "BY38",
+          "type": "beam",
+          "nodes": [
+            "N3_1_0",
+            "N3_1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        },
+        {
+          "id": "BY39",
+          "type": "beam",
+          "nodes": [
+            "N3_1_1",
+            "N3_1_2"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F3"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 3.3,
+          "floorLoad": 10
+        },
+        {
+          "id": "F2",
+          "height": 3.3,
+          "floorLoad": 10
+        },
+        {
+          "id": "F3",
+          "height": 3.3,
+          "floorLoad": 10
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "BX19",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX20",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX21",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX22",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX23",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX24",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX25",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX26",
+              "wz": -10,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "BX27",
+              "wz": -10,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1.2
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "frame",
+        "frameDimension": "3d",
+        "storyCount": 3,
+        "bayCountX": 1,
+        "bayCountY": 2,
+        "geometry": {
+          "storyHeightsM": [
+            3.3,
+            3.3,
+            3.3
+          ],
+          "bayWidthsXM": [
+            6
+          ],
+          "bayWidthsYM": [
+            5,
+            5
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "column-concrete-4p5-500",
+    "inferredType": "column",
+    "description": "独立混凝土柱，400x400mm，高4.5m，柱顶轴向荷载500kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 0,
+          "y": 0,
+          "z": 4.5
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1",
+          "type": "column",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "C30",
+          "grade": "C30",
+          "category": "concrete",
+          "E": 30000,
+          "nu": 0.2,
+          "rho": 2500,
+          "fc": 14.3
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "C30 400x400",
+          "type": "rect",
+          "purpose": "column",
+          "shape": {
+            "kind": "rect",
+            "B": 0.4,
+            "H": 0.4
+          },
+          "properties": {
+            "A": 0.16000000000000003,
+            "Iy": 0.002133333333333334,
+            "Iz": 0.002133333333333334,
+            "J": 0.004266666666666669,
+            "G": 12500
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "N2",
+              "fz": -500
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "column",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "column-concrete-4p2-600-30",
+    "inferredType": "column",
+    "description": "独立混凝土柱，450x450mm，高4.2m，轴压600kN，水平荷载30kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 0,
+          "y": 0,
+          "z": 4.2
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1",
+          "type": "column",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "C30",
+          "grade": "C30",
+          "category": "concrete",
+          "E": 30000,
+          "nu": 0.2,
+          "rho": 2500,
+          "fc": 14.3
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "C30 450x450",
+          "type": "rect",
+          "purpose": "column",
+          "shape": {
+            "kind": "rect",
+            "B": 0.45,
+            "H": 0.45
+          },
+          "properties": {
+            "A": 0.2025,
+            "Iy": 0.0034171875000000005,
+            "Iz": 0.0034171875000000005,
+            "J": 0.006834375000000001,
+            "G": 12500
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "N2",
+              "fz": -600
+            },
+            {
+              "node": "N2",
+              "fx": 30
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "column",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "column-steel-5m-700",
+    "inferredType": "column",
+    "description": "独立钢柱，H300x300，高5m，轴压700kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 0,
+          "y": 0,
+          "z": 5
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1",
+          "type": "column",
+          "nodes": [
+            "N1",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "H300x300",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "N2",
+              "fz": -700
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "column",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "portal-simple-21m-7p5-8k",
+    "inferredType": "portal-frame",
+    "description": "单跨门式刚架，跨度21m，高7.5m，屋面荷载8kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 21,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N3",
+          "x": 0,
+          "y": 0,
+          "z": 7.5
+        },
+        {
+          "id": "N4",
+          "x": 21,
+          "y": 0,
+          "z": 7.5
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1",
+          "type": "column",
+          "nodes": [
+            "N1",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "R1",
+          "type": "beam",
+          "nodes": [
+            "N3",
+            "N4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "C2",
+          "type": "column",
+          "nodes": [
+            "N4",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "H600x250",
+          "type": "H",
+          "purpose": "portal",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "R1",
+              "wz": -8,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "portal-frame",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "portal-double-36m-9m-crane5t",
+    "inferredType": "portal-frame",
+    "description": "双跨门式刚架，2x18m，高9m，5t吊车，屋面荷载6kN/m",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 18,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N3",
+          "x": 36,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N4",
+          "x": 0,
+          "y": 0,
+          "z": 9
+        },
+        {
+          "id": "N5",
+          "x": 18,
+          "y": 0,
+          "z": 9
+        },
+        {
+          "id": "N6",
+          "x": 36,
+          "y": 0,
+          "z": 9
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1",
+          "type": "column",
+          "nodes": [
+            "N1",
+            "N4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "R1",
+          "type": "beam",
+          "nodes": [
+            "N4",
+            "N5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "R2",
+          "type": "beam",
+          "nodes": [
+            "N5",
+            "N6"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "C2",
+          "type": "column",
+          "nodes": [
+            "N6",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "C3",
+          "type": "column",
+          "nodes": [
+            "N5",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "H700x300",
+          "type": "H",
+          "purpose": "portal",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "R1",
+              "wz": -6,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "R2",
+              "wz": -6,
+              "wy": 0
+            },
+            {
+              "node": "N5",
+              "fz": -49,
+              "fx": 4.9
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "portal-frame",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "portal-mezzanine-18m-7m",
+    "inferredType": "portal-frame",
+    "description": "18m门式刚架，一侧3m夹层，屋面荷载6kN/m，夹层荷载4kN/m2",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N1",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N2",
+          "x": 18,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N3",
+          "x": 0,
+          "y": 0,
+          "z": 3
+        },
+        {
+          "id": "N4",
+          "x": 6,
+          "y": 0,
+          "z": 3
+        },
+        {
+          "id": "N5",
+          "x": 0,
+          "y": 0,
+          "z": 7
+        },
+        {
+          "id": "N6",
+          "x": 18,
+          "y": 0,
+          "z": 7
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1a",
+          "type": "column",
+          "nodes": [
+            "N1",
+            "N3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "C1b",
+          "type": "column",
+          "nodes": [
+            "N3",
+            "N5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "M1",
+          "type": "beam",
+          "nodes": [
+            "N3",
+            "N4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "R1",
+          "type": "beam",
+          "nodes": [
+            "N5",
+            "N6"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "C2",
+          "type": "column",
+          "nodes": [
+            "N6",
+            "N2"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "H600x250",
+          "type": "H",
+          "purpose": "portal",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "type": "distributed",
+              "element": "R1",
+              "wz": -6,
+              "wy": 0
+            },
+            {
+              "type": "distributed",
+              "element": "M1",
+              "wz": -4,
+              "wy": 0
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "portal-frame",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "generic-single-bay-6m-4m-lateral50",
+    "inferredType": "generic",
+    "description": "单层单跨平面结构，宽6m，高4m，顶部水平荷载50kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "N0_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N0_1",
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "N1_0",
+          "x": 0,
+          "y": 0,
+          "z": 4
+        },
+        {
+          "id": "N1_1",
+          "x": 6,
+          "y": 0,
+          "z": 4
+        }
+      ],
+      "elements": [
+        {
+          "id": "C1_0",
+          "type": "column",
+          "nodes": [
+            "N0_0",
+            "N1_0"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "C1_1",
+          "type": "column",
+          "nodes": [
+            "N0_1",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "1",
+          "story": "F1"
+        },
+        {
+          "id": "B1_0",
+          "type": "beam",
+          "nodes": [
+            "N1_0",
+            "N1_1"
+          ],
+          "material": "1",
+          "section": "2",
+          "story": "F1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "Q345",
+          "grade": "Q345",
+          "category": "steel",
+          "E": 206000,
+          "nu": 0.3,
+          "rho": 7850,
+          "fy": 345
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "HW350x350",
+          "type": "H",
+          "purpose": "column",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        },
+        {
+          "id": "2",
+          "name": "HN500x200",
+          "type": "H",
+          "purpose": "beam",
+          "shape": {
+            "kind": "H",
+            "H": 0.35,
+            "B": 0.25,
+            "tw": 0.01,
+            "tf": 0.016
+          },
+          "properties": {
+            "A": 0.012,
+            "Iy": 0.0003,
+            "Iz": 0.00008,
+            "J": 0.00001,
+            "G": 79000
+          }
+        }
+      ],
+      "stories": [
+        {
+          "id": "F1",
+          "height": 4,
+          "floorLoad": 0
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "D",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "N1_1",
+              "fx": 50
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "D": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "generic",
+        "frameDimension": "2d",
+        "storyCount": 1,
+        "bayCount": 1,
+        "geometry": {
+          "storyHeightsM": [
+            4
+          ],
+          "bayWidthsM": [
+            6
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "truss-complex-trap-12k",
+    "inferredType": "truss",
+    "description": "梯形屋架近似模型，跨度18m，高2.5m，6节间，节点荷载12kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "B0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "T0",
+          "x": 0,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "B1",
+          "x": 3,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T1",
+          "x": 3,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "B2",
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T2",
+          "x": 6,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "B3",
+          "x": 9,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T3",
+          "x": 9,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "B4",
+          "x": 12,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T4",
+          "x": 12,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "B5",
+          "x": 15,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T5",
+          "x": 15,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "B6",
+          "x": 18,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "T6",
+          "x": 18,
+          "y": 0,
+          "z": 2.5
+        }
+      ],
+      "elements": [
+        {
+          "id": "BC0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "B1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC0",
+          "type": "truss",
+          "nodes": [
+            "T0",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC1",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC1",
+          "type": "truss",
+          "nodes": [
+            "T1",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D1",
+          "type": "truss",
+          "nodes": [
+            "T1",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "B3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC2",
+          "type": "truss",
+          "nodes": [
+            "T2",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC3",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "B4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC3",
+          "type": "truss",
+          "nodes": [
+            "T3",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D3",
+          "type": "truss",
+          "nodes": [
+            "T3",
+            "B4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "B5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC4",
+          "type": "truss",
+          "nodes": [
+            "T4",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC5",
+          "type": "truss",
+          "nodes": [
+            "B5",
+            "B6"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC5",
+          "type": "truss",
+          "nodes": [
+            "T5",
+            "T6"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D5",
+          "type": "truss",
+          "nodes": [
+            "T5",
+            "B6"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "T1",
+          "type": "rod",
+          "properties": {
+            "A": 0.01
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "T1",
+              "fz": -12
+            },
+            {
+              "node": "T2",
+              "fz": -12
+            },
+            {
+              "node": "T3",
+              "fz": -12
+            },
+            {
+              "node": "T4",
+              "fz": -12
+            },
+            {
+              "node": "T5",
+              "fz": -12
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "truss",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "truss-roof-18m-3m-12k",
+    "inferredType": "truss",
+    "description": "钢屋架，跨度18m，高3m，6节间，节点荷载12kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "B0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "T0",
+          "x": 0,
+          "y": 0,
+          "z": 3
+        },
+        {
+          "id": "B1",
+          "x": 3,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T1",
+          "x": 3,
+          "y": 0,
+          "z": 3
+        },
+        {
+          "id": "B2",
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T2",
+          "x": 6,
+          "y": 0,
+          "z": 3
+        },
+        {
+          "id": "B3",
+          "x": 9,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T3",
+          "x": 9,
+          "y": 0,
+          "z": 3
+        },
+        {
+          "id": "B4",
+          "x": 12,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T4",
+          "x": 12,
+          "y": 0,
+          "z": 3
+        },
+        {
+          "id": "B5",
+          "x": 15,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T5",
+          "x": 15,
+          "y": 0,
+          "z": 3
+        },
+        {
+          "id": "B6",
+          "x": 18,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "T6",
+          "x": 18,
+          "y": 0,
+          "z": 3
+        }
+      ],
+      "elements": [
+        {
+          "id": "BC0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "B1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC0",
+          "type": "truss",
+          "nodes": [
+            "T0",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC1",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC1",
+          "type": "truss",
+          "nodes": [
+            "T1",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D1",
+          "type": "truss",
+          "nodes": [
+            "T1",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "B3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC2",
+          "type": "truss",
+          "nodes": [
+            "T2",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC3",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "B4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC3",
+          "type": "truss",
+          "nodes": [
+            "T3",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D3",
+          "type": "truss",
+          "nodes": [
+            "T3",
+            "B4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "B5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC4",
+          "type": "truss",
+          "nodes": [
+            "T4",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC5",
+          "type": "truss",
+          "nodes": [
+            "B5",
+            "B6"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC5",
+          "type": "truss",
+          "nodes": [
+            "T5",
+            "T6"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D5",
+          "type": "truss",
+          "nodes": [
+            "T5",
+            "B6"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "T1",
+          "type": "rod",
+          "properties": {
+            "A": 0.01
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "T1",
+              "fz": -12
+            },
+            {
+              "node": "T2",
+              "fz": -12
+            },
+            {
+              "node": "T3",
+              "fz": -12
+            },
+            {
+              "node": "T4",
+              "fz": -12
+            },
+            {
+              "node": "T5",
+              "fz": -12
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "truss",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "truss-triangle-12m-3m-20k",
+    "inferredType": "truss",
+    "description": "三角桁架，跨度12m，高3m，节点荷载20kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "B0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "B1",
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "B2",
+          "x": 12,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "T0",
+          "x": 3,
+          "y": 0,
+          "z": 1.5
+        },
+        {
+          "id": "T1",
+          "x": 6,
+          "y": 0,
+          "z": 3
+        },
+        {
+          "id": "T2",
+          "x": 9,
+          "y": 0,
+          "z": 1.5
+        }
+      ],
+      "elements": [
+        {
+          "id": "BC1",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "B1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC2",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC1",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "T0"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC2",
+          "type": "truss",
+          "nodes": [
+            "T0",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC3",
+          "type": "truss",
+          "nodes": [
+            "T1",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC4",
+          "type": "truss",
+          "nodes": [
+            "T2",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "W1",
+          "type": "truss",
+          "nodes": [
+            "T0",
+            "B1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "W2",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "W3",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "W4",
+          "type": "truss",
+          "nodes": [
+            "T0",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "T1",
+          "type": "rod",
+          "properties": {
+            "A": 0.01
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "T0",
+              "fz": -20
+            },
+            {
+              "node": "T1",
+              "fz": -20
+            },
+            {
+              "node": "T2",
+              "fz": -20
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "truss",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "truss-warren-12m-2m-8k",
+    "inferredType": "truss",
+    "description": "Warren桁架，跨度12m，高2m，6节间，下弦节点荷载8kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "B0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "T0",
+          "x": 0,
+          "y": 0,
+          "z": 2
+        },
+        {
+          "id": "B1",
+          "x": 2,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T1",
+          "x": 2,
+          "y": 0,
+          "z": 2
+        },
+        {
+          "id": "B2",
+          "x": 4,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T2",
+          "x": 4,
+          "y": 0,
+          "z": 2
+        },
+        {
+          "id": "B3",
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T3",
+          "x": 6,
+          "y": 0,
+          "z": 2
+        },
+        {
+          "id": "B4",
+          "x": 8,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T4",
+          "x": 8,
+          "y": 0,
+          "z": 2
+        },
+        {
+          "id": "B5",
+          "x": 10,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "T5",
+          "x": 10,
+          "y": 0,
+          "z": 2
+        },
+        {
+          "id": "B6",
+          "x": 12,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "T6",
+          "x": 12,
+          "y": 0,
+          "z": 2
+        }
+      ],
+      "elements": [
+        {
+          "id": "BC0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "B1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC0",
+          "type": "truss",
+          "nodes": [
+            "T0",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC1",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC1",
+          "type": "truss",
+          "nodes": [
+            "T1",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D1",
+          "type": "truss",
+          "nodes": [
+            "T1",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "B3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC2",
+          "type": "truss",
+          "nodes": [
+            "T2",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC3",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "B4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC3",
+          "type": "truss",
+          "nodes": [
+            "T3",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D3",
+          "type": "truss",
+          "nodes": [
+            "T3",
+            "B4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "B5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC4",
+          "type": "truss",
+          "nodes": [
+            "T4",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC5",
+          "type": "truss",
+          "nodes": [
+            "B5",
+            "B6"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC5",
+          "type": "truss",
+          "nodes": [
+            "T5",
+            "T6"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "D5",
+          "type": "truss",
+          "nodes": [
+            "T5",
+            "B6"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "T1",
+          "type": "rod",
+          "properties": {
+            "A": 0.01
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "B1",
+              "fz": -8
+            },
+            {
+              "node": "B2",
+              "fz": -8
+            },
+            {
+              "node": "B3",
+              "fz": -8
+            },
+            {
+              "node": "B4",
+              "fz": -8
+            },
+            {
+              "node": "B5",
+              "fz": -8
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "truss",
+        "frameDimension": "2d"
+      }
+    }
   }
 ]

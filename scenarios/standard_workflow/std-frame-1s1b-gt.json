@@ -53,7 +53,7 @@
       },
       {
         "type": "model_matches",
-        "groundTruthId": "frame-simple-1s1b"
+        "groundTruthId": "frame-simple-1s1b-10k"
       },
       {
         "type": "has_analysis"

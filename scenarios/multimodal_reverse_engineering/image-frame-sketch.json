@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "multimodal",
@@ -56,6 +57,10 @@
         "type": "has_model",
         "minNodes": 4,
         "minElements": 6
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame-2s1b-6m-10k"
       },
       {
         "type": "has_analysis"

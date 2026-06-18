@@ -13,6 +13,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis",
     "engine_match"
   ],
@@ -49,6 +50,10 @@
         "type": "has_model",
         "minNodes": 4,
         "minElements": 3
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame-simple-1s1b"
       },
       {
         "type": "has_analysis"

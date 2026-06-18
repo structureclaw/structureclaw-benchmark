@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "static-analysis",
@@ -47,6 +48,13 @@
         "type": "has_model",
         "minNodes": 5,
         "minElements": 5
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "portal-double-36m-9m-crane5t",
+        "tolerances": {
+          "load": 0.6
+        }
       },
       {
         "type": "has_analysis"

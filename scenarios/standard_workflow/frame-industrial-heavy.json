@@ -13,6 +13,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis",
     "engine_match"
   ],
@@ -51,6 +52,13 @@
         "type": "has_model",
         "minNodes": 4,
         "minElements": 3
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "frame-industrial-24m-12m-crane10t",
+        "tolerances": {
+          "load": 0.6
+        }
       },
       {
         "type": "has_analysis"

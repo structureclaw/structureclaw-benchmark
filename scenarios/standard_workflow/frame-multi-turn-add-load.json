@@ -13,6 +13,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis",
     "engine_match",
     "semantic"
@@ -47,6 +48,10 @@
           "minElements": 6
         },
         {
+          "type": "model_matches",
+          "groundTruthId": "frame-2s1b-6m-10k"
+        },
+        {
           "type": "has_analysis"
         },
         {
@@ -63,6 +68,13 @@
           "type": "has_model",
           "minNodes": 6,
           "minElements": 6
+        },
+        {
+          "type": "model_matches",
+          "groundTruthId": "frame-2s1b-6m-10k-wind",
+          "tolerances": {
+            "load": 0.5
+          }
         },
         {
           "type": "has_analysis"

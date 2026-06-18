@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis",
     "report"
   ],
@@ -56,6 +57,10 @@
         "type": "has_model",
         "minNodes": 2,
         "minElements": 1
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "beam-simple-6m"
       },
       {
         "type": "has_analysis"

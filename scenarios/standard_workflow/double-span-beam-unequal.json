@@ -11,6 +11,7 @@
   "evaluationFocus": [
     "routing",
     "modeling",
+    "model_match",
     "analysis"
   ],
   "category": "static-analysis",
@@ -49,6 +50,10 @@
         "type": "has_model",
         "minNodes": 3,
         "minElements": 2
+      },
+      {
+        "type": "model_matches",
+        "groundTruthId": "dspan-unequal-4-7-udl10-point30"
       },
       {
         "type": "has_analysis"
