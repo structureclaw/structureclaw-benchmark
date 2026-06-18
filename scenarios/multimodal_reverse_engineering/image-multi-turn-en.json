@@ -22,7 +22,7 @@
     "en"
   ],
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "attachments": [
     {
       "fileId": "bench-truss-diagram-mt",

@@ -22,7 +22,7 @@
   ],
   "message": "A two-story steel frame is described as using both C30 concrete and Q355 steel. Span is 6m and story height is 3.6m. Please analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

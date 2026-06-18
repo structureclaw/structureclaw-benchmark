@@ -22,7 +22,7 @@
   ],
   "message": "A standalone steel column is 80m high with a 50x50mm section and 1000kN axial compression at the top. Please analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

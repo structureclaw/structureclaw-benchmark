@@ -22,7 +22,7 @@
   ],
   "message": "Build a full bridge model for a three-span continuous girder bridge, including moving vehicle loads and support settlement.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

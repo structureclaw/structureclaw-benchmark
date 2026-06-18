@@ -22,7 +22,7 @@
   ],
   "message": "Please analyze a Pratt truss with no web members. It spans 15m, has 2.5m height, and 10kN nodal loads.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

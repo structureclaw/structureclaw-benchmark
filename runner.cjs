@@ -428,7 +428,7 @@ async function runBenchmark(args) {
     const maxRetries = Math.max(0, typeof scenario.maxRetries === "number" ? scenario.maxRetries : 0);
     let attempt = 0;
     let lastEvaluation = null;
-    const retryRounds = [];
+    const attemptRounds = [];
 
     while (attempt <= maxRetries) {
       let feedbackPrefix = "";
@@ -514,23 +514,27 @@ async function runBenchmark(args) {
         }
       }
 
-      if (lastEvaluation && lastEvaluation.allPassed) break;
-      if (executionError) break;
       if (lastEvaluation) {
-        retryRounds.push({
+        attemptRounds.push({
           attempt: attempt + 1,
           allPassed: lastEvaluation.allPassed,
           metrics: (lastEvaluation.metrics || []).map((m) => ({ metric: m.metric, pass: m.pass })),
         });
       }
+      if (lastEvaluation && lastEvaluation.allPassed) break;
+      if (executionError) break;
       attempt += 1;
     }
 
     if (lastEvaluation) {
+      const attempts = attemptRounds.length;
       lastEvaluation.retries = {
-        attempts: Math.min(attempt + 1, maxRetries + 1),
+        attempts,
         maxRetries,
-        rounds: retryRounds,
+        retriesUsed: Math.max(0, attempts - 1),
+        passAt1: attemptRounds[0]?.allPassed === true,
+        passAtN: lastEvaluation.allPassed === true,
+        rounds: attemptRounds,
       };
     }
 

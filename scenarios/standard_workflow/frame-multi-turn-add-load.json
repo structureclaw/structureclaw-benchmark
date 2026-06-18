@@ -25,7 +25,7 @@
     "multi-turn"
   ],
   "locale": "zh",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "turns": [
     {
       "message": "2层单跨钢框架，层高3.6m，跨度6m，每层楼面荷载10kN/m2，请使用YJK进行静力分析",

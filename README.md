@@ -55,7 +55,16 @@ analysis backend. Use `analysisSkillTarget` for the skill ID and
 | `pkpm-static` | `builtin-pkpm` |
 | `yjk-static` | `builtin-yjk` |
 
-Each scenario can retry with structured feedback (maxRetries).
+Every scenario uses `maxRetries: 2`, so each scenario has at most three
+attempts. Failed attempts are converted into compact structured feedback and
+prepended to the next attempt. Reports distinguish first-try success from final
+success:
+
+- `Pass@1` — passed without retry
+- `Pass@N` — passed within the retry budget
+- `averageRetries` — average retries used per scenario run
+- `averageToolCalls` — average agent tool calls per scenario run
+- `averageDurationMs` — average wall-clock duration per scenario run
 
 The standard executable workflow split is balanced by `benchmarkStructureType`:
 

@@ -22,7 +22,7 @@
   ],
   "message": "A two-story concrete frame uses C500 concrete and HRB400 reinforcement, with 6m span and 3.6m story height. Please analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

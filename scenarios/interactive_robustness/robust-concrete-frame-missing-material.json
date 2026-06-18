@@ -22,7 +22,7 @@
   ],
   "message": "A three-story concrete frame has a 6m span. Please run structural analysis.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

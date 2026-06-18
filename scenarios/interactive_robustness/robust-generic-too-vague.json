@@ -23,7 +23,7 @@
   ],
   "message": "Please calculate whether this structure is safe.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

@@ -22,7 +22,7 @@
   ],
   "message": "An 18m-span portal frame has roof load 0.5. Please analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

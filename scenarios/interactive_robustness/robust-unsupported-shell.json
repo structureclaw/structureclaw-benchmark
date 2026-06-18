@@ -22,7 +22,7 @@
   ],
   "message": "Analyze a thin shell roof with a 30m curvature radius and include geometric nonlinearity.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

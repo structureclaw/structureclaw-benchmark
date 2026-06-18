@@ -22,7 +22,7 @@
   ],
   "message": "A two-story steel frame has 3.6m story height. Please help analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

@@ -22,7 +22,7 @@
   ],
   "message": "A simply supported beam spans 6m with a 10000000kN/m uniformly distributed load. Please analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

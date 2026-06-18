@@ -22,7 +22,7 @@
   ],
   "message": "混凝土框架3层0跨，层高3.6m，请分析",
   "locale": "zh",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

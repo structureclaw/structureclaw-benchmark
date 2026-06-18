@@ -22,7 +22,7 @@
   ],
   "message": "This beam is both simply supported and fixed at both ends. Span is 6m and UDL is 20kN/m. Please analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

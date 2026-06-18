@@ -22,7 +22,7 @@
   ],
   "message": "请分析一个120m通信塔，包含风振和地震时程",
   "locale": "zh",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

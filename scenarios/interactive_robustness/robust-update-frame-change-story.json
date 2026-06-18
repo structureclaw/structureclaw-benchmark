@@ -24,7 +24,7 @@
     "l3"
   ],
   "locale": "zh",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

@@ -22,7 +22,7 @@
   ],
   "message": "A simply supported beam spans 6m and the load is 20. Please analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

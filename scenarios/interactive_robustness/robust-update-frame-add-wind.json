@@ -24,7 +24,7 @@
     "en"
   ],
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

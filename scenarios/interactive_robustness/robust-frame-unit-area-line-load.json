@@ -22,7 +22,7 @@
   ],
   "message": "A two-story two-bay frame has 3.6m story height, 6m spans, and floor load 10. Please analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

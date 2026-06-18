@@ -23,7 +23,7 @@
     "en"
   ],
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "turns": [
     {
       "message": "Please analyze a simply supported beam.",

@@ -22,7 +22,7 @@
   ],
   "message": "A portal frame has a 500m span, 3m eave height, and 3000kN/m roof load. Please analyze it.",
   "locale": "en",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],

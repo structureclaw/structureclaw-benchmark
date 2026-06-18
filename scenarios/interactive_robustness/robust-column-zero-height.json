@@ -22,7 +22,7 @@
   ],
   "message": "独立柱高度0m，柱顶压力500kN，请分析",
   "locale": "zh",
-  "maxRetries": 1,
+  "maxRetries": 2,
   "benchmarkModes": [
     "auto"
   ],
