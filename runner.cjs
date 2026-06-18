@@ -370,7 +370,7 @@ function mergeTurnResults(scenario, turnResults, totalDurationMs) {
     analysisEngineTarget: scenario.analysisEngineTarget || null,
     mode: scenario.mode || "auto",
     evaluationFocus: Array.isArray(scenario.evaluationFocus) ? scenario.evaluationFocus : [],
-    passed,
+    passed: passed + 1,
     total: total + 1,
     allPassed,
     metrics: allMetrics,
@@ -448,6 +448,7 @@ async function runBenchmark(args) {
       const scenarioStart = Date.now();
       let executionError = false;
       const turnResults = [];
+      let currentTurnIndex = 0;
       const conversationId = `bench-${safeConversationIdPart(scenario.id)}-${scenarioStart}-${attempt}`;
 
       const prevLogLevel = process.env.LOG_LEVEL;
@@ -455,6 +456,7 @@ async function runBenchmark(args) {
 
       try {
         for (let i = 0; i < scenario.turns.length; i++) {
+          currentTurnIndex = i;
           const turn = scenario.turns[i];
           const turnStart = Date.now();
 
@@ -485,7 +487,7 @@ async function runBenchmark(args) {
         const message = err instanceof Error ? err.message : String(err);
         process.stdout.write(`  error: ${message}\n`);
         turnResults.push({
-          turnIndex: scenario.turns.length - 1,
+          turnIndex: currentTurnIndex,
           evaluation: {
             scenarioId: scenario.id,
             description: scenario.description || "",
