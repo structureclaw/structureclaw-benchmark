@@ -1,6 +1,6 @@
 {
-  "id": "robust-update-frame-change-story",
-  "description": "多轮：框架增加层数",
+  "id": "robust-update-frame-add-wind-zh",
+  "description": "多轮：钢框架追加风荷载后重新分析",
   "split": "core",
   "taskFamily": "interactive_robustness",
   "inputModality": "text",
@@ -21,7 +21,8 @@
     "interactive",
     "multi-turn-update",
     "zh",
-    "l3"
+    "l3",
+    "wind"
   ],
   "locale": "zh",
   "maxRetries": 2,
@@ -30,7 +31,7 @@
   ],
   "turns": [
     {
-      "message": "两层单跨钢框架，层高3.6m，跨度6m，请分析",
+      "message": "2层单跨钢框架，层高3.6m，跨度6m，每层楼面荷载10kN/m2，请分析",
       "assertions": [
         {
           "type": "structural_type",
@@ -54,7 +55,7 @@
       ]
     },
     {
-      "message": "改成三层，其他参数不变，重新分析",
+      "message": "现在还需要考虑风荷载，基本风压0.5kN/m2，B类地面粗糙度，请重新分析",
       "assertions": [
         {
           "type": "has_model",
@@ -66,7 +67,7 @@
         },
         {
           "type": "natural_language",
-          "description": "The updated model should reflect three stories."
+          "description": "The updated analysis should reflect wind load effects in addition to gravity loads."
         }
       ]
     }
