@@ -197,7 +197,7 @@ models.push({
   },
 });
 
-// 5. truss-simple-tri: triangular truss, 5 panels, L=15m, H=2.5m
+// 5. truss-simple-tri: parallel-chord truss with triangular web, 5 panels, L=15m, H=2.5m
 (() => {
   const L = 15, H = 2.5, panels = 5;
   const dx = L / panels;
@@ -219,12 +219,47 @@ models.push({
   models.push({
     id: "truss-simple-tri",
     inferredType: "truss",
-    description: "三角桁架，5节间，L=15m，H=2.5m，节点荷载10kN",
+    description: "平行弦三角腹杆桁架，5节间，L=15m，H=2.5m，下弦节点荷载10kN",
     model: {
       schema_version: "2.0.0", unit_system: "SI", nodes, elements,
       materials: [steel()], sections: [rodSection()],
       load_cases: [{ id: "LC1", type: "dead", loads: [
         { node: "B1", fz: -10 }, { node: "B2", fz: -10 }, { node: "B3", fz: -10 }, { node: "B4", fz: -10 },
+      ] }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType: "truss", frameDimension: "2d" },
+    },
+  });
+})();
+
+// 5b. truss-pratt-15m-top10: Pratt-like truss, top chord nodal loads
+(() => {
+  const L = 15, H = 2.5, panels = 5;
+  const dx = L / panels;
+  const nodes = [];
+  const elements = [];
+  for (let i = 0; i <= panels; i++) nodes.push({ id: `B${i}`, x: i * dx, y: 0, z: 0, ...(i === 0 ? { restraints: fixed } : i === panels ? { restraints: roller } : {}) });
+  for (let i = 0; i <= panels; i++) nodes.push({ id: `T${i}`, x: i * dx, y: 0, z: H });
+  for (let i = 0; i < panels; i++) {
+    elements.push({ id: `BC${i}`, type: "truss", nodes: [`B${i}`, `B${i + 1}`], material: "1", section: "1" });
+    elements.push({ id: `TC${i}`, type: "truss", nodes: [`T${i}`, `T${i + 1}`], material: "1", section: "1" });
+  }
+  for (let i = 0; i <= panels; i++) {
+    elements.push({ id: `WV${i}`, type: "truss", nodes: [`B${i}`, `T${i}`], material: "1", section: "1" });
+  }
+  for (let i = 0; i < panels; i++) {
+    const diagonalNodes = i < panels / 2 ? [`B${i}`, `T${i + 1}`] : [`T${i}`, `B${i + 1}`];
+    elements.push({ id: `WD${i}`, type: "truss", nodes: diagonalNodes, material: "1", section: "1" });
+  }
+  models.push({
+    id: "truss-pratt-15m-top10",
+    inferredType: "truss",
+    description: "Pratt桁架，5节间，L=15m，H=2.5m，上弦节点荷载10kN",
+    model: {
+      schema_version: "2.0.0", unit_system: "SI", nodes, elements,
+      materials: [steel()], sections: [rodSection()],
+      load_cases: [{ id: "LC1", type: "dead", loads: [
+        { node: "T1", fz: -10 }, { node: "T2", fz: -10 }, { node: "T3", fz: -10 }, { node: "T4", fz: -10 },
       ] }],
       load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
       metadata: { source: "ground-truth", inferredType: "truss", frameDimension: "2d" },
@@ -979,6 +1014,49 @@ function buildPanelTruss(id, description, opts) {
   };
 }
 
+function buildTrapezoidTruss(id, description, opts) {
+  const { span, height, panels, nodeLoad, loadChord = "bottom" } = opts;
+  const dx = span / panels;
+  const slope = 1 / 10;
+  const nodes = [];
+  const elements = [];
+  for (let i = 0; i <= panels; i++) {
+    nodes.push({ id: `B${i}`, x: i * dx, y: 0, z: 0, ...(i === 0 ? { restraints: fixed } : i === panels ? { restraints: roller } : {}) });
+  }
+  for (let i = 0; i <= panels; i++) {
+    const distFromCenter = Math.abs(i * dx - span / 2);
+    nodes.push({ id: `T${i}`, x: i * dx, y: 0, z: height - distFromCenter * slope });
+  }
+  for (let i = 0; i < panels; i++) {
+    elements.push({ id: `BC${i}`, type: "truss", nodes: [`B${i}`, `B${i + 1}`], material: "1", section: "1" });
+    elements.push({ id: `TC${i}`, type: "truss", nodes: [`T${i}`, `T${i + 1}`], material: "1", section: "1" });
+  }
+  for (let i = 0; i <= panels; i++) {
+    elements.push({ id: `WV${i}`, type: "truss", nodes: [`B${i}`, `T${i}`], material: "1", section: "1" });
+    if (i < panels) elements.push({ id: `WD${i}`, type: "truss", nodes: [`B${i + 1}`, `T${i}`], material: "1", section: "1" });
+  }
+  const loads = [];
+  for (let i = 1; i < panels; i++) {
+    loads.push({ node: `${loadChord === "top" ? "T" : "B"}${i}`, fz: -nodeLoad });
+  }
+  return {
+    id,
+    inferredType: "truss",
+    description,
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes,
+      elements,
+      materials: [steel()],
+      sections: [rodSection()],
+      load_cases: [{ id: "LC1", type: "dead", loads }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType: "truss", frameDimension: "2d" },
+    },
+  };
+}
+
 function buildTriangularTruss12() {
   return {
     id: "truss-triangle-12m-3m-20k",
@@ -1014,6 +1092,59 @@ function buildTriangularTruss12() {
         { node: "T1", fz: -20 },
         { node: "T2", fz: -20 },
       ] }],
+      load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
+      metadata: { source: "ground-truth", inferredType: "truss", frameDimension: "2d" },
+    },
+  };
+}
+
+function buildTriangularRoofTruss(id, description, opts) {
+  const { span, height, panels, nodeLoad } = opts;
+  const dx = span / panels;
+  const nodes = [];
+  const elements = [];
+  for (let i = 0; i <= panels; i++) {
+    nodes.push({ id: `B${i}`, x: i * dx, y: 0, z: 0, ...(i === 0 ? { restraints: fixed } : i === panels ? { restraints: roller } : {}) });
+  }
+  const topNodes = [];
+  for (let i = 1; i < panels; i++) {
+    const x = i * dx;
+    const z = height * (1 - Math.abs(x - span / 2) / (span / 2));
+    topNodes.push({ id: `T${i}`, x, z });
+  }
+  if (!topNodes.some((node) => Math.abs(node.x - span / 2) < 1e-6)) {
+    topNodes.push({ id: "TA", x: span / 2, z: height });
+  }
+  topNodes.sort((a, b) => a.x - b.x);
+  for (const node of topNodes) nodes.push({ id: node.id, x: node.x, y: 0, z: node.z });
+  for (let i = 0; i < panels; i++) {
+    elements.push({ id: `BC${i}`, type: "truss", nodes: [`B${i}`, `B${i + 1}`], material: "1", section: "1" });
+  }
+  const topPath = ["B0", ...topNodes.map((node) => node.id), `B${panels}`];
+  for (let i = 0; i < topPath.length - 1; i++) {
+    elements.push({ id: `TC${i}`, type: "truss", nodes: [topPath[i], topPath[i + 1]], material: "1", section: "1" });
+  }
+  for (const node of topNodes) {
+    const nearestBottom = Math.round(node.x / dx);
+    const bottomId = `B${nearestBottom}`;
+    elements.push({ id: `WV${node.id}`, type: "truss", nodes: [bottomId, node.id], material: "1", section: "1" });
+  }
+  for (let i = 1; i < topNodes.length; i++) {
+    const prevBottom = `B${Math.round(topNodes[i - 1].x / dx)}`;
+    elements.push({ id: `WD${i}`, type: "truss", nodes: [prevBottom, topNodes[i].id], material: "1", section: "1" });
+  }
+  return {
+    id,
+    inferredType: "truss",
+    description,
+    model: {
+      schema_version: "2.0.0",
+      unit_system: "SI",
+      nodes,
+      elements,
+      materials: [steel()],
+      sections: [rodSection()],
+      load_cases: [{ id: "LC1", type: "dead", loads: topNodes.map((node) => ({ node: node.id, fz: -nodeLoad })) }],
       load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
       metadata: { source: "ground-truth", inferredType: "truss", frameDimension: "2d" },
     },
@@ -1226,7 +1357,7 @@ models.push(build2dFrame("generic-single-bay-6m-4m-lateral50", "单层单跨平�
   lateralLoads: [{ storyIndex: 1, xIndices: [1], fx: 50 }],
 }));
 
-models.push(buildPanelTruss("truss-complex-trap-12k", "梯形屋架近似模型，跨度18m，高2.5m，6节间，节点荷载12kN", {
+models.push(buildTrapezoidTruss("truss-complex-trap-12k", "梯形屋架，跨度18m，高2.5m，6节间，上弦节点荷载12kN", {
   span: 18,
   height: 2.5,
   panels: 6,
@@ -1241,6 +1372,12 @@ models.push(buildPanelTruss("truss-roof-18m-3m-12k", "钢屋架，跨度18m，�
   loadChord: "top",
 }));
 models.push(buildTriangularTruss12());
+models.push(buildTriangularRoofTruss("truss-triangle-15m-2p5-10k", "三角屋架，跨度15m，高2.5m，5节间，上弦节点荷载10kN", {
+  span: 15,
+  height: 2.5,
+  panels: 5,
+  nodeLoad: 10,
+}));
 models.push(buildPanelTruss("truss-warren-12m-2m-8k", "Warren桁架，跨度12m，高2m，6节间，下弦节点荷载8kN", {
   span: 12,
   height: 2,

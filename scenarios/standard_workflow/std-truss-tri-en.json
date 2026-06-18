@@ -50,7 +50,7 @@
       },
       {
         "type": "model_matches",
-        "groundTruthId": "truss-simple-tri"
+        "groundTruthId": "truss-triangle-15m-2p5-10k"
       },
       {
         "type": "has_analysis"

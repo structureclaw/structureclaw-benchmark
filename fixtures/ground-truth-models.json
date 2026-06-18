@@ -813,7 +813,7 @@
   {
     "id": "truss-simple-tri",
     "inferredType": "truss",
-    "description": "三角桁架，5节间，L=15m，H=2.5m，节点荷载10kN",
+    "description": "平行弦三角腹杆桁架，5节间，L=15m，H=2.5m，下弦节点荷载10kN",
     "model": {
       "schema_version": "2.0.0",
       "unit_system": "SI",
@@ -1157,6 +1157,373 @@
             },
             {
               "node": "B4",
+              "fz": -10
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "truss",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "truss-pratt-15m-top10",
+    "inferredType": "truss",
+    "description": "Pratt桁架，5节间，L=15m，H=2.5m，上弦节点荷载10kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "B0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "B1",
+          "x": 3,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "B2",
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "B3",
+          "x": 9,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "B4",
+          "x": 12,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "B5",
+          "x": 15,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "T0",
+          "x": 0,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "T1",
+          "x": 3,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "T2",
+          "x": 6,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "T3",
+          "x": 9,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "T4",
+          "x": 12,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "T5",
+          "x": 15,
+          "y": 0,
+          "z": 2.5
+        }
+      ],
+      "elements": [
+        {
+          "id": "BC0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "B1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC0",
+          "type": "truss",
+          "nodes": [
+            "T0",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC1",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC1",
+          "type": "truss",
+          "nodes": [
+            "T1",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "B3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC2",
+          "type": "truss",
+          "nodes": [
+            "T2",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC3",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "B4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC3",
+          "type": "truss",
+          "nodes": [
+            "T3",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "B5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC4",
+          "type": "truss",
+          "nodes": [
+            "T4",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "T0"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD0",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "T0"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV1",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD1",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD2",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV3",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD3",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD4",
+          "type": "truss",
+          "nodes": [
+            "B5",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV5",
+          "type": "truss",
+          "nodes": [
+            "B5",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "T1",
+          "type": "rod",
+          "properties": {
+            "A": 0.01
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "T1",
+              "fz": -10
+            },
+            {
+              "node": "T2",
+              "fz": -10
+            },
+            {
+              "node": "T3",
+              "fz": -10
+            },
+            {
+              "node": "T4",
               "fz": -10
             }
           ]
@@ -11342,7 +11709,7 @@
   {
     "id": "truss-complex-trap-12k",
     "inferredType": "truss",
-    "description": "梯形屋架近似模型，跨度18m，高2.5m，6节间，节点荷载12kN",
+    "description": "梯形屋架，跨度18m，高2.5m，6节间，上弦节点荷载12kN",
     "model": {
       "schema_version": "2.0.0",
       "unit_system": "SI",
@@ -11362,22 +11729,10 @@
           ]
         },
         {
-          "id": "T0",
-          "x": 0,
-          "y": 0,
-          "z": 2.5
-        },
-        {
           "id": "B1",
           "x": 3,
           "y": 0,
           "z": 0
-        },
-        {
-          "id": "T1",
-          "x": 3,
-          "y": 0,
-          "z": 2.5
         },
         {
           "id": "B2",
@@ -11386,22 +11741,10 @@
           "z": 0
         },
         {
-          "id": "T2",
-          "x": 6,
-          "y": 0,
-          "z": 2.5
-        },
-        {
           "id": "B3",
           "x": 9,
           "y": 0,
           "z": 0
-        },
-        {
-          "id": "T3",
-          "x": 9,
-          "y": 0,
-          "z": 2.5
         },
         {
           "id": "B4",
@@ -11410,22 +11753,10 @@
           "z": 0
         },
         {
-          "id": "T4",
-          "x": 12,
-          "y": 0,
-          "z": 2.5
-        },
-        {
           "id": "B5",
           "x": 15,
           "y": 0,
           "z": 0
-        },
-        {
-          "id": "T5",
-          "x": 15,
-          "y": 0,
-          "z": 2.5
         },
         {
           "id": "B6",
@@ -11442,10 +11773,46 @@
           ]
         },
         {
+          "id": "T0",
+          "x": 0,
+          "y": 0,
+          "z": 1.6
+        },
+        {
+          "id": "T1",
+          "x": 3,
+          "y": 0,
+          "z": 1.9
+        },
+        {
+          "id": "T2",
+          "x": 6,
+          "y": 0,
+          "z": 2.2
+        },
+        {
+          "id": "T3",
+          "x": 9,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "T4",
+          "x": 12,
+          "y": 0,
+          "z": 2.2
+        },
+        {
+          "id": "T5",
+          "x": 15,
+          "y": 0,
+          "z": 1.9
+        },
+        {
           "id": "T6",
           "x": 18,
           "y": 0,
-          "z": 2.5
+          "z": 1.6
         }
       ],
       "elements": [
@@ -11464,16 +11831,6 @@
           "type": "truss",
           "nodes": [
             "T0",
-            "T1"
-          ],
-          "material": "1",
-          "section": "1"
-        },
-        {
-          "id": "D0",
-          "type": "truss",
-          "nodes": [
-            "B0",
             "T1"
           ],
           "material": "1",
@@ -11500,16 +11857,6 @@
           "section": "1"
         },
         {
-          "id": "D1",
-          "type": "truss",
-          "nodes": [
-            "T1",
-            "B2"
-          ],
-          "material": "1",
-          "section": "1"
-        },
-        {
           "id": "BC2",
           "type": "truss",
           "nodes": [
@@ -11524,16 +11871,6 @@
           "type": "truss",
           "nodes": [
             "T2",
-            "T3"
-          ],
-          "material": "1",
-          "section": "1"
-        },
-        {
-          "id": "D2",
-          "type": "truss",
-          "nodes": [
-            "B2",
             "T3"
           ],
           "material": "1",
@@ -11560,16 +11897,6 @@
           "section": "1"
         },
         {
-          "id": "D3",
-          "type": "truss",
-          "nodes": [
-            "T3",
-            "B4"
-          ],
-          "material": "1",
-          "section": "1"
-        },
-        {
           "id": "BC4",
           "type": "truss",
           "nodes": [
@@ -11584,16 +11911,6 @@
           "type": "truss",
           "nodes": [
             "T4",
-            "T5"
-          ],
-          "material": "1",
-          "section": "1"
-        },
-        {
-          "id": "D4",
-          "type": "truss",
-          "nodes": [
-            "B4",
             "T5"
           ],
           "material": "1",
@@ -11620,11 +11937,131 @@
           "section": "1"
         },
         {
-          "id": "D5",
+          "id": "WV0",
           "type": "truss",
           "nodes": [
-            "T5",
-            "B6"
+            "B0",
+            "T0"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD0",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "T0"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV1",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD1",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD2",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV3",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD3",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD4",
+          "type": "truss",
+          "nodes": [
+            "B5",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV5",
+          "type": "truss",
+          "nodes": [
+            "B5",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD5",
+          "type": "truss",
+          "nodes": [
+            "B6",
+            "T5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WV6",
+          "type": "truss",
+          "nodes": [
+            "B6",
+            "T6"
           ],
           "material": "1",
           "section": "1"
@@ -12243,6 +12680,361 @@
             {
               "node": "T2",
               "fz": -20
+            }
+          ]
+        }
+      ],
+      "load_combinations": [
+        {
+          "id": "ULS",
+          "factors": {
+            "LC1": 1
+          }
+        }
+      ],
+      "metadata": {
+        "source": "ground-truth",
+        "inferredType": "truss",
+        "frameDimension": "2d"
+      }
+    }
+  },
+  {
+    "id": "truss-triangle-15m-2p5-10k",
+    "inferredType": "truss",
+    "description": "三角屋架，跨度15m，高2.5m，5节间，上弦节点荷载10kN",
+    "model": {
+      "schema_version": "2.0.0",
+      "unit_system": "SI",
+      "nodes": [
+        {
+          "id": "B0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "id": "B1",
+          "x": 3,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "B2",
+          "x": 6,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "B3",
+          "x": 9,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "B4",
+          "x": 12,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "id": "B5",
+          "x": 15,
+          "y": 0,
+          "z": 0,
+          "restraints": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "id": "T1",
+          "x": 3,
+          "y": 0,
+          "z": 1
+        },
+        {
+          "id": "T2",
+          "x": 6,
+          "y": 0,
+          "z": 2
+        },
+        {
+          "id": "TA",
+          "x": 7.5,
+          "y": 0,
+          "z": 2.5
+        },
+        {
+          "id": "T3",
+          "x": 9,
+          "y": 0,
+          "z": 2
+        },
+        {
+          "id": "T4",
+          "x": 12,
+          "y": 0,
+          "z": 1
+        }
+      ],
+      "elements": [
+        {
+          "id": "BC0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "B1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC1",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "B2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "B3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC3",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "B4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "BC4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "B5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC0",
+          "type": "truss",
+          "nodes": [
+            "B0",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC1",
+          "type": "truss",
+          "nodes": [
+            "T1",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC2",
+          "type": "truss",
+          "nodes": [
+            "T2",
+            "TA"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC3",
+          "type": "truss",
+          "nodes": [
+            "TA",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC4",
+          "type": "truss",
+          "nodes": [
+            "T3",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "TC5",
+          "type": "truss",
+          "nodes": [
+            "T4",
+            "B5"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WVT1",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "T1"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WVT2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WVTA",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "TA"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WVT3",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WVT4",
+          "type": "truss",
+          "nodes": [
+            "B4",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD1",
+          "type": "truss",
+          "nodes": [
+            "B1",
+            "T2"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD2",
+          "type": "truss",
+          "nodes": [
+            "B2",
+            "TA"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD3",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "T3"
+          ],
+          "material": "1",
+          "section": "1"
+        },
+        {
+          "id": "WD4",
+          "type": "truss",
+          "nodes": [
+            "B3",
+            "T4"
+          ],
+          "material": "1",
+          "section": "1"
+        }
+      ],
+      "materials": [
+        {
+          "id": "1",
+          "name": "steel",
+          "E": 205000,
+          "nu": 0.3,
+          "rho": 7850
+        }
+      ],
+      "sections": [
+        {
+          "id": "1",
+          "name": "T1",
+          "type": "rod",
+          "properties": {
+            "A": 0.01
+          }
+        }
+      ],
+      "load_cases": [
+        {
+          "id": "LC1",
+          "type": "dead",
+          "loads": [
+            {
+              "node": "T1",
+              "fz": -10
+            },
+            {
+              "node": "T2",
+              "fz": -10
+            },
+            {
+              "node": "TA",
+              "fz": -10
+            },
+            {
+              "node": "T3",
+              "fz": -10
+            },
+            {
+              "node": "T4",
+              "fz": -10
             }
           ]
         }

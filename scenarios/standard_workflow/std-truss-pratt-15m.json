@@ -50,7 +50,7 @@
       },
       {
         "type": "model_matches",
-        "groundTruthId": "truss-simple-tri"
+        "groundTruthId": "truss-pratt-15m-top10"
       },
       {
         "type": "has_analysis"
