@@ -9,6 +9,7 @@
   "difficulty": "L2",
   "skillTarget": "beam",
   "evaluationFocus": [
+    "interaction",
     "semantic"
   ],
   "category": "multimodal",
@@ -37,6 +38,15 @@
       ]
     },
     "assertions": [
+      {
+        "type": "has_interaction_questions"
+      },
+      {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      },
       {
         "type": "natural_language",
         "description": "The agent should mention the image quality is poor or blurry and either try to extract what it can or ask the user to provide a clearer image or supplement with text"

@@ -41,6 +41,10 @@
     },
     "assertions": [
       {
+        "type": "structural_type",
+        "expected": "portal-frame"
+      },
+      {
         "type": "skill_match",
         "primary": "portal-frame",
         "mayAlsoMatch": [

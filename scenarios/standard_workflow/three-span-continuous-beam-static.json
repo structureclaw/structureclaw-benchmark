@@ -4,10 +4,10 @@
   "split": "core",
   "taskFamily": "standard_workflow",
   "inputModality": "text",
-  "structureType": "beam",
-  "benchmarkStructureType": "beam",
+  "structureType": "double-span-beam",
+  "benchmarkStructureType": "continuous-beam",
   "difficulty": "L1",
-  "skillTarget": "beam",
+  "skillTarget": "double-span-beam",
   "evaluationFocus": [
     "routing",
     "modeling",
@@ -16,7 +16,7 @@
   ],
   "category": "static-analysis",
   "tags": [
-    "beam",
+    "double-span-beam",
     "continuous",
     "three-span",
     "static",
@@ -27,22 +27,22 @@
   "maxRetries": 2,
   "expect": {
     "skills": {
-      "primary": "beam",
+      "primary": "double-span-beam",
       "mayAlsoMatch": [
-        "double-span-beam",
+        "beam",
         "generic"
       ]
     },
     "assertions": [
       {
         "type": "structural_type",
-        "expected": "beam"
+        "expected": "double-span-beam"
       },
       {
         "type": "skill_match",
-        "primary": "beam",
+        "primary": "double-span-beam",
         "mayAlsoMatch": [
-          "double-span-beam",
+          "beam",
           "generic"
         ]
       },
@@ -53,7 +53,7 @@
       },
       {
         "type": "model_matches",
-        "groundTruthId": "beam-continuous-3span-4-5-4-udl15"
+        "groundTruthId": "dspan-complex-3span"
       },
       {
         "type": "has_analysis"

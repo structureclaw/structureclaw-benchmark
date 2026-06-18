@@ -1,6 +1,6 @@
 {
-  "id": "concrete-frame-seismic-en",
-  "description": "3-story concrete frame seismic analysis",
+  "id": "concrete-frame-3story-opensees-static-en",
+  "description": "3-story concrete frame OpenSees static analysis",
   "split": "core",
   "taskFamily": "standard_workflow",
   "inputModality": "text",

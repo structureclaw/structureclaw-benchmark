@@ -37,6 +37,10 @@
       "message": "What type of structure is shown in this image?",
       "assertions": [
         {
+          "type": "structural_type",
+          "expected": "truss"
+        },
+        {
           "type": "skill_match",
           "primary": "truss",
           "mayAlsoMatch": [

@@ -11,7 +11,8 @@
   "evaluationFocus": [
     "routing",
     "modeling",
-    "model_match"
+    "model_match",
+    "analysis"
   ],
   "category": "multimodal",
   "tags": [
@@ -41,6 +42,10 @@
     },
     "assertions": [
       {
+        "type": "structural_type",
+        "expected": "portal-frame"
+      },
+      {
         "type": "skill_match",
         "primary": "portal-frame",
         "mayAlsoMatch": [
@@ -54,6 +59,9 @@
       {
         "type": "model_matches",
         "groundTruthId": "portal-simple-18m"
+      },
+      {
+        "type": "has_analysis"
       }
     ]
   }

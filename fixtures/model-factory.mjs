@@ -387,7 +387,7 @@ models.push({
     schema_version: "2.0.0", unit_system: "SI",
     nodes: [
       { id: "1", x: 0, y: 0, z: 0, restraints: pinned },
-      { id: "2", x: 5, y: 0, z: 0 },
+      { id: "2", x: 5, y: 0, z: 0, restraints: roller },
       { id: "3", x: 11, y: 0, z: 0, restraints: roller },
     ],
     elements: [
@@ -414,8 +414,8 @@ models.push({
     schema_version: "2.0.0", unit_system: "SI",
     nodes: [
       { id: "1", x: 0, y: 0, z: 0, restraints: pinned },
-      { id: "2", x: 4, y: 0, z: 0 },
-      { id: "3", x: 9, y: 0, z: 0 },
+      { id: "2", x: 4, y: 0, z: 0, restraints: roller },
+      { id: "3", x: 9, y: 0, z: 0, restraints: roller },
       { id: "4", x: 13, y: 0, z: 0, restraints: roller },
     ],
     elements: [

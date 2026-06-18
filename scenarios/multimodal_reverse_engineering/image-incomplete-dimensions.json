@@ -42,6 +42,12 @@
         "type": "has_interaction_questions"
       },
       {
+        "type": "no_bad_model"
+      },
+      {
+        "type": "should_not_analyze"
+      },
+      {
         "type": "natural_language",
         "description": "The agent should recognize the structure from the image but notice missing dimensions and ask the user to provide specific values"
       }
