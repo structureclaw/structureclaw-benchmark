@@ -18,7 +18,8 @@
   "tags": [
     "reverse-engineering",
     "double-span-beam",
-    "dxf"
+    "dxf",
+    "zh"
   ],
   "message": "请根据这个DXF结构图纸建立计算模型并进行分析",
   "locale": "zh",

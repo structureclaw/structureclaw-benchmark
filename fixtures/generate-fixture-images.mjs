@@ -123,7 +123,7 @@ const trussDiagram = svg(`
   <line x1="88" y1="100" x2="88" y2="260" stroke="#1a65ac" stroke-width="1" stroke-dasharray="3,3"/>
 `);
 
-// 4. portal-frame-photo.png — portal frame
+// 4. portal-frame-diagram.png — portal frame
 const portalFrame = svg(`
   <text x="${W / 2}" y="28" text-anchor="middle" class="title">Portal Frame</text>
   <!-- left column -->
@@ -190,7 +190,7 @@ const fixtures = [
   { name: "beam-sketch.png", svg: beamSketch },
   { name: "frame-sketch.png", svg: frameSketch },
   { name: "truss-diagram.png", svg: trussDiagram },
-  { name: "portal-frame-photo.png", svg: portalFrame },
+  { name: "portal-frame-diagram.png", svg: portalFrame },
   { name: "incomplete-dimensions.png", svg: incompleteDimensions },
   { name: "cropped-frame-sketch.png", svg: croppedFrameSketch },
 ];

@@ -5,6 +5,9 @@
   "description": "LLM agent benchmark suite for StructureClaw — typed assertions, skill-trace, LLM-as-Judge",
   "license": "MIT",
   "type": "commonjs",
+  "dependencies": {
+    "sharp": "^0.35.1"
+  },
   "scripts": {
     "benchmark": "node runner.cjs",
     "benchmark:single": "node runner.cjs --scenario",

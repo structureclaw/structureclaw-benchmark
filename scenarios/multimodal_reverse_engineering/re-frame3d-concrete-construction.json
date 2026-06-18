@@ -19,7 +19,8 @@
     "reverse-engineering",
     "concrete-frame",
     "3d",
-    "construction-plan"
+    "construction-plan",
+    "zh"
   ],
   "message": "请根据这张空间混凝土框架轴测图建立3D计算模型并进行分析",
   "locale": "zh",

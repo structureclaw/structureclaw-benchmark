@@ -21,7 +21,7 @@
     "pratt",
     "en"
   ],
-  "message": "A Pratt truss spans 15m, has 2.5m height and 5 panels, with 10kN loads at top chord nodes. Run static analysis.",
+  "message": "A Pratt truss spans 15m, has 2.5m height and 5 panels, with 10kN loads at the four interior top chord nodes. Run static analysis.",
   "locale": "en",
   "maxRetries": 2,
   "expect": {

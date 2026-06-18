@@ -19,7 +19,8 @@
     "reverse-engineering",
     "frame",
     "3d",
-    "mechanics-diagram"
+    "mechanics-diagram",
+    "zh"
   ],
   "message": "请根据这张空间框架力学简图建立3D计算模型并进行分析",
   "locale": "zh",

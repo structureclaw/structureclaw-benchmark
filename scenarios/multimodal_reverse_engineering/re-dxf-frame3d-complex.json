@@ -19,7 +19,8 @@
     "reverse-engineering",
     "frame",
     "3d",
-    "dxf"
+    "dxf",
+    "zh"
   ],
   "message": "请根据这个DXF空间框架图建立3D计算模型并进行分析",
   "locale": "zh",

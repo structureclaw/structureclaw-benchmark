@@ -1,6 +1,6 @@
 {
-  "id": "image-portal-frame-photo",
-  "description": "上传门式刚架照片，识别结构类型",
+  "id": "image-portal-frame-diagram",
+  "description": "上传门式刚架示意图，识别结构类型",
   "split": "auxiliary",
   "taskFamily": "multimodal_reverse_engineering",
   "inputModality": "image",
@@ -26,9 +26,9 @@
   "maxRetries": 2,
   "attachments": [
     {
-      "fileId": "bench-portal-frame",
-      "originalName": "portal-frame-photo.png",
-      "relPath": "../../tests/llm-benchmark/fixtures/portal-frame-photo.png",
+      "fileId": "bench-portal-frame-diagram",
+      "originalName": "portal-frame-diagram.png",
+      "relPath": "../../tests/llm-benchmark/fixtures/portal-frame-diagram.png",
       "mimeType": "image/png"
     }
   ],

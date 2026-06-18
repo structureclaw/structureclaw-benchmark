@@ -19,7 +19,8 @@
     "reverse-engineering",
     "frame",
     "architectural",
-    "dxf"
+    "dxf",
+    "zh"
   ],
   "message": "请根据这张建筑平面图DXF建立结构计算模型并进行分析，图中有墙体、门窗、家具等建筑元素，请从中提取结构构件信息",
   "locale": "zh",

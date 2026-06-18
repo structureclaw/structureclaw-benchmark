@@ -20,7 +20,8 @@
     "frame",
     "3d",
     "architectural",
-    "dxf"
+    "dxf",
+    "zh"
   ],
   "message": "请根据这张建筑平面图DXF建立3D结构计算模型并进行分析，图中有墙体、门窗、家具等建筑元素",
   "locale": "zh",
