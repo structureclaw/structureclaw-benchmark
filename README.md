@@ -63,7 +63,8 @@ success:
 - `Pass@1` — passed without retry
 - `Pass@N` — passed within the retry budget
 - `averageRetries` — average retries used per scenario run
-- `averageToolCalls` — average agent tool calls per scenario run
+- `averageToolCalls` — average agent tool calls per scenario run; this is an
+  efficiency signal only, with no pass/fail threshold
 - `averageDurationMs` — average wall-clock duration per scenario run
 
 The standard executable workflow split is balanced by `benchmarkStructureType`:
