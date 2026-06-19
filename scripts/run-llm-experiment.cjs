@@ -63,6 +63,8 @@ const RUNNER_VALUE_FLAGS = new Set([
   "--task-family",
   "--split",
   "--mode",
+  "--execution",
+  "--case-timeout-ms",
   "--output",
   "--sut-root",
 ]);
@@ -88,6 +90,7 @@ function usage() {
     "",
     "Runner flags passed through:",
     "  --scenario <id> --family <name> --split <name> --mode <auto|oracle-specialist|generic-only|all>",
+    "  --execution <web-stream|full> --case-timeout-ms <milliseconds>",
     "  --output <file> --sut-root <path>",
   ].join("\n");
 }
@@ -348,6 +351,11 @@ function buildRunnerArgs(config, suite, suiteName, primary, judge, cliRunnerArgs
     runnerArgs.push("--mode", String(defaultMode));
   }
 
+  const defaultCaseTimeoutMs = config.defaults?.caseTimeoutMs;
+  if (defaultCaseTimeoutMs && !hasFlag(runnerArgs, "--case-timeout-ms")) {
+    runnerArgs.push("--case-timeout-ms", String(defaultCaseTimeoutMs));
+  }
+
   if (!hasFlag(runnerArgs, "--output")) {
     runnerArgs.push("--output", resolveOutputPath(config, suiteName, primary, judge, runnerArgs));
   } else {
@@ -362,7 +370,9 @@ function buildExperimentEnv(config, suite, primary, judge) {
   const suiteEnv = suite.environment && typeof suite.environment === "object" ? suite.environment : {};
   const runtimeDir = path.join(RUNTIME_ROOT, sanitizeFilePart(primary.key));
   fs.mkdirSync(runtimeDir, { recursive: true });
-  return {
+  const sourceDataDir = resolveBenchmarkSourceDataDir(rootEnv, suiteEnv);
+  syncRuntimeSettings(runtimeDir, sourceDataDir);
+  const env = {
     ...process.env,
     ...stringifyEnv(rootEnv),
     ...stringifyEnv(primary.extraEnv),
@@ -372,10 +382,40 @@ function buildExperimentEnv(config, suite, primary, judge) {
     LLM_JUDGE_MODEL: judge.model,
     LLM_JUDGE_BASE_URL: judge.baseUrl,
     LLM_JUDGE_API_KEY: judge.apiKey,
-    SCLAW_DATA_DIR: runtimeDir,
     ...stringifyEnv(judge.extraEnv),
     ...stringifyEnv(suiteEnv),
+    SCLAW_DATA_DIR: runtimeDir,
+    ...(sourceDataDir ? { SCLAW_BENCHMARK_SOURCE_DATA_DIR: sourceDataDir } : {}),
   };
+  return env;
+}
+
+function resolveBenchmarkSourceDataDir(rootEnv, suiteEnv) {
+  const value = suiteEnv.SCLAW_BENCHMARK_SOURCE_DATA_DIR
+    || rootEnv.SCLAW_BENCHMARK_SOURCE_DATA_DIR
+    || process.env.SCLAW_BENCHMARK_SOURCE_DATA_DIR
+    || process.env.SCLAW_DATA_DIR;
+  return value ? path.resolve(String(value)) : null;
+}
+
+function syncRuntimeSettings(runtimeDir, sourceDataDir) {
+  if (!sourceDataDir) return;
+  const sourceSettings = path.join(sourceDataDir, "settings.json");
+  if (!fs.existsSync(sourceSettings)) return;
+  fs.mkdirSync(runtimeDir, { recursive: true });
+  const settings = readJson(sourceSettings);
+  const sourcePython = process.platform === "win32"
+    ? path.join(sourceDataDir, ".venv", "Scripts", "python.exe")
+    : path.join(sourceDataDir, ".venv", "bin", "python");
+  if (fs.existsSync(sourcePython)) {
+    settings.analysis = {
+      ...(settings.analysis && typeof settings.analysis === "object" && !Array.isArray(settings.analysis)
+        ? settings.analysis
+        : {}),
+      pythonBin: settings.analysis?.pythonBin || sourcePython,
+    };
+  }
+  fs.writeFileSync(path.join(runtimeDir, "settings.json"), `${JSON.stringify(settings, null, 2)}\n`);
 }
 
 function stringifyEnv(values) {
@@ -397,6 +437,7 @@ function printResolvedRun({ configPath, suiteName, suite, primary, judge, runner
   process.stdout.write(`Judge key env: ${judge.apiKeyEnv} (${judge.apiKey ? "set" : "missing"})\n`);
   process.stdout.write(`Runner cwd: ${runnerCwd}\n`);
   process.stdout.write(`Runtime data: ${path.join(RUNTIME_ROOT, sanitizeFilePart(primary.key))}\n`);
+  process.stdout.write(`Source data: ${process.env.SCLAW_BENCHMARK_SOURCE_DATA_DIR || process.env.SCLAW_DATA_DIR || "(none)"}\n`);
   process.stdout.write(`Command: node ${path.relative(BENCH_ROOT, RUNNER_PATH)} ${runnerArgs.join(" ")}\n`);
 }
 

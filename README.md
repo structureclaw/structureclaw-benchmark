@@ -60,6 +60,13 @@ attempts. Failed attempts are converted into compact structured feedback and
 prepended to the next attempt. Reports distinguish first-try success from final
 success:
 
+Each scenario run also has a wall-clock timeout shared by all turns and retries.
+The default is 900000 ms (15 minutes) and can be overridden with
+`defaults.caseTimeoutMs` in `experiments/llm-experiments.local.json`,
+`--case-timeout-ms <milliseconds>`, or `LLM_BENCHMARK_CASE_TIMEOUT_MS`. A
+timeout records the run as an execution failure; it does not change scoring
+thresholds for normal tool usage.
+
 - `Pass@1` — passed without retry
 - `Pass@N` — passed within the retry budget
 - `averageRetries` — average retries used per scenario run

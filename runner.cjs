@@ -13,6 +13,12 @@ const SCLAW_ROOT = process.env.SCLAW_ROOT
   || path.resolve(BENCH_ROOT, "../..");
 
 const BENCHMARK_MODES = ["auto", "oracle-specialist", "generic-only"];
+const EXECUTION_MODES = ["web-stream", "full"];
+const DEFAULT_CASE_TIMEOUT_MS = 15 * 60 * 1000;
+const BENCHMARK_UTILITY_SKILL_IDS = [
+  "validation-structure-model",
+  "report-export-builtin",
+];
 
 const DEFAULT_MODES_BY_TASK_FAMILY = {
   standard_workflow: BENCHMARK_MODES,
@@ -199,6 +205,8 @@ function parseBenchmarkOptions(args) {
   let outputPath;
   let sutRoot;
   let mode = "auto";
+  let execution = "web-stream";
+  let caseTimeoutMs = Number(process.env.LLM_BENCHMARK_CASE_TIMEOUT_MS || DEFAULT_CASE_TIMEOUT_MS);
   let taskFamily;
   let split;
   for (let i = 0; i < args.length; i++) {
@@ -210,6 +218,10 @@ function parseBenchmarkOptions(args) {
       sutRoot = args[++i];
     } else if (args[i] === "--mode" && args[i + 1]) {
       mode = args[++i];
+    } else if (args[i] === "--execution" && args[i + 1]) {
+      execution = args[++i];
+    } else if (args[i] === "--case-timeout-ms" && args[i + 1]) {
+      caseTimeoutMs = Number(args[++i]);
     } else if ((args[i] === "--family" || args[i] === "--task-family") && args[i + 1]) {
       taskFamily = args[++i];
     } else if (args[i] === "--split" && args[i + 1]) {
@@ -219,7 +231,13 @@ function parseBenchmarkOptions(args) {
   if (mode !== "all" && !BENCHMARK_MODES.includes(mode)) {
     throw new Error(`Unsupported benchmark mode: ${mode}. Use one of: ${BENCHMARK_MODES.join(", ")}, all`);
   }
-  return { scenarioId, outputPath, sutRoot, mode, taskFamily, split };
+  if (!EXECUTION_MODES.includes(execution)) {
+    throw new Error(`Unsupported execution mode: ${execution}. Use one of: ${EXECUTION_MODES.join(", ")}`);
+  }
+  if (!Number.isFinite(caseTimeoutMs) || caseTimeoutMs <= 0) {
+    throw new Error("--case-timeout-ms must be a positive number");
+  }
+  return { scenarioId, outputPath, sutRoot, mode, execution, caseTimeoutMs, taskFamily, split };
 }
 
 function buildFeedbackFromEvaluation(evaluation, locale = "zh") {
@@ -332,6 +350,86 @@ function applyBenchmarkMode(scenario, mode) {
   return clone;
 }
 
+async function buildBenchmarkCapabilityContext(runtime, LangGraphAgentService) {
+  const manifests = await runtime.listSkillManifests();
+  const protocol = LangGraphAgentService.getProtocol();
+  const enabledToolIds = protocol.tools
+    .filter((toolDef) => toolDef.defaultEnabled)
+    .map((toolDef) => toolDef.name);
+  return { manifests, enabledToolIds };
+}
+
+function uniqueStrings(values) {
+  return [...new Set(values.filter((value) => typeof value === "string" && value.trim().length > 0))];
+}
+
+function resolveBenchmarkSkillIds(scenario, manifests) {
+  const availableSkillIds = new Set(manifests.map((manifest) => manifest.id));
+  const structureSkillIds = manifests
+    .filter((manifest) => manifest.domain === "structure-type")
+    .map((manifest) => manifest.id);
+  const analysisSkillTarget = scenario.analysisSkillTarget || "opensees-static";
+  const utilitySkillIds = BENCHMARK_UTILITY_SKILL_IDS.filter((skillId) => availableSkillIds.has(skillId));
+
+  const structureScope = scenario.mode === "oracle-specialist"
+    ? [scenario.skillTarget || scenario.structureType]
+    : scenario.mode === "generic-only"
+      ? ["generic"]
+      : structureSkillIds;
+
+  return uniqueStrings([
+    ...structureScope,
+    analysisSkillTarget,
+    ...utilitySkillIds,
+  ]).filter((skillId) => availableSkillIds.has(skillId));
+}
+
+function buildTurnContext({ scenario, turn, benchmarkContext, skillIds }) {
+  return {
+    locale: scenario.locale || "zh",
+    skillIds,
+    enabledToolIds: benchmarkContext.enabledToolIds,
+    attachments: turn.attachments || scenario.attachments,
+  };
+}
+
+async function runAgentLikeWeb(service, input) {
+  for await (const _chunk of service.runStream(input)) {
+    // Drain the stream exactly like the browser does; evaluation reads the
+    // final graph state from the checkpoint below.
+  }
+  const snapshot = await service.getConversationSessionSnapshot(
+    input.conversationId,
+    input.context?.locale || "zh",
+  );
+  if (!snapshot?.state) {
+    throw new Error("web-stream execution did not produce a checkpoint state");
+  }
+  return snapshot.state;
+}
+
+async function runAgentForBenchmark(service, input, execution) {
+  if (execution === "full") {
+    return service.runFull(input);
+  }
+  return runAgentLikeWeb(service, input);
+}
+
+function createCaseTimeout(timeoutMs) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => {
+    controller.abort(new Error(`case timed out after ${timeoutMs}ms`));
+  }, timeoutMs);
+  if (typeof timeout.unref === "function") {
+    timeout.unref();
+  }
+  return {
+    signal: controller.signal,
+    clear: () => clearTimeout(timeout),
+    timedOut: () => controller.signal.aborted,
+  };
+}
+
 function mergeTurnResults(scenario, turnResults, totalDurationMs) {
   const allMetrics = [];
   let allPassed = true;
@@ -412,6 +510,8 @@ async function runBenchmark(args) {
   process.stdout.write(`\n${"=".repeat(60)}\n`);
   process.stdout.write(`LangGraph Agent Benchmark: ${scenarios.length} scenario run(s)\n`);
   process.stdout.write(`Mode: ${options.mode}\n`);
+  process.stdout.write(`Execution: ${options.execution}\n`);
+  process.stdout.write(`Case timeout: ${options.caseTimeoutMs}ms\n`);
   process.stdout.write(`SUT root: ${sutRoot}\n`);
   process.stdout.write(`Model: ${context.env.LLM_MODEL || "(default)"}\n`);
   process.stdout.write(`Base URL: ${context.env.LLM_BASE_URL || "(default)"}\n`);
@@ -420,115 +520,132 @@ async function runBenchmark(args) {
   const { AgentSkillRuntime, LangGraphAgentService } = await importBackendModules(sutRoot);
   const runtime = new AgentSkillRuntime();
   const service = new LangGraphAgentService(runtime);
+  const benchmarkContext = await buildBenchmarkCapabilityContext(runtime, LangGraphAgentService);
 
   const results = [];
 
   for (const rawScenario of scenarios) {
     const scenario = normalizeScenario(resolveAttachmentPaths(rawScenario));
+    const skillIds = resolveBenchmarkSkillIds(scenario, benchmarkContext.manifests);
     const maxRetries = Math.max(0, typeof scenario.maxRetries === "number" ? scenario.maxRetries : 0);
     let attempt = 0;
     let lastEvaluation = null;
     const attemptRounds = [];
+    const caseTimeout = createCaseTimeout(options.caseTimeoutMs);
 
-    while (attempt <= maxRetries) {
-      let feedbackPrefix = "";
-      if (attempt > 0 && lastEvaluation) {
-        feedbackPrefix = buildFeedbackFromEvaluation(lastEvaluation, scenario.locale || "zh");
-        if (feedbackPrefix) {
-          process.stdout.write(`  Feedback: ${feedbackPrefix.slice(0, 100)}...\n`);
-        }
-      }
-
-      if (attempt > 0) {
-        process.stdout.write(`  Retrying (attempt ${attempt + 1}/${maxRetries + 1})...\n`);
-      } else {
-        process.stdout.write(`\nRunning: ${scenario.id}...\n`);
-      }
-
-      const scenarioStart = Date.now();
-      let executionError = false;
-      const turnResults = [];
-      let currentTurnIndex = 0;
-      const conversationId = `bench-${safeConversationIdPart(scenario.id)}-${scenarioStart}-${attempt}`;
-
-      const prevLogLevel = process.env.LOG_LEVEL;
-      process.env.LOG_LEVEL = "warn";
-
-      try {
-        for (let i = 0; i < scenario.turns.length; i++) {
-          currentTurnIndex = i;
-          const turn = scenario.turns[i];
-          const turnStart = Date.now();
-
-          const messageWithFeedback = (i === 0 && feedbackPrefix)
-            ? feedbackPrefix + "\n\n" + turn.message
-            : turn.message;
-
-          const state = await service.runFull({
-            message: messageWithFeedback,
-            conversationId,
-            context: {
-              locale: scenario.locale || "zh",
-              ...(scenario.scopedSkillIds ? { skillIds: scenario.scopedSkillIds } : {}),
-              attachments: turn.attachments || scenario.attachments,
-            },
-          });
-
-          const turnDurationMs = Date.now() - turnStart;
-
-          if (turn.assertions && turn.assertions.length > 0) {
-            const turnScenario = { ...scenario, expect: { assertions: turn.assertions } };
-            const evaluation = await evaluateScenario(turnScenario, state, turnDurationMs);
-            turnResults.push({ turnIndex: i, evaluation });
+    try {
+      while (attempt <= maxRetries) {
+        let feedbackPrefix = "";
+        if (attempt > 0 && lastEvaluation) {
+          feedbackPrefix = buildFeedbackFromEvaluation(lastEvaluation, scenario.locale || "zh");
+          if (feedbackPrefix) {
+            process.stdout.write(`  Feedback: ${feedbackPrefix.slice(0, 100)}...\n`);
           }
         }
-      } catch (err) {
-        executionError = true;
-        const message = err instanceof Error ? err.message : String(err);
-        process.stdout.write(`  error: ${message}\n`);
-        turnResults.push({
-          turnIndex: currentTurnIndex,
-          evaluation: {
-            scenarioId: scenario.id,
-            description: scenario.description || "",
-            passed: 0,
-            total: 1,
-            allPassed: false,
-            metrics: [{ metric: "execution", pass: false, expected: "no error", actual: message }],
-            durationMs: Date.now() - scenarioStart,
-          },
-        });
-      } finally {
-        if (prevLogLevel === undefined) {
-          delete process.env.LOG_LEVEL;
+
+        if (attempt > 0) {
+          process.stdout.write(`  Retrying (attempt ${attempt + 1}/${maxRetries + 1})...\n`);
         } else {
-          process.env.LOG_LEVEL = prevLogLevel;
+          process.stdout.write(`\nRunning: ${scenario.id}...\n`);
         }
-      }
 
-      const totalDurationMs = Date.now() - scenarioStart;
+        const scenarioStart = Date.now();
+        let executionError = false;
+        const turnResults = [];
+        let currentTurnIndex = 0;
+        const conversationId = `bench-${safeConversationIdPart(scenario.id)}-${scenarioStart}-${attempt}`;
 
-      if (turnResults.length > 0) {
-        if (scenario._multiTurn) {
-          lastEvaluation = mergeTurnResults(scenario, turnResults, totalDurationMs);
-        } else {
-          lastEvaluation = turnResults[0].evaluation;
+        const prevLogLevel = process.env.LOG_LEVEL;
+        process.env.LOG_LEVEL = "warn";
+
+        try {
+          for (let i = 0; i < scenario.turns.length; i++) {
+            currentTurnIndex = i;
+            const turn = scenario.turns[i];
+            const turnStart = Date.now();
+
+            const messageWithFeedback = (i === 0 && feedbackPrefix)
+              ? feedbackPrefix + "\n\n" + turn.message
+              : turn.message;
+
+            const state = await runAgentForBenchmark(service, {
+              message: messageWithFeedback,
+              conversationId,
+              signal: caseTimeout.signal,
+              context: buildTurnContext({ scenario, turn, benchmarkContext, skillIds }),
+            }, options.execution);
+
+            const turnDurationMs = Date.now() - turnStart;
+
+            if (turn.assertions && turn.assertions.length > 0) {
+              const turnScenario = { ...scenario, expect: { assertions: turn.assertions } };
+              const evaluation = await evaluateScenario(turnScenario, state, turnDurationMs);
+              turnResults.push({ turnIndex: i, evaluation });
+            }
+          }
+        } catch (err) {
+          executionError = true;
+          const errorMessage = err instanceof Error ? err.message : String(err);
+          const message = caseTimeout.timedOut()
+            ? `case timed out after ${options.caseTimeoutMs}ms`
+            : errorMessage;
+          process.stdout.write(`  error: ${message}\n`);
+          turnResults.push({
+            turnIndex: currentTurnIndex,
+            evaluation: {
+              scenarioId: scenario.id,
+              description: scenario.description || "",
+              passed: 0,
+              total: 1,
+              allPassed: false,
+              metrics: [{ metric: "execution", pass: false, expected: "no error", actual: message }],
+              durationMs: Date.now() - scenarioStart,
+            },
+          });
+        } finally {
+          if (prevLogLevel === undefined) {
+            delete process.env.LOG_LEVEL;
+          } else {
+            process.env.LOG_LEVEL = prevLogLevel;
+          }
         }
-      }
 
-      if (lastEvaluation) {
-        attemptRounds.push({
-          attempt: attempt + 1,
-          allPassed: lastEvaluation.allPassed,
-          metrics: (lastEvaluation.metrics || []).map((m) => ({ metric: m.metric, pass: m.pass })),
-        });
+        const totalDurationMs = Date.now() - scenarioStart;
+
+        if (turnResults.length > 0) {
+          if (scenario._multiTurn) {
+            lastEvaluation = mergeTurnResults(scenario, turnResults, totalDurationMs);
+          } else {
+            lastEvaluation = turnResults[0].evaluation;
+          }
+        }
+
+        if (lastEvaluation) {
+          attemptRounds.push({
+            attempt: attempt + 1,
+            allPassed: lastEvaluation.allPassed,
+            metrics: (lastEvaluation.metrics || []).map((m) => ({ metric: m.metric, pass: m.pass })),
+          });
+        }
+        if (lastEvaluation && lastEvaluation.allPassed) break;
+        if (executionError) break;
+        attempt += 1;
       }
-      if (lastEvaluation && lastEvaluation.allPassed) break;
-      if (executionError) break;
-      attempt += 1;
+    } finally {
+      caseTimeout.clear();
     }
 
     if (lastEvaluation) {
+      lastEvaluation.executionProfile = {
+        execution: options.execution,
+        mode: scenario.mode || "auto",
+        skillIds,
+        enabledToolIds: benchmarkContext.enabledToolIds,
+        sourceDataDir: process.env.SCLAW_BENCHMARK_SOURCE_DATA_DIR || null,
+        runtimeDataDir: process.env.SCLAW_DATA_DIR || null,
+        analysisSkillTarget: scenario.analysisSkillTarget || "opensees-static",
+        caseTimeoutMs: options.caseTimeoutMs,
+      };
       const attempts = attemptRounds.length;
       lastEvaluation.retries = {
         attempts,
