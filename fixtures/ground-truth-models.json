@@ -274,7 +274,7 @@
   {
     "id": "frame-simple-1s1b",
     "inferredType": "frame",
-    "description": "单层单跨钢框架，H=4.5m，L=6m",
+    "description": "单层单跨钢框架，H=4.5m，L=6m，屋面荷载8kN/m2",
     "model": {
       "schema_version": "2.0.0",
       "unit_system": "SI",
@@ -410,7 +410,9 @@
         {
           "id": "F1",
           "height": 4.5,
-          "floorLoad": 8
+          "floorLoad": 8,
+          "floorLoadUnit": "kN/m2",
+          "equivalentLineLoad": 48
         }
       ],
       "load_cases": [
@@ -421,7 +423,7 @@
             {
               "type": "distributed",
               "element": "B1",
-              "wz": -8,
+              "wz": -48,
               "wy": 0
             }
           ]
@@ -439,6 +441,7 @@
         "source": "ground-truth",
         "inferredType": "frame",
         "frameDimension": "2d",
+        "floorLoadUnit": "kN/m2",
         "storyCount": 1,
         "bayCount": 1,
         "geometry": {
@@ -2940,12 +2943,14 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2"
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2"
         }
       ],
       "load_cases": [
@@ -2956,25 +2961,25 @@
             {
               "type": "distributed",
               "element": "BX9",
-              "wz": -10,
+              "wz": -25,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX10",
-              "wz": -10,
+              "wz": -25,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX11",
-              "wz": -10,
+              "wz": -25,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX12",
-              "wz": -10,
+              "wz": -25,
               "wy": 0
             }
           ]
@@ -2995,6 +3000,7 @@
         "storyCount": 2,
         "bayCountX": 1,
         "bayCountY": 1,
+        "floorLoadUnit": "kN/m2",
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -3775,12 +3781,14 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2"
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 8
+          "floorLoad": 8,
+          "floorLoadUnit": "kN/m2"
         }
       ],
       "load_cases": [
@@ -3791,73 +3799,73 @@
             {
               "type": "distributed",
               "element": "BX19",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX20",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX21",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX22",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX23",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX24",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX25",
-              "wz": -8,
+              "wz": -26.666666666666668,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX26",
-              "wz": -8,
+              "wz": -26.666666666666668,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX27",
-              "wz": -8,
+              "wz": -26.666666666666668,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX28",
-              "wz": -8,
+              "wz": -26.666666666666668,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX29",
-              "wz": -8,
+              "wz": -26.666666666666668,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX30",
-              "wz": -8,
+              "wz": -26.666666666666668,
               "wy": 0
             }
           ]
@@ -3878,6 +3886,7 @@
         "storyCount": 2,
         "bayCountX": 2,
         "bayCountY": 2,
+        "floorLoadUnit": "kN/m2",
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -4402,12 +4411,14 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 12
+          "floorLoad": 12,
+          "floorLoadUnit": "kN/m2"
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2"
         }
       ],
       "load_cases": [
@@ -4418,49 +4429,49 @@
             {
               "type": "distributed",
               "element": "BX13",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX14",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX15",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX16",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX17",
-              "wz": -10,
+              "wz": -25,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX18",
-              "wz": -10,
+              "wz": -25,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX19",
-              "wz": -10,
+              "wz": -25,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX20",
-              "wz": -10,
+              "wz": -25,
               "wy": 0
             }
           ]
@@ -4481,6 +4492,7 @@
         "storyCount": 2,
         "bayCountX": 2,
         "bayCountY": 1,
+        "floorLoadUnit": "kN/m2",
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -5494,7 +5506,8 @@
         {
           "id": "F1",
           "height": 4.5,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m"
         }
       ],
       "load_cases": [
@@ -5525,6 +5538,7 @@
         "frameDimension": "2d",
         "storyCount": 1,
         "bayCount": 1,
+        "floorLoadUnit": "kN/m",
         "geometry": {
           "storyHeightsM": [
             4.5
@@ -5539,7 +5553,7 @@
   {
     "id": "frame-2s1b-6m-10k",
     "inferredType": "frame",
-    "description": "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m",
+    "description": "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m2",
     "model": {
       "schema_version": "2.0.0",
       "unit_system": "SI",
@@ -5723,12 +5737,18 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 60
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 60
         }
       ],
       "load_cases": [
@@ -5739,13 +5759,13 @@
             {
               "type": "distributed",
               "element": "B1_0",
-              "wz": -10,
+              "wz": -60,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "B2_0",
-              "wz": -10,
+              "wz": -60,
               "wy": 0
             }
           ]
@@ -5765,6 +5785,8 @@
         "frameDimension": "2d",
         "storyCount": 2,
         "bayCount": 1,
+        "floorLoadUnit": "kN/m2",
+        "tributaryWidthM": 6,
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -5780,7 +5802,7 @@
   {
     "id": "frame-2s1b-6m-10k-wind",
     "inferredType": "frame",
-    "description": "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m，风荷载0.5kN/m2",
+    "description": "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m2，风荷载0.5kN/m2",
     "model": {
       "schema_version": "2.0.0",
       "unit_system": "SI",
@@ -5964,12 +5986,18 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 60
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 60
         }
       ],
       "load_cases": [
@@ -5980,13 +6008,13 @@
             {
               "type": "distributed",
               "element": "B1_0",
-              "wz": -10,
+              "wz": -60,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "B2_0",
-              "wz": -10,
+              "wz": -60,
               "wy": 0
             },
             {
@@ -6014,6 +6042,8 @@
         "frameDimension": "2d",
         "storyCount": 2,
         "bayCount": 1,
+        "floorLoadUnit": "kN/m2",
+        "tributaryWidthM": 6,
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -6283,12 +6313,14 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m"
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m"
         }
       ],
       "load_cases": [
@@ -6337,6 +6369,7 @@
         "frameDimension": "2d",
         "storyCount": 2,
         "bayCount": 2,
+        "floorLoadUnit": "kN/m",
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -6680,17 +6713,20 @@
         {
           "id": "F1",
           "height": 3.3,
-          "floorLoad": 15
+          "floorLoad": 15,
+          "floorLoadUnit": "kN/m"
         },
         {
           "id": "F2",
           "height": 3.3,
-          "floorLoad": 15
+          "floorLoad": 15,
+          "floorLoadUnit": "kN/m"
         },
         {
           "id": "F3",
           "height": 3.3,
-          "floorLoad": 15
+          "floorLoad": 15,
+          "floorLoadUnit": "kN/m"
         }
       ],
       "load_cases": [
@@ -6751,6 +6787,7 @@
         "frameDimension": "2d",
         "storyCount": 3,
         "bayCount": 2,
+        "floorLoadUnit": "kN/m",
         "geometry": {
           "storyHeightsM": [
             3.3,
@@ -7095,17 +7132,20 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m"
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m"
         },
         {
           "id": "F3",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m"
         }
       ],
       "load_cases": [
@@ -7178,6 +7218,7 @@
         "frameDimension": "2d",
         "storyCount": 3,
         "bayCount": 2,
+        "floorLoadUnit": "kN/m",
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -7334,7 +7375,10 @@
         {
           "id": "F1",
           "height": 12,
-          "floorLoad": 1.5
+          "floorLoad": 1.5,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 24,
+          "equivalentLineLoad": 36
         }
       ],
       "load_cases": [
@@ -7345,7 +7389,7 @@
             {
               "type": "distributed",
               "element": "B1_0",
-              "wz": -1.5,
+              "wz": -36,
               "wy": 0
             },
             {
@@ -7373,6 +7417,8 @@
         "frameDimension": "2d",
         "storyCount": 1,
         "bayCount": 1,
+        "floorLoadUnit": "kN/m2",
+        "tributaryWidthM": 24,
         "geometry": {
           "storyHeightsM": [
             12
@@ -7567,12 +7613,18 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 12
+          "floorLoad": 12,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 72
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 12
+          "floorLoad": 12,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 72
         }
       ],
       "load_cases": [
@@ -7583,13 +7635,13 @@
             {
               "type": "distributed",
               "element": "B1_0",
-              "wz": -12,
+              "wz": -72,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "B2_0",
-              "wz": -12,
+              "wz": -72,
               "wy": 0
             }
           ]
@@ -7609,6 +7661,8 @@
         "frameDimension": "2d",
         "storyCount": 2,
         "bayCount": 1,
+        "floorLoadUnit": "kN/m2",
+        "tributaryWidthM": 6,
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -7804,12 +7858,18 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 60
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 60
         }
       ],
       "load_cases": [
@@ -7820,13 +7880,13 @@
             {
               "type": "distributed",
               "element": "B1_0",
-              "wz": -10,
+              "wz": -60,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "B2_0",
-              "wz": -10,
+              "wz": -60,
               "wy": 0
             }
           ]
@@ -7846,6 +7906,8 @@
         "frameDimension": "2d",
         "storyCount": 2,
         "bayCount": 1,
+        "floorLoadUnit": "kN/m2",
+        "tributaryWidthM": 6,
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -8086,17 +8148,26 @@
         {
           "id": "F1",
           "height": 3.3,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 60
         },
         {
           "id": "F2",
           "height": 3.3,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 60
         },
         {
           "id": "F3",
           "height": 3.3,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
+          "equivalentLineLoad": 60
         }
       ],
       "load_cases": [
@@ -8107,19 +8178,19 @@
             {
               "type": "distributed",
               "element": "B1_0",
-              "wz": -10,
+              "wz": -60,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "B2_0",
-              "wz": -10,
+              "wz": -60,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "B3_0",
-              "wz": -10,
+              "wz": -60,
               "wy": 0
             }
           ]
@@ -8139,6 +8210,8 @@
         "frameDimension": "2d",
         "storyCount": 3,
         "bayCount": 1,
+        "floorLoadUnit": "kN/m2",
+        "tributaryWidthM": 6,
         "geometry": {
           "storyHeightsM": [
             3.3,
@@ -8475,12 +8548,14 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 8
+          "floorLoad": 8,
+          "floorLoadUnit": "kN/m"
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 8
+          "floorLoad": 8,
+          "floorLoadUnit": "kN/m"
         }
       ],
       "load_cases": [
@@ -8541,6 +8616,7 @@
         "frameDimension": "2d",
         "storyCount": 2,
         "bayCount": 3,
+        "floorLoadUnit": "kN/m",
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -9062,12 +9138,14 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 12
+          "floorLoad": 12,
+          "floorLoadUnit": "kN/m2"
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 12
+          "floorLoad": 12,
+          "floorLoadUnit": "kN/m2"
         }
       ],
       "load_cases": [
@@ -9078,49 +9156,49 @@
             {
               "type": "distributed",
               "element": "BX13",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX14",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX15",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX16",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX17",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX18",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX19",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX20",
-              "wz": -12,
+              "wz": -30,
               "wy": 0
             }
           ]
@@ -9141,6 +9219,7 @@
         "storyCount": 2,
         "bayCountX": 2,
         "bayCountY": 1,
+        "floorLoadUnit": "kN/m2",
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -9668,12 +9747,14 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 8
+          "floorLoad": 8,
+          "floorLoadUnit": "kN/m2"
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 8
+          "floorLoad": 8,
+          "floorLoadUnit": "kN/m2"
         }
       ],
       "load_cases": [
@@ -9684,49 +9765,49 @@
             {
               "type": "distributed",
               "element": "BX13",
-              "wz": -8,
+              "wz": -20,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX14",
-              "wz": -8,
+              "wz": -20,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX15",
-              "wz": -8,
+              "wz": -20,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX16",
-              "wz": -8,
+              "wz": -20,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX17",
-              "wz": -8,
+              "wz": -20,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX18",
-              "wz": -8,
+              "wz": -20,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX19",
-              "wz": -8,
+              "wz": -20,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX20",
-              "wz": -8,
+              "wz": -20,
               "wy": 0
             }
           ]
@@ -9747,6 +9828,7 @@
         "storyCount": 2,
         "bayCountX": 2,
         "bayCountY": 1,
+        "floorLoadUnit": "kN/m2",
         "geometry": {
           "storyHeightsM": [
             3.6,
@@ -10453,17 +10535,20 @@
         {
           "id": "F1",
           "height": 3.3,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2"
         },
         {
           "id": "F2",
           "height": 3.3,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2"
         },
         {
           "id": "F3",
           "height": 3.3,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m2"
         }
       ],
       "load_cases": [
@@ -10474,55 +10559,55 @@
             {
               "type": "distributed",
               "element": "BX19",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX20",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX21",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX22",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX23",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX24",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX25",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX26",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             },
             {
               "type": "distributed",
               "element": "BX27",
-              "wz": -10,
+              "wz": -33.333333333333336,
               "wy": 0
             }
           ]
@@ -10543,6 +10628,7 @@
         "storyCount": 3,
         "bayCountX": 1,
         "bayCountY": 2,
+        "floorLoadUnit": "kN/m2",
         "geometry": {
           "storyHeightsM": [
             3.3,
@@ -11529,7 +11615,8 @@
         {
           "id": "F1",
           "height": 4,
-          "floorLoad": 0
+          "floorLoad": 0,
+          "floorLoadUnit": "kN/m"
         }
       ],
       "load_cases": [
@@ -11558,6 +11645,7 @@
         "frameDimension": "2d",
         "storyCount": 1,
         "bayCount": 1,
+        "floorLoadUnit": "kN/m",
         "geometry": {
           "storyHeightsM": [
             4

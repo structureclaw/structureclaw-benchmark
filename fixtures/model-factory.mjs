@@ -91,7 +91,7 @@ models.push({
 models.push({
   id: "frame-simple-1s1b",
   inferredType: "frame",
-  description: "单层单跨钢框架，H=4.5m，L=6m",
+  description: "单层单跨钢框架，H=4.5m，L=6m，屋面荷载8kN/m2",
   model: {
     schema_version: "2.0.0", unit_system: "SI",
     nodes: [
@@ -114,13 +114,14 @@ models.push({
         shape: { kind: "H", H: 0.4, B: 0.2, tw: 0.008, tf: 0.013 },
         properties: { A: 0.008, Iy: 0.0002, Iz: 0.00003, J: 0.000005, G: 79000 } },
     ],
-    stories: [{ id: "F1", height: 4.5, floorLoad: 8 }],
+    stories: [{ id: "F1", height: 4.5, floorLoad: 8, floorLoadUnit: "kN/m2", equivalentLineLoad: 48 }],
     load_cases: [
-      { id: "D", type: "dead", loads: [{ type: "distributed", element: "B1", wz: -8, wy: 0 }] },
+      { id: "D", type: "dead", loads: [{ type: "distributed", element: "B1", wz: -48, wy: 0 }] },
     ],
     load_combinations: [{ id: "ULS", factors: { D: 1.0 } }],
     metadata: {
       source: "ground-truth", inferredType: "frame", frameDimension: "2d",
+      floorLoadUnit: "kN/m2",
       storyCount: 1, bayCount: 1,
       geometry: { storyHeightsM: [4.5], bayWidthsM: [6] },
     },
@@ -516,14 +517,16 @@ function build3dFrame(id, description, opts) {
     }
   }
 
-  // Floor loads as distributed loads on X-direction beams
+  // Floor area loads are represented as equivalent line loads on X-direction beams.
+  const totalSpanX = xCoords[xCoords.length - 1];
+  const totalSpanY = yCoords[yCoords.length - 1];
+  const xBeamLengthPerStory = totalSpanX * yCoords.length;
   for (const fl of floorLoads) {
     const si = fl.storyIndex;
-    const wPerBeam = fl.loadPerArea;
+    const totalFloorLoad = fl.loadPerArea * totalSpanX * totalSpanY;
+    const wPerBeam = xBeamLengthPerStory > 0 ? totalFloorLoad / xBeamLengthPerStory : fl.loadPerArea;
     for (let xi = 0; xi < bayWidthsX.length; xi++) {
       for (let yi = 0; yi < yCoords.length; yi++) {
-        const beamId = `BX${bayWidthsX.length * yCoords.length * (si - 1) + xi * yCoords.length + yi + (xCoords.length - bayWidthsX.length) * yCoords.length * (si - 1) + 1}`;
-        // Find the actual beam element
         const beamEl = elements.find(e =>
           e.nodes[0] === `N${si}_${xi}_${yi}` && e.nodes[1] === `N${si}_${xi + 1}_${yi}`
         );
@@ -538,6 +541,7 @@ function build3dFrame(id, description, opts) {
     id: `F${i + 1}`,
     height: h,
     floorLoad: floorLoads.find(fl => fl.storyIndex === i + 1)?.loadPerArea || 0,
+    floorLoadUnit: "kN/m2",
   }));
 
   return {
@@ -561,6 +565,7 @@ function build3dFrame(id, description, opts) {
         storyCount: storyHeights.length,
         bayCountX: bayWidthsX.length,
         bayCountY: bayWidthsY.length,
+        floorLoadUnit: "kN/m2",
         geometry: { storyHeightsM: storyHeights, bayWidthsXM: bayWidthsX, bayWidthsYM: bayWidthsY },
       },
     },
@@ -755,6 +760,8 @@ function build2dFrame(id, description, opts) {
     bayWidths,
     storyHeights,
     floorLoads = [],
+    floorLoadUnit = "line",
+    tributaryWidthM,
     lateralLoads = [],
     pointLoads = [],
     material = q345(),
@@ -764,6 +771,11 @@ function build2dFrame(id, description, opts) {
   for (const width of bayWidths) xCoords.push(xCoords[xCoords.length - 1] + width);
   const zCoords = [0];
   for (const height of storyHeights) zCoords.push(zCoords[zCoords.length - 1] + height);
+  const totalSpan = xCoords[xCoords.length - 1];
+  const effectiveTributaryWidth = tributaryWidthM ?? totalSpan;
+  const toEquivalentLineLoad = (floorLoad) => (
+    floorLoadUnit === "area" ? floorLoad * effectiveTributaryWidth : floorLoad
+  );
   const nodes = [];
   const elements = [];
   const loads = [];
@@ -798,7 +810,7 @@ function build2dFrame(id, description, opts) {
       };
       elements.push(beam);
       const floorLoad = floorLoads[si - 1] ?? 0;
-      if (floorLoad > 0) loads.push({ type: "distributed", element: beam.id, wz: -floorLoad, wy: 0 });
+      if (floorLoad > 0) loads.push({ type: "distributed", element: beam.id, wz: -toEquivalentLineLoad(floorLoad), wy: 0 });
     }
   }
 
@@ -815,11 +827,16 @@ function build2dFrame(id, description, opts) {
     loads.push(nodeLoad);
   }
 
-  const stories = storyHeights.map((height, index) => ({
-    id: `F${index + 1}`,
-    height,
-    floorLoad: floorLoads[index] ?? 0,
-  }));
+  const stories = storyHeights.map((height, index) => {
+    const floorLoad = floorLoads[index] ?? 0;
+    return {
+      id: `F${index + 1}`,
+      height,
+      floorLoad,
+      floorLoadUnit: floorLoadUnit === "area" ? "kN/m2" : "kN/m",
+      ...(floorLoadUnit === "area" ? { tributaryWidthM: effectiveTributaryWidth, equivalentLineLoad: toEquivalentLineLoad(floorLoad) } : {}),
+    };
+  });
 
   return {
     id,
@@ -841,6 +858,8 @@ function build2dFrame(id, description, opts) {
         frameDimension: "2d",
         storyCount: storyHeights.length,
         bayCount: bayWidths.length,
+        floorLoadUnit: floorLoadUnit === "area" ? "kN/m2" : "kN/m",
+        ...(floorLoadUnit === "area" ? { tributaryWidthM: effectiveTributaryWidth } : {}),
         geometry: { storyHeightsM: storyHeights, bayWidthsM: bayWidths },
       },
     },
@@ -1201,15 +1220,17 @@ models.push(build2dFrame("frame-simple-1s1b-10k", "单层单跨钢框架，H=4.5
   storyHeights: [4.5],
   floorLoads: [10],
 }));
-models.push(build2dFrame("frame-2s1b-6m-10k", "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m", {
+models.push(build2dFrame("frame-2s1b-6m-10k", "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m2", {
   bayWidths: [6],
   storyHeights: [3.6, 3.6],
   floorLoads: [10, 10],
+  floorLoadUnit: "area",
 }));
-models.push(build2dFrame("frame-2s1b-6m-10k-wind", "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m，风荷载0.5kN/m2", {
+models.push(build2dFrame("frame-2s1b-6m-10k-wind", "2层单跨钢框架，层高3.6m，跨度6m，楼面荷载10kN/m2，风荷载0.5kN/m2", {
   bayWidths: [6],
   storyHeights: [3.6, 3.6],
   floorLoads: [10, 10],
+  floorLoadUnit: "area",
   lateralLoads: [
     { storyIndex: 1, xIndices: [1], fx: 10 },
     { storyIndex: 2, xIndices: [1], fx: 15 },
@@ -1239,6 +1260,7 @@ models.push(build2dFrame("frame-industrial-24m-12m-crane10t", "单层工业重�
   bayWidths: [24],
   storyHeights: [12],
   floorLoads: [1.5],
+  floorLoadUnit: "area",
   lateralLoads: [{ storyIndex: 1, xIndices: [1], fx: 10 }],
   pointLoads: [{ storyIndex: 1, xIndex: 1, fz: -98 }],
 }));
@@ -1248,6 +1270,7 @@ models.push(build2dFrame("concrete-frame-2s1b-6m-12k", "2层混凝土框架，�
   bayWidths: [6],
   storyHeights: [3.6, 3.6],
   floorLoads: [12, 12],
+  floorLoadUnit: "area",
   material: concrete("1", "C30"),
   sections: [rectSection("1", "C30 500x500", 0.5, 0.5, "column"), rectSection("2", "C30 300x600", 0.3, 0.6, "beam")],
 }));
@@ -1256,6 +1279,7 @@ models.push(build2dFrame("concrete-frame-2s1b-6m-10k", "2层混凝土框架，�
   bayWidths: [6],
   storyHeights: [3.6, 3.6],
   floorLoads: [10, 10],
+  floorLoadUnit: "area",
   material: concrete("1", "C30"),
   sections: [rectSection("1", "C30 500x500", 0.5, 0.5, "column"), rectSection("2", "C30 300x600", 0.3, 0.6, "beam")],
 }));
@@ -1264,6 +1288,7 @@ models.push(build2dFrame("concrete-frame-3s1b-6m-10k", "3层混凝土框架，�
   bayWidths: [6],
   storyHeights: [3.3, 3.3, 3.3],
   floorLoads: [10, 10, 10],
+  floorLoadUnit: "area",
   material: concrete("1", "C35"),
   sections: [rectSection("1", "C35 500x500", 0.5, 0.5, "column"), rectSection("2", "C35 300x600", 0.3, 0.6, "beam")],
 }));
