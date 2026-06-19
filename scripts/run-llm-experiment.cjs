@@ -446,9 +446,11 @@ function runChild(runnerArgs, env, runnerCwd) {
     const child = spawn(process.execPath, [RUNNER_PATH, ...runnerArgs], {
       cwd: runnerCwd,
       env,
-      stdio: "inherit",
+      stdio: ["ignore", "pipe", "pipe"],
     });
 
+    child.stdout.on("data", (chunk) => process.stdout.write(chunk));
+    child.stderr.on("data", (chunk) => process.stderr.write(chunk));
     child.on("error", reject);
     child.on("exit", (code, signal) => {
       if (signal) {
