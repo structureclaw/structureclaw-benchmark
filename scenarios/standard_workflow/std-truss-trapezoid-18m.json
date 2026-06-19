@@ -23,7 +23,7 @@
   ],
   "message": "梯形屋架跨度18m，高2.5m，6个节间，上弦内部节点荷载12kN，请进行静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "truss",

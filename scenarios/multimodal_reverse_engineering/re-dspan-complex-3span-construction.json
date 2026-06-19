@@ -23,7 +23,7 @@
   ],
   "message": "Use this construction drawing of the 4m+5m+4m three-span continuous beam to build the calculation model and run analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-dspan-complex-3span-c",

@@ -24,7 +24,7 @@
   ],
   "message": "Analyze a simply supported beam, span 7.5m, UDL 18kN/m, and generate a calculation report.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "beam",

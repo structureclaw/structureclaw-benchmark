@@ -22,7 +22,7 @@
   ],
   "message": "桁架跨度1m，高度50m，100个节间，节点荷载10000kN，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

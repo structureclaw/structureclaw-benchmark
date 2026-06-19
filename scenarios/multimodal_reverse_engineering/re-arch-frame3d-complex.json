@@ -25,7 +25,7 @@
   ],
   "message": "请根据这张建筑平面图DXF建立3D结构计算模型并进行分析，图中有墙体、门窗、家具等建筑元素",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-arch-frame3d-complex",

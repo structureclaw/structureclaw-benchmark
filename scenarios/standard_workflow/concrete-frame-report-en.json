@@ -27,7 +27,7 @@
   ],
   "message": "Use YJK to run static analysis and generate a report for a 2-story single-bay reinforced concrete frame with C30 concrete, HRB400 reinforcement, 3.6m story height, 6m bay width, and 10kN/m2 floor load.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "concrete-frame",

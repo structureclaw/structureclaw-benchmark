@@ -22,7 +22,7 @@
   ],
   "message": "A portal frame has an 18m span, 7m eave height, and 6kN/m roof load. Run static analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "portal-frame",

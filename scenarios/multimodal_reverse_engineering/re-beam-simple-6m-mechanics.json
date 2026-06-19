@@ -23,7 +23,7 @@
   ],
   "message": "Use this mechanics diagram of the 6m simply supported beam to build the calculation model and run analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-beam-simple-6m-m",

@@ -23,7 +23,7 @@
   ],
   "message": "梯形平行弦桁架，跨度18m，高度2.5m，上弦坡度1/10，下弦节点荷载15kN，做静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "truss",

@@ -22,7 +22,7 @@
   ],
   "message": "A single-story steel frame has 300m story height, 2m span, 100x100mm columns, and 5000kN/m floor load. Please analyze it.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

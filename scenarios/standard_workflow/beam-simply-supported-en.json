@@ -24,7 +24,7 @@
   ],
   "message": "A simply supported beam, span 8m, uniformly distributed load 15kN/m, please run a static analysis",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "beam",

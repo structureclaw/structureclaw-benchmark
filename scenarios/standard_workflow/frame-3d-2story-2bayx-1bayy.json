@@ -28,7 +28,7 @@
   ],
   "message": "Use PKPM to run 3D static analysis for a 2-story 3D steel frame with X spans of 6m+6m, one Y span of 5m, 3.6m story height, and 8kN/m2 floor load.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "frame",

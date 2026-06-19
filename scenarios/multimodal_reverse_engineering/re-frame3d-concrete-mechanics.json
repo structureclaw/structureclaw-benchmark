@@ -24,7 +24,7 @@
   ],
   "message": "请根据这张空间混凝土框架力学简图建立3D计算模型并进行分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-frame3d-concrete-m",

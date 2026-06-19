@@ -27,7 +27,7 @@
   ],
   "message": "Use OpenSees to run static analysis for a 2-story single-bay steel frame with 3.6m story height, 6m bay width, and 10kN/m2 floor load on each level.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "frame",

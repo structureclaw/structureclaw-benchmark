@@ -23,7 +23,7 @@
   ],
   "message": "根据这张图识别结构类型并做静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "bench-truss-diagram",

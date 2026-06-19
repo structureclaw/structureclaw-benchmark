@@ -22,7 +22,7 @@
   ],
   "message": "三层混凝土框架，X向2跨，Y向也没有跨度，是2D还是3D都可以，请直接分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

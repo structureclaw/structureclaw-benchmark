@@ -28,7 +28,7 @@
   ],
   "message": "Use YJK to run 3D static analysis for a 3-story 3D steel frame with X direction 1 bay of 6m, Y direction 2 bays of 5m+5m, 3.3m story height, and 10kN/m2 floor load.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "frame",

@@ -25,7 +25,7 @@
     "wind"
   ],
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

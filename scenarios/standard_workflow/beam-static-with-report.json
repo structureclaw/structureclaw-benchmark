@@ -24,7 +24,7 @@
   ],
   "message": "简支梁跨度8m，均布荷载18kN/m，请进行静力分析并生成计算报告",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "beam",

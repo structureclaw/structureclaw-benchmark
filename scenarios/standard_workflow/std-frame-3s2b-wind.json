@@ -26,7 +26,7 @@
   ],
   "message": "Use OpenSees to run static analysis for a 3-story 2-bay steel frame with 3.6m story height, 6m bays, 10kN/m floor line load, and 0.5kN/m2 horizontal wind load.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "frame",

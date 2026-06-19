@@ -23,7 +23,7 @@
   ],
   "message": "Pratt桁架，跨度15m，高2.5m，5个节间，4个上弦内部节点各作用竖向荷载10kN，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "truss",

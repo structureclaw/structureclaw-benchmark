@@ -23,7 +23,7 @@
   ],
   "message": "请根据这张力学简图建立计算模型并进行分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-frame-complex-2s2b-m",

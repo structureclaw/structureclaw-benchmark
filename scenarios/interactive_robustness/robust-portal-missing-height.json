@@ -22,7 +22,7 @@
   ],
   "message": "A single-span portal frame has a 24m span. Please analyze it.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

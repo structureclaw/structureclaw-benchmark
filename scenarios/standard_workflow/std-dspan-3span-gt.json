@@ -23,7 +23,7 @@
   ],
   "message": "A three-span continuous beam has spans of 4m, 5m, and 4m with a 15kN/m uniformly distributed load. Run static analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "double-span-beam",

@@ -21,7 +21,7 @@
   ],
   "message": "3层框架，层高-3m，跨度6m，做静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "frame",

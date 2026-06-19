@@ -23,7 +23,7 @@
   ],
   "message": "单跨门式刚架，跨度18m，檐口高度7m，屋面荷载6kN/m，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "portal-frame",

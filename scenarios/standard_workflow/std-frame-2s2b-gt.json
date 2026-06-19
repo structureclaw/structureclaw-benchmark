@@ -26,7 +26,7 @@
   ],
   "message": "2层2跨钢框架，层高3.6m，跨度5.4m和6m，楼面线荷载10kN/m，请使用YJK进行静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "frame",

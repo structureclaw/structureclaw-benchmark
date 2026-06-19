@@ -23,7 +23,7 @@
   ],
   "message": "钢梁跨度100000m，截面高度1mm，均布荷载999999kN/m，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

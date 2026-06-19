@@ -24,7 +24,7 @@
   ],
   "message": "Identify the simply supported beam from this sketch, extract the span and load labels, and run static analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "bench-beam-sketch",

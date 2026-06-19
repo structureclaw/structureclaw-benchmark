@@ -26,7 +26,7 @@
   ],
   "message": "2层空间钢框架，X向2跨6m+6m，Y向2跨5m+5m，层高3.6m，一层楼面荷载10kN/m²，二层楼面荷载8kN/m²，请使用PKPM进行静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "frame",

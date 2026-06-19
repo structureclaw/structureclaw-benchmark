@@ -23,7 +23,7 @@
   ],
   "message": "建立一个单层单跨平面结构，宽6m，高4m，顶部水平荷载50kN，请进行静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "generic",

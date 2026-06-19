@@ -25,7 +25,7 @@
   ],
   "message": "Use this architectural DXF to build a 3D calculation model for the simple 2-story steel frame, filtering out walls, doors, windows, and furniture.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-arch-frame3d-simple",

@@ -24,7 +24,7 @@
   ],
   "message": "外伸梁，简支跨度5m，外伸1.5m，均布荷载15kN/m，请进行静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "beam",

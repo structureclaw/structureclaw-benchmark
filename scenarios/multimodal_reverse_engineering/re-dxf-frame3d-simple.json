@@ -24,7 +24,7 @@
   ],
   "message": "Use this DXF drawing of the simple 2-story 3D steel frame to build a 3D calculation model and run analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-dxf-frame3d-simple",

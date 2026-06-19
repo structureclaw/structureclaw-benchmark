@@ -22,7 +22,7 @@
   ],
   "message": "简支梁跨度-5m，均布荷载20kN/m，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

@@ -23,7 +23,7 @@
   ],
   "message": "Warren truss, span 12m, height 2m, 6 panels, node load 8kN on bottom chord, please run a static analysis",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "truss",

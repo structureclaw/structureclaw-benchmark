@@ -22,7 +22,7 @@
   ],
   "message": "请用壳单元精细分析一块双向楼板，考虑板柱节点冲切",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

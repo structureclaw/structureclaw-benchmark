@@ -23,7 +23,7 @@
   ],
   "message": "帮我分析一根简支梁",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

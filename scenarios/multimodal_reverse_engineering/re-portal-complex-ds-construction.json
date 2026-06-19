@@ -23,7 +23,7 @@
   ],
   "message": "Use this construction drawing of the double-span portal frame to build the calculation model and run analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-portal-complex-ds-c",

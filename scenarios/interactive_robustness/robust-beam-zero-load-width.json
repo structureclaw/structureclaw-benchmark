@@ -22,7 +22,7 @@
   ],
   "message": "简支梁跨度6m，截面宽度0mm，高度500mm，均布荷载15kN/m，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

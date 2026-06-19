@@ -23,7 +23,7 @@
   ],
   "message": "A standalone steel column is 5m high with an H300x300 section and 700kN axial compression at the top. Build the model and run static analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "generic",

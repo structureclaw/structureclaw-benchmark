@@ -27,7 +27,7 @@
   ],
   "message": "2层3D混凝土框架，X向2跨跨度6m+6m，Y向1跨跨度5m，层高3.6m，C30混凝土，每层楼面荷载12kN/m2，请使用PKPM进行3D静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "concrete-frame",

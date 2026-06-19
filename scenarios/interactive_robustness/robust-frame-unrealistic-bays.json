@@ -22,7 +22,7 @@
   ],
   "message": "一层1000跨钢框架，每跨6m，层高3.6m，楼面荷载10kN/m，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

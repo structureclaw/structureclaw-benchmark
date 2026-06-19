@@ -23,7 +23,7 @@
   ],
   "message": "A triangular roof truss spans 15m with 5 panels and 10kN vertical nodal loads. Run static analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "truss",

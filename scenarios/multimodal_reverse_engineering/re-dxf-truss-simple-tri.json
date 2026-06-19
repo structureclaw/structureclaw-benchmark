@@ -23,7 +23,7 @@
   ],
   "message": "Use this DXF structural drawing of the triangular truss to build the calculation model and run analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-dxf-truss-simple",

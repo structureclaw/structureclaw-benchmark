@@ -21,7 +21,7 @@
   ],
   "message": "Try to interpret this blurry structural image and decide whether a clearer image or text dimensions are needed before analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "bench-blurry",

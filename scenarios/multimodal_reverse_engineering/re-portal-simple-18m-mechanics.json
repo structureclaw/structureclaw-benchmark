@@ -23,7 +23,7 @@
   ],
   "message": "Use this mechanics diagram of the 18m single-span portal frame to build the calculation model and run analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-portal-simple-18m-m",

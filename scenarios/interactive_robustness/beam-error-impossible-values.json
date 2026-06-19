@@ -21,7 +21,7 @@
   ],
   "message": "A steel beam spans 100000m, has a 1mm section depth, and carries 999999999kN/m. Run static analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "beam",

@@ -24,7 +24,7 @@
   ],
   "message": "三跨连续梁，跨度4m、5m、4m，均布荷载15kN/m，做静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "double-span-beam",

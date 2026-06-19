@@ -23,7 +23,7 @@
   ],
   "message": "请根据这张结构图识别类型并分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "bench-frame-sketch",

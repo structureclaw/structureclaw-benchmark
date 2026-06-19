@@ -23,7 +23,7 @@
   ],
   "message": "双跨连续梁，跨度5m和6m，均布荷载12kN/m，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "double-span-beam",

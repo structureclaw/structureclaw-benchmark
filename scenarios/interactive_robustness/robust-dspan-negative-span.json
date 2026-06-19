@@ -22,7 +22,7 @@
   ],
   "message": "双跨连续梁，第一跨5m，第二跨-6m，均布荷载12kN/m，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

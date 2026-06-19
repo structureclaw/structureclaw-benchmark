@@ -25,7 +25,7 @@
   ],
   "message": "Use this architectural DXF to build a 3D reinforced concrete frame calculation model and run analysis, filtering out non-structural building elements.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-arch-frame3d-concrete",

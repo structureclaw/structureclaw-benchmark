@@ -23,7 +23,7 @@
   ],
   "message": "A double-span portal frame has two 18m spans, 9m column height, and 6kN/m roof load. Run static analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "portal-frame",

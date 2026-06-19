@@ -23,7 +23,7 @@
   ],
   "message": "Use this construction drawing of the 2-story 2-bay steel frame to build the calculation model and run analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-frame-complex-2s2b-c",

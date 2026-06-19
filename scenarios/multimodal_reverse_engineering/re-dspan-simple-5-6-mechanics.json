@@ -23,7 +23,7 @@
   ],
   "message": "Use this mechanics diagram of the 5m+6m two-span continuous beam to build the calculation model and run analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-dspan-simple-5-6-m",

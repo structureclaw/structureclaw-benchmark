@@ -25,7 +25,7 @@
   ],
   "message": "请根据这张图片识别结构类型，提取参数，进行静力分析，并生成计算报告",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "bench-beam-report",

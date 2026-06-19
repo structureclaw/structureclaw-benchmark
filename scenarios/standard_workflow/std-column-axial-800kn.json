@@ -23,7 +23,7 @@
   ],
   "message": "A standalone reinforced concrete column is 4.2m high with a 450x450mm section, 600kN axial compression, and 30kN lateral load at the top. Build the model and run static analysis.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "generic",

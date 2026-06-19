@@ -23,7 +23,7 @@
   ],
   "message": "这是什么结构？请识别并分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "bench-portal-frame-diagram",

@@ -22,7 +22,7 @@
   ],
   "message": "三角桁架，跨度12m，高3m，节点荷载20kN，做静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "truss",

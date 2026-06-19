@@ -22,7 +22,7 @@
   ],
   "message": "独立混凝土柱，截面400x400mm，高度4.5m，柱顶轴向荷载500kN，做静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "generic",

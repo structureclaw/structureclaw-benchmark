@@ -23,7 +23,7 @@
   ],
   "message": "简支梁6m，均布荷载20kN/m，请建立模型并分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "beam",

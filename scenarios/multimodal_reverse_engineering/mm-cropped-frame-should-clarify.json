@@ -22,7 +22,7 @@
   ],
   "message": "Build a model from this cropped frame drawing only if the critical span, height, and support information are visible; otherwise ask for a complete drawing.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

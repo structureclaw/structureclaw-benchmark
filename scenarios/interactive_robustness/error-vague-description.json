@@ -21,7 +21,7 @@
   ],
   "message": "帮我分析一个结构",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "generic"

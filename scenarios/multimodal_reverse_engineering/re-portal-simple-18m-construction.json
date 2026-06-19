@@ -23,7 +23,7 @@
   ],
   "message": "请根据这张结构施工图建立计算模型并进行分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "attachments": [
     {
       "fileId": "re-portal-simple-18m-c",

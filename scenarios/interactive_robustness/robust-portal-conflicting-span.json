@@ -22,7 +22,7 @@
   ],
   "message": "门式刚架跨度18m，同时总宽度又是12m，屋面荷载6kN/m，请分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

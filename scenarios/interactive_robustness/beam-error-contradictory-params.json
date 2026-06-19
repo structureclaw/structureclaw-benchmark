@@ -21,7 +21,7 @@
   ],
   "message": "简支梁跨度-5米（负数），截面宽度0mm，做静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "beam",

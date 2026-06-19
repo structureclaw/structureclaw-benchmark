@@ -22,7 +22,7 @@
   ],
   "message": "This 15m truss has nodal loads of either 10 tons or 10kN; I am not sure. Please analyze it first.",
   "locale": "en",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "benchmarkModes": [
     "auto"
   ],

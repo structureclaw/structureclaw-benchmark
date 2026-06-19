@@ -24,7 +24,7 @@
   ],
   "message": "双跨门式刚架，跨度2x18m，高度9m，设5t吊车，屋面荷载6kN/m，做静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "portal-frame",

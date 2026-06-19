@@ -27,7 +27,7 @@
   ],
   "message": "3层2跨钢框架，层高3.3m，跨度5.4m和6m，每层楼面荷载15kN/m，请使用PKPM进行静力分析",
   "locale": "zh",
-  "maxRetries": 2,
+  "maxRetries": 0,
   "expect": {
     "skills": {
       "primary": "frame",

@@ -55,10 +55,9 @@ analysis backend. Use `analysisSkillTarget` for the skill ID and
 | `pkpm-static` | `builtin-pkpm` |
 | `yjk-static` | `builtin-yjk` |
 
-Every scenario uses `maxRetries: 2`, so each scenario has at most three
-attempts. Failed attempts are converted into compact structured feedback and
-prepended to the next attempt. Reports distinguish first-try success from final
-success:
+Every scenario uses `maxRetries: 0`, so each scenario is attempted once.
+Repeated trials should be represented by running the full experiment multiple
+times and aggregating those independent runs.
 
 Each scenario run also has a wall-clock timeout shared by all turns and retries.
 The default is 900000 ms (15 minutes) and can be overridden with
@@ -67,9 +66,7 @@ The default is 900000 ms (15 minutes) and can be overridden with
 timeout records the run as an execution failure; it does not change scoring
 thresholds for normal tool usage.
 
-- `Pass@1` — passed without retry
-- `Pass@N` — passed within the retry budget
-- `averageRetries` — average retries used per scenario run
+- `Pass@1` — passed on the single scenario attempt
 - `averageToolCalls` — average agent tool calls per scenario run; this is an
   efficiency signal only, with no pass/fail threshold
 - `averageDurationMs` — average wall-clock duration per scenario run
