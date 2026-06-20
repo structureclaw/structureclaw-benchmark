@@ -7,7 +7,7 @@
   "structureType": "column",
   "benchmarkStructureType": "column",
   "difficulty": "L1",
-  "skillTarget": "generic",
+  "skillTarget": "column",
   "evaluationFocus": [
     "routing",
     "modeling",
@@ -25,18 +25,18 @@
   "maxRetries": 0,
   "expect": {
     "skills": {
-      "primary": "generic",
-      "mayAlsoMatch": [
-        "beam"
-      ]
+      "primary": "column",
+      "mayAlsoMatch": []
     },
     "assertions": [
       {
+        "type": "structural_type",
+        "expected": "column"
+      },
+      {
         "type": "skill_match",
-        "primary": "generic",
-        "mayAlsoMatch": [
-          "beam"
-        ]
+        "primary": "column",
+        "mayAlsoMatch": []
       },
       {
         "type": "has_model",

@@ -27,13 +27,17 @@
   "expect": {
     "skills": {
       "primary": "generic",
-      "mayAlsoMatch": []
+      "mayAlsoMatch": [
+        "frame"
+      ]
     },
     "assertions": [
       {
         "type": "skill_match",
         "primary": "generic",
-        "mayAlsoMatch": []
+        "mayAlsoMatch": [
+          "frame"
+        ]
       },
       {
         "type": "has_model",
