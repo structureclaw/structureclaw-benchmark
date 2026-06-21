@@ -68,6 +68,9 @@ const RUNNER_VALUE_FLAGS = new Set([
   "--output",
   "--sut-root",
 ]);
+const RUNNER_BOOLEAN_FLAGS = new Set([
+  "--supervise",
+]);
 
 function usage() {
   return [
@@ -90,7 +93,7 @@ function usage() {
     "",
     "Runner flags passed through:",
     "  --scenario <id> --family <name> --split <name> --mode <auto|oracle-specialist|generic-only|all>",
-    "  --execution <web-stream|full> --case-timeout-ms <milliseconds>",
+    "  --execution <web-stream|full> --case-timeout-ms <milliseconds> --supervise",
     "  --output <file> --sut-root <path>",
   ].join("\n");
 }
@@ -145,6 +148,8 @@ function parseArgs(argv) {
       break;
     } else if (RUNNER_VALUE_FLAGS.has(arg)) {
       options.runnerArgs.push(arg, requireValue(argv, ++i, arg));
+    } else if (RUNNER_BOOLEAN_FLAGS.has(arg)) {
+      options.runnerArgs.push(arg);
     } else {
       throw new Error(`Unknown option: ${arg}\n\n${usage()}`);
     }

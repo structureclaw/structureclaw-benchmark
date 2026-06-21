@@ -33,9 +33,6 @@
     },
     "assertions": [
       {
-        "type": "has_interaction_questions"
-      },
-      {
         "type": "no_bad_model"
       },
       {

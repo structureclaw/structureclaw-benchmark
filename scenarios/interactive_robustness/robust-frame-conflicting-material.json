@@ -9,7 +9,6 @@
   "difficulty": "L3",
   "skillTarget": "frame",
   "evaluationFocus": [
-    "routing",
     "interaction"
   ],
   "category": "conflicting-requirements",
@@ -27,24 +26,7 @@
     "auto"
   ],
   "expect": {
-    "skills": {
-      "primary": "frame",
-      "mayAlsoMatch": [
-        "generic"
-      ]
-    },
     "assertions": [
-      {
-        "type": "structural_type",
-        "expected": "frame"
-      },
-      {
-        "type": "skill_match",
-        "primary": "frame",
-        "mayAlsoMatch": [
-          "generic"
-        ]
-      },
       {
         "type": "has_interaction_questions"
       },

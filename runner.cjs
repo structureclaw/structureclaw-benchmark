@@ -1,6 +1,7 @@
 const path = require("node:path");
 const fs = require("node:fs");
 const { pathToFileURL } = require("node:url");
+const { spawn } = require("node:child_process");
 
 const { evaluateScenario } = require("./lib/evaluate.cjs");
 const { printScenarioResult, printSummary, writeJsonOutput } = require("./lib/report.cjs");
@@ -209,6 +210,7 @@ function parseBenchmarkOptions(args) {
   let caseTimeoutMs = Number(process.env.LLM_BENCHMARK_CASE_TIMEOUT_MS || DEFAULT_CASE_TIMEOUT_MS);
   let taskFamily;
   let split;
+  let supervise = false;
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--scenario" && args[i + 1]) {
       scenarioId = args[++i];
@@ -226,6 +228,8 @@ function parseBenchmarkOptions(args) {
       taskFamily = args[++i];
     } else if (args[i] === "--split" && args[i + 1]) {
       split = args[++i];
+    } else if (args[i] === "--supervise") {
+      supervise = true;
     }
   }
   if (mode !== "all" && !BENCHMARK_MODES.includes(mode)) {
@@ -237,7 +241,7 @@ function parseBenchmarkOptions(args) {
   if (!Number.isFinite(caseTimeoutMs) || caseTimeoutMs <= 0) {
     throw new Error("--case-timeout-ms must be a positive number");
   }
-  return { scenarioId, outputPath, sutRoot, mode, execution, caseTimeoutMs, taskFamily, split };
+  return { scenarioId, outputPath, sutRoot, mode, execution, caseTimeoutMs, taskFamily, split, supervise };
 }
 
 function buildFeedbackFromEvaluation(evaluation, locale = "zh") {
@@ -394,14 +398,24 @@ function buildTurnContext({ scenario, turn, benchmarkContext, skillIds }) {
 }
 
 async function runAgentLikeWeb(service, input) {
-  for await (const _chunk of service.runStream(input)) {
-    // Drain the stream exactly like the browser does; evaluation reads the
-    // final graph state from the checkpoint below.
+  const iterator = service.runStream(input)[Symbol.asyncIterator]();
+  try {
+    while (true) {
+      const next = await raceWithSignal(iterator.next(), input.signal);
+      if (next.done) break;
+      // Drain the stream exactly like the browser does; evaluation reads the
+      // final graph state from the checkpoint below.
+    }
+  } catch (err) {
+    if (input.signal?.aborted && typeof iterator.return === "function") {
+      await iterator.return().catch(() => {});
+    }
+    throw err;
   }
-  const snapshot = await service.getConversationSessionSnapshot(
+  const snapshot = await raceWithSignal(service.getConversationSessionSnapshot(
     input.conversationId,
     input.context?.locale || "zh",
-  );
+  ), input.signal);
   if (!snapshot?.state) {
     throw new Error("web-stream execution did not produce a checkpoint state");
   }
@@ -410,9 +424,35 @@ async function runAgentLikeWeb(service, input) {
 
 async function runAgentForBenchmark(service, input, execution) {
   if (execution === "full") {
-    return service.runFull(input);
+    return raceWithSignal(service.runFull(input), input.signal);
   }
   return runAgentLikeWeb(service, input);
+}
+
+function abortReason(signal) {
+  if (signal?.reason instanceof Error) return signal.reason;
+  if (signal?.reason) return new Error(String(signal.reason));
+  return new Error("operation aborted");
+}
+
+function raceWithSignal(promise, signal) {
+  if (!signal) return promise;
+  if (signal.aborted) return Promise.reject(abortReason(signal));
+
+  return new Promise((resolve, reject) => {
+    const onAbort = () => reject(abortReason(signal));
+    signal.addEventListener("abort", onAbort, { once: true });
+    promise.then(
+      (value) => {
+        signal.removeEventListener("abort", onAbort);
+        resolve(value);
+      },
+      (err) => {
+        signal.removeEventListener("abort", onAbort);
+        reject(err);
+      },
+    );
+  });
 }
 
 function createCaseTimeout(timeoutMs) {
@@ -480,9 +520,173 @@ function mergeTurnResults(scenario, turnResults, totalDurationMs) {
   };
 }
 
+function supervisedOutputPath(outputPath, scenario) {
+  const safeId = safeConversationIdPart(scenario.id);
+  const dir = outputPath
+    ? `${outputPath}.cases`
+    : path.join(BENCH_ROOT, "results", "supervised-cases");
+  fs.mkdirSync(dir, { recursive: true });
+  return path.join(dir, `${safeId}.json`);
+}
+
+function childArgsForScenario(options, sutRoot, scenario, outputPath) {
+  return [
+    __filename,
+    "--scenario", scenario.baseScenarioId || scenario.id,
+    "--mode", scenario.mode || "auto",
+    "--execution", options.execution,
+    "--case-timeout-ms", String(options.caseTimeoutMs),
+    "--sut-root", sutRoot,
+    "--output", outputPath,
+  ];
+}
+
+function killProcessTree(pid) {
+  if (!pid) return;
+  if (process.platform === "win32") {
+    spawn("taskkill.exe", ["/PID", String(pid), "/T", "/F"], { stdio: "ignore" });
+    return;
+  }
+  try {
+    process.kill(-pid, "SIGKILL");
+  } catch {
+    try {
+      process.kill(pid, "SIGKILL");
+    } catch {
+      // Ignore best-effort cleanup failures.
+    }
+  }
+}
+
+function failedSupervisedEvaluation(scenario, actual, durationMs, options) {
+  return {
+    scenarioId: scenario.id,
+    baseScenarioId: scenario.baseScenarioId || scenario.id,
+    description: scenario.description || "",
+    split: scenario.split || "core",
+    taskFamily: scenario.taskFamily || "standard_workflow",
+    inputModality: scenario.inputModality || "text",
+    structureType: scenario.structureType || null,
+    benchmarkStructureType: scenario.benchmarkStructureType || null,
+    difficulty: scenario.difficulty || null,
+    skillTarget: scenario.skillTarget || null,
+    category: scenario.category || null,
+    tags: Array.isArray(scenario.tags) ? scenario.tags : [],
+    locale: scenario.locale || null,
+    analysisSkillTarget: scenario.analysisSkillTarget || null,
+    analysisEngineTarget: scenario.analysisEngineTarget || null,
+    mode: scenario.mode || "auto",
+    evaluationFocus: Array.isArray(scenario.evaluationFocus) ? scenario.evaluationFocus : [],
+    passed: 0,
+    total: 1,
+    allPassed: false,
+    metrics: [{ metric: "execution", pass: false, expected: "supervised case completes", actual }],
+    durationMs,
+    executionProfile: {
+      execution: options.execution,
+      mode: scenario.mode || "auto",
+      skillIds: [],
+      enabledToolIds: [],
+      sourceDataDir: process.env.SCLAW_BENCHMARK_SOURCE_DATA_DIR || null,
+      runtimeDataDir: process.env.SCLAW_DATA_DIR || null,
+      analysisSkillTarget: scenario.analysisSkillTarget || "opensees-static",
+      caseTimeoutMs: options.caseTimeoutMs,
+      supervised: true,
+    },
+  };
+}
+
+function readSingleScenarioResult(outputPath) {
+  if (!fs.existsSync(outputPath)) return null;
+  const record = JSON.parse(fs.readFileSync(outputPath, "utf8"));
+  return Array.isArray(record.scenarios) ? record.scenarios[0] || null : null;
+}
+
+function runChildScenario(args, timeoutMs, cwd) {
+  return new Promise((resolve) => {
+    const start = Date.now();
+    const child = spawn(process.execPath, args, {
+      cwd,
+      env: process.env,
+      stdio: "inherit",
+      detached: process.platform !== "win32",
+    });
+    let timedOut = false;
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      killProcessTree(child.pid);
+    }, timeoutMs);
+    if (typeof timeout.unref === "function") timeout.unref();
+    child.on("close", (code, signal) => {
+      clearTimeout(timeout);
+      resolve({ code, signal, timedOut, durationMs: Date.now() - start });
+    });
+  });
+}
+
+async function runSupervisedBenchmark(options, sutRoot, scenarios) {
+  process.stdout.write(`\n${"=".repeat(60)}\n`);
+  process.stdout.write(`LangGraph Agent Benchmark: ${scenarios.length} supervised scenario run(s)\n`);
+  process.stdout.write(`Mode: ${options.mode}\n`);
+  process.stdout.write(`Execution: ${options.execution}\n`);
+  process.stdout.write(`Case timeout: ${options.caseTimeoutMs}ms\n`);
+  process.stdout.write(`SUT root: ${sutRoot}\n`);
+  process.stdout.write(`${"=".repeat(60)}\n`);
+
+  const results = [];
+  const hardTimeoutMs = options.caseTimeoutMs + 30_000;
+  for (const scenario of scenarios) {
+    const caseOutput = supervisedOutputPath(options.outputPath, scenario);
+    fs.rmSync(caseOutput, { force: true });
+    process.stdout.write(`\nSupervised running: ${scenario.id}\n`);
+    const childResult = await runChildScenario(
+      childArgsForScenario(options, sutRoot, scenario, caseOutput),
+      hardTimeoutMs,
+      sutRoot,
+    );
+    let evaluation = readSingleScenarioResult(caseOutput);
+    if (!evaluation) {
+      const actual = childResult.timedOut
+        ? `case process timed out after ${hardTimeoutMs}ms`
+        : `case process exited without result (code=${childResult.code}, signal=${childResult.signal || "none"})`;
+      evaluation = failedSupervisedEvaluation(scenario, actual, childResult.durationMs, options);
+    } else {
+      evaluation.executionProfile = {
+        ...(evaluation.executionProfile || {}),
+        supervised: true,
+        processExitCode: childResult.code,
+        processSignal: childResult.signal || null,
+        processTimedOut: childResult.timedOut,
+      };
+    }
+    printScenarioResult(scenario, evaluation);
+    results.push(evaluation);
+    if (options.outputPath) {
+      writeJsonOutput(options.outputPath, results, { quiet: true });
+    }
+  }
+
+  printSummary(results);
+  if (options.outputPath) {
+    writeJsonOutput(options.outputPath, results);
+  }
+  if (results.some((r) => !r.allPassed)) {
+    process.exitCode = 1;
+  }
+}
+
 async function runBenchmark(args) {
   const options = parseBenchmarkOptions(args);
   const sutRoot = resolveSutRoot(options.sutRoot);
+  const scenarios = resolveScenarioRuns(loadScenarios(options), options);
+  if (scenarios.length === 0) {
+    process.stdout.write("No benchmark scenarios matched.\n");
+    return;
+  }
+  if (options.supervise) {
+    await runSupervisedBenchmark(options, sutRoot, scenarios);
+    return;
+  }
 
   // Reuse SUT's regression helpers for env setup and backend build.
   const regressionSharedPath = path.join(sutRoot, "tests", "regression", "shared.js");
@@ -503,12 +707,6 @@ async function runBenchmark(args) {
     env: { ...process.env, ...context.env },
     stdio: "pipe",
   });
-
-  const scenarios = resolveScenarioRuns(loadScenarios(options), options);
-  if (scenarios.length === 0) {
-    process.stdout.write("No benchmark scenarios matched.\n");
-    return;
-  }
 
   process.stdout.write(`\n${"=".repeat(60)}\n`);
   process.stdout.write(`LangGraph Agent Benchmark: ${scenarios.length} scenario run(s)\n`);

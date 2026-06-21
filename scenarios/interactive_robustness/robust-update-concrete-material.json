@@ -30,7 +30,7 @@
   ],
   "turns": [
     {
-      "message": "两层两跨混凝土框架，C30混凝土，HRB400钢筋，跨度6m，层高3.6m，请分析",
+      "message": "两层两跨混凝土框架，C30混凝土，HRB400钢筋，跨度6m，层高3.6m，楼面荷载10kN/m²，请分析",
       "assertions": [
         {
           "type": "structural_type",
