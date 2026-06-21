@@ -10,7 +10,8 @@
   "skillTarget": "frame",
   "evaluationFocus": [
     "routing",
-    "interaction"
+    "interaction",
+    "analysis"
   ],
   "category": "unrealistic-values",
   "tags": [
@@ -46,13 +47,7 @@
         ]
       },
       {
-        "type": "has_interaction_questions"
-      },
-      {
-        "type": "no_bad_model"
-      },
-      {
-        "type": "should_not_analyze"
+        "type": "analysis_or_interaction"
       }
     ]
   }

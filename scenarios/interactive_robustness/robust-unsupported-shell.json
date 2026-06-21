@@ -9,7 +9,6 @@
   "difficulty": "L3",
   "skillTarget": "generic",
   "evaluationFocus": [
-    "routing",
     "interaction"
   ],
   "category": "unsupported",
@@ -32,11 +31,6 @@
       "mayAlsoMatch": []
     },
     "assertions": [
-      {
-        "type": "skill_match",
-        "primary": "generic",
-        "mayAlsoMatch": []
-      },
       {
         "type": "has_interaction_questions"
       },

@@ -1,13 +1,13 @@
 {
   "id": "robust-update-generic-increase-load",
-  "description": "多轮：通用结构增大水平荷载",
+  "description": "多轮：平面框架增大水平荷载",
   "split": "core",
   "taskFamily": "interactive_robustness",
   "inputModality": "text",
-  "structureType": "generic",
-  "benchmarkStructureType": "generic",
+  "structureType": "frame",
+  "benchmarkStructureType": "steel-frame",
   "difficulty": "L3",
-  "skillTarget": "generic",
+  "skillTarget": "frame",
   "evaluationFocus": [
     "routing",
     "modeling",
@@ -17,7 +17,7 @@
   ],
   "category": "multi-turn-update",
   "tags": [
-    "generic",
+    "frame",
     "interactive",
     "multi-turn-update",
     "zh",
@@ -34,8 +34,10 @@
       "assertions": [
         {
           "type": "skill_match",
-          "primary": "generic",
-          "mayAlsoMatch": []
+          "primary": "frame",
+          "mayAlsoMatch": [
+            "generic"
+          ]
         },
         {
           "type": "has_model",

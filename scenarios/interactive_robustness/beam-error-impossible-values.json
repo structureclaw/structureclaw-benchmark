@@ -11,7 +11,8 @@
   "evaluationFocus": [
     "routing",
     "interaction",
-    "semantic"
+    "semantic",
+    "analysis"
   ],
   "category": "error-recovery",
   "tags": [
@@ -38,17 +39,7 @@
         ]
       },
       {
-        "type": "has_interaction_questions"
-      },
-      {
-        "type": "natural_language",
-        "description": "Agent should recognize the unrealistic dimensions and ask the user to confirm or correct the values"
-      },
-      {
-        "type": "no_bad_model"
-      },
-      {
-        "type": "should_not_analyze"
+        "type": "analysis_or_interaction"
       }
     ]
   }

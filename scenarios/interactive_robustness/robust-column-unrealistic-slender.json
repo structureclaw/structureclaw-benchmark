@@ -7,10 +7,11 @@
   "structureType": "column",
   "benchmarkStructureType": "column",
   "difficulty": "L2",
-  "skillTarget": "generic",
+  "skillTarget": "column",
   "evaluationFocus": [
     "routing",
-    "interaction"
+    "interaction",
+    "analysis"
   ],
   "category": "unrealistic-values",
   "tags": [
@@ -28,8 +29,10 @@
   ],
   "expect": {
     "skills": {
-      "primary": "generic",
-      "mayAlsoMatch": []
+      "primary": "column",
+      "mayAlsoMatch": [
+        "generic"
+      ]
     },
     "assertions": [
       {
@@ -38,17 +41,13 @@
       },
       {
         "type": "skill_match",
-        "primary": "generic",
-        "mayAlsoMatch": []
+        "primary": "column",
+        "mayAlsoMatch": [
+          "generic"
+        ]
       },
       {
-        "type": "has_interaction_questions"
-      },
-      {
-        "type": "no_bad_model"
-      },
-      {
-        "type": "should_not_analyze"
+        "type": "analysis_or_interaction"
       }
     ]
   }

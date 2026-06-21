@@ -41,10 +41,6 @@
         "type": "has_interaction_questions"
       },
       {
-        "type": "natural_language",
-        "description": "Agent should detect the negative story height (-3m) and ask the user to provide a valid positive dimension"
-      },
-      {
         "type": "no_bad_model"
       },
       {

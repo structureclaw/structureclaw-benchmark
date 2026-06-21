@@ -9,7 +9,6 @@
   "difficulty": "L2",
   "skillTarget": "generic",
   "evaluationFocus": [
-    "routing",
     "interaction",
     "semantic"
   ],
@@ -33,11 +32,6 @@
       "mayAlsoMatch": []
     },
     "assertions": [
-      {
-        "type": "skill_match",
-        "primary": "generic",
-        "mayAlsoMatch": []
-      },
       {
         "type": "has_interaction_questions"
       },

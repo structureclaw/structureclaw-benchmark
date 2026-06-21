@@ -464,6 +464,9 @@ function mergeTurnResults(scenario, turnResults, totalDurationMs) {
     benchmarkStructureType: scenario.benchmarkStructureType || null,
     difficulty: scenario.difficulty || null,
     skillTarget: scenario.skillTarget || null,
+    category: scenario.category || null,
+    tags: Array.isArray(scenario.tags) ? scenario.tags : [],
+    locale: scenario.locale || null,
     analysisSkillTarget: scenario.analysisSkillTarget || null,
     analysisEngineTarget: scenario.analysisEngineTarget || null,
     mode: scenario.mode || "auto",
@@ -671,6 +674,9 @@ async function runBenchmark(args) {
 
     printScenarioResult(rawScenario, lastEvaluation);
     results.push(lastEvaluation);
+    if (options.outputPath) {
+      writeJsonOutput(options.outputPath, results, { quiet: true });
+    }
   }
 
   printSummary(results);
