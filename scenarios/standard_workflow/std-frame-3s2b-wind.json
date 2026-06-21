@@ -1,6 +1,6 @@
 {
   "id": "std-frame-3s2b-wind",
-  "description": "3-story 2-bay steel frame with wind load",
+  "description": "3-story 2-bay steel frame with equivalent wind nodal loads",
   "split": "core",
   "taskFamily": "standard_workflow",
   "inputModality": "text",
@@ -24,7 +24,7 @@
     "l2",
     "en"
   ],
-  "message": "Use OpenSees to run static analysis for a 3-story 2-bay steel frame with 3.6m story height, 6m bays, 10kN/m floor line load, and 0.5kN/m2 horizontal wind load.",
+  "message": "Use OpenSees to run static analysis for a 3-story 2-bay steel frame with 3.6m story height, 6m bays, 10kN/m floor line load on each beam, and equivalent horizontal wind nodal loads of 10kN, 15kN, and 20kN at the right-side joints of stories 1, 2, and 3.",
   "locale": "en",
   "maxRetries": 0,
   "expect": {
@@ -54,8 +54,9 @@
       {
         "type": "model_matches",
         "groundTruthId": "frame-3s2b-6m-10k-wind",
+        "loadAxes": ["x", "z"],
         "tolerances": {
-          "load": 0.4
+          "load": 0.2
         }
       },
       {

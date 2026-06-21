@@ -6805,7 +6805,7 @@
   {
     "id": "frame-3s2b-6m-10k-wind",
     "inferredType": "frame",
-    "description": "3层2跨钢框架，层高3.6m，6m等跨，楼面线荷载10kN/m，水平风荷载",
+    "description": "3层2跨钢框架，层高3.6m，6m等跨，楼面线荷载10kN/m，右侧节点等效水平风荷载10/15/20kN",
     "model": {
       "schema_version": "2.0.0",
       "unit_system": "SI",

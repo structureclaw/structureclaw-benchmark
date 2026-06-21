@@ -1246,7 +1246,7 @@ models.push(build2dFrame("frame-3s2b-5p4-6-15k", "3层2跨钢框架，层高3.3m
   storyHeights: [3.3, 3.3, 3.3],
   floorLoads: [15, 15, 15],
 }));
-models.push(build2dFrame("frame-3s2b-6m-10k-wind", "3层2跨钢框架，层高3.6m，6m等跨，楼面线荷载10kN/m，水平风荷载", {
+models.push(build2dFrame("frame-3s2b-6m-10k-wind", "3层2跨钢框架，层高3.6m，6m等跨，楼面线荷载10kN/m，右侧节点等效水平风荷载10/15/20kN", {
   bayWidths: [6, 6],
   storyHeights: [3.6, 3.6, 3.6],
   floorLoads: [10, 10, 10],
