@@ -281,6 +281,51 @@ function resolveAttachmentPaths(scenario) {
   return resolved;
 }
 
+function runtimeUploadRoot() {
+  const dataDir = process.env.SCLAW_DATA_DIR;
+  if (!dataDir) {
+    throw new Error("SCLAW_DATA_DIR is required for benchmark attachment uploads");
+  }
+  return path.join(dataDir, ".uploads");
+}
+
+function safeAttachmentName(value, fallback) {
+  const raw = String(value || fallback || "attachment").replace(/[^A-Za-z0-9._-]/g, "-");
+  return raw && raw !== "." && raw !== ".." ? raw : "attachment";
+}
+
+function copyAttachmentsToRuntimeUploads(attachments, conversationId) {
+  if (!attachments) return attachments;
+  const uploadDir = path.join(runtimeUploadRoot(), conversationId);
+  fs.mkdirSync(uploadDir, { recursive: true });
+  return attachments.map((attachment, index) => {
+    const sourcePath = path.isAbsolute(attachment.relPath)
+      ? attachment.relPath
+      : path.resolve(BENCH_ROOT, attachment.relPath.replace(/^tests\/llm-benchmark\//, ""));
+    const originalName = safeAttachmentName(attachment.originalName || path.basename(sourcePath), `attachment-${index}`);
+    const storedName = safeAttachmentName(`bench-${index}-${originalName}`, `bench-${index}${path.extname(sourcePath)}`);
+    fs.copyFileSync(sourcePath, path.join(uploadDir, storedName));
+    return {
+      ...attachment,
+      relPath: path.join(".uploads", conversationId, storedName).replace(/\\/g, "/"),
+    };
+  });
+}
+
+function prepareScenarioAttachmentsForRun(scenario, conversationId) {
+  const prepared = {
+    ...scenario,
+    attachments: copyAttachmentsToRuntimeUploads(scenario.attachments, conversationId),
+  };
+  if (Array.isArray(scenario.turns)) {
+    prepared.turns = scenario.turns.map((turn) => ({
+      ...turn,
+      attachments: copyAttachmentsToRuntimeUploads(turn.attachments, conversationId),
+    }));
+  }
+  return prepared;
+}
+
 function normalizeScenario(scenario) {
   if (scenario.turns) {
     return { ...scenario, _multiTurn: true };
@@ -755,14 +800,15 @@ async function runBenchmark(args) {
         const turnResults = [];
         let currentTurnIndex = 0;
         const conversationId = `bench-${safeConversationIdPart(scenario.id)}-${scenarioStart}-${attempt}`;
+        const runScenario = prepareScenarioAttachmentsForRun(scenario, conversationId);
 
         const prevLogLevel = process.env.LOG_LEVEL;
         process.env.LOG_LEVEL = "warn";
 
         try {
-          for (let i = 0; i < scenario.turns.length; i++) {
+          for (let i = 0; i < runScenario.turns.length; i++) {
             currentTurnIndex = i;
-            const turn = scenario.turns[i];
+            const turn = runScenario.turns[i];
             const turnStart = Date.now();
 
             const messageWithFeedback = (i === 0 && feedbackPrefix)
@@ -773,13 +819,13 @@ async function runBenchmark(args) {
               message: messageWithFeedback,
               conversationId,
               signal: caseTimeout.signal,
-              context: buildTurnContext({ scenario, turn, benchmarkContext, skillIds }),
+              context: buildTurnContext({ scenario: runScenario, turn, benchmarkContext, skillIds }),
             }, options.execution);
 
             const turnDurationMs = Date.now() - turnStart;
 
             if (turn.assertions && turn.assertions.length > 0) {
-              const turnScenario = { ...scenario, expect: { assertions: turn.assertions } };
+              const turnScenario = { ...runScenario, expect: { assertions: turn.assertions } };
               const evaluation = await evaluateScenario(turnScenario, state, turnDurationMs);
               turnResults.push({ turnIndex: i, evaluation });
             }

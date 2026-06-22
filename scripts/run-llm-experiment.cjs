@@ -376,7 +376,7 @@ function buildExperimentEnv(config, suite, primary, judge) {
   const runtimeDir = path.join(RUNTIME_ROOT, sanitizeFilePart(primary.key));
   fs.mkdirSync(runtimeDir, { recursive: true });
   const sourceDataDir = resolveBenchmarkSourceDataDir(rootEnv, suiteEnv);
-  syncRuntimeSettings(runtimeDir, sourceDataDir);
+  syncRuntimeSettings(runtimeDir, sourceDataDir, primary);
   const env = {
     ...process.env,
     ...stringifyEnv(rootEnv),
@@ -403,16 +403,29 @@ function resolveBenchmarkSourceDataDir(rootEnv, suiteEnv) {
   return value ? path.resolve(String(value)) : null;
 }
 
-function syncRuntimeSettings(runtimeDir, sourceDataDir) {
-  if (!sourceDataDir) return;
-  const sourceSettings = path.join(sourceDataDir, "settings.json");
-  if (!fs.existsSync(sourceSettings)) return;
+function syncRuntimeSettings(runtimeDir, sourceDataDir, primary) {
+  let settings = {};
+  const sourceSettings = sourceDataDir ? path.join(sourceDataDir, "settings.json") : null;
+  if (sourceSettings && fs.existsSync(sourceSettings)) {
+    settings = readJson(sourceSettings);
+  }
   fs.mkdirSync(runtimeDir, { recursive: true });
-  const settings = readJson(sourceSettings);
-  const sourcePython = process.platform === "win32"
-    ? path.join(sourceDataDir, ".venv", "Scripts", "python.exe")
-    : path.join(sourceDataDir, ".venv", "bin", "python");
-  if (fs.existsSync(sourcePython)) {
+
+  settings.llm = {
+    ...(settings.llm && typeof settings.llm === "object" && !Array.isArray(settings.llm)
+      ? settings.llm
+      : {}),
+    model: primary.model,
+    baseUrl: primary.baseUrl,
+  };
+  delete settings.llm.apiKey;
+
+  const sourcePython = sourceDataDir
+    ? (process.platform === "win32"
+        ? path.join(sourceDataDir, ".venv", "Scripts", "python.exe")
+        : path.join(sourceDataDir, ".venv", "bin", "python"))
+    : null;
+  if (sourcePython && fs.existsSync(sourcePython)) {
     settings.analysis = {
       ...(settings.analysis && typeof settings.analysis === "object" && !Array.isArray(settings.analysis)
         ? settings.analysis
