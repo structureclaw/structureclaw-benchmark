@@ -83,11 +83,11 @@ const frameSketch = svg(`
   <line x1="425" y1="322" x2="455" y2="322" stroke="#333" stroke-width="3"/>
   <line x1="160" y1="320" x2="160" y2="322" stroke="#333" stroke-width="2.5"/>
   <line x1="440" y1="320" x2="440" y2="322" stroke="#333" stroke-width="2.5"/>
-  <!-- floor load arrows -->
+  <!-- equivalent beam line load arrows -->
   ${[200, 280, 360].map(x => `<line x1="${x}" y1="72" x2="${x}" y2="95" class="load-arrow"/>`).join("\n  ")}
-  <text x="300" y="65" text-anchor="middle" class="dim">10 kN/m²</text>
+  <text x="300" y="65" text-anchor="middle" class="dim">60 kN/m</text>
   ${[200, 280, 360].map(x => `<line x1="${x}" y1="182" x2="${x}" y2="205" class="load-arrow"/>`).join("\n  ")}
-  <text x="300" y="178" text-anchor="middle" class="dim">10 kN/m²</text>
+  <text x="300" y="178" text-anchor="middle" class="dim">60 kN/m</text>
   <!-- dimensions -->
   <text x="140" y="160" text-anchor="end" class="dim">3.6m</text>
   <text x="140" y="270" text-anchor="end" class="dim">3.6m</text>
@@ -130,16 +130,15 @@ const portalFrame = svg(`
   <line x1="120" y1="310" x2="120" y2="120" class="member"/>
   <!-- right column -->
   <line x1="520" y1="310" x2="520" y2="120" class="member"/>
-  <!-- rafter -->
-  <line x1="120" y1="120" x2="320" y2="100" class="member"/>
-  <line x1="320" y1="100" x2="520" y2="120" class="member"/>
+  <!-- roof beam -->
+  <line x1="120" y1="120" x2="520" y2="120" class="member"/>
   <!-- fixed supports -->
   <line x1="105" y1="312" x2="135" y2="312" stroke="#333" stroke-width="3"/>
   <line x1="505" y1="312" x2="535" y2="312" stroke="#333" stroke-width="3"/>
   <!-- UDL on roof -->
   ${Array.from({ length: 9 }, (_, i) => {
     const x = 150 + i * 42;
-    const yTop = 112 - (Math.abs(x - 320) / 200) * 12;
+    const yTop = 112;
     return `<line x1="${x}" y1="${yTop - 25}" x2="${x}" y2="${yTop - 3}" class="load-arrow"/>`;
   }).join("\n  ")}
   <text x="320" y="70" text-anchor="middle" class="dim">6 kN/m</text>

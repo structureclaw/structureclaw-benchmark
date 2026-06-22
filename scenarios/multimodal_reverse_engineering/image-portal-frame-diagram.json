@@ -21,7 +21,7 @@
     "image",
     "zh"
   ],
-  "message": "这是什么结构？请识别并分析",
+  "message": "这是什么结构？请读取跨度、高度和屋面梁线荷载，并建立模型分析",
   "locale": "zh",
   "maxRetries": 0,
   "attachments": [

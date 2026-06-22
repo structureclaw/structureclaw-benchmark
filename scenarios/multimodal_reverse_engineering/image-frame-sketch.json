@@ -21,7 +21,7 @@
     "image",
     "zh"
   ],
-  "message": "请根据这张结构图识别类型并分析",
+  "message": "请根据这张结构图识别类型，读取层高、跨度和梁线荷载并进行静力分析",
   "locale": "zh",
   "maxRetries": 0,
   "attachments": [
