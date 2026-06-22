@@ -21,7 +21,7 @@
     "dxf",
     "en"
   ],
-  "message": "Use this DXF structural drawing of the 2-story 2-bay steel frame to build the calculation model and run analysis.",
+  "message": "Use this DXF structural drawing of the 2-story 2-bay steel frame to build the calculation model and run analysis. Use fixed column bases and the downward floor beam line loads shown in the drawing: 10 kN/m dead load and 8 kN/m live load.",
   "locale": "en",
   "maxRetries": 0,
   "attachments": [

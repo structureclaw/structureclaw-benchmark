@@ -21,7 +21,7 @@
     "dxf",
     "en"
   ],
-  "message": "Use this DXF structural drawing of the triangular truss to build the calculation model and run analysis.",
+  "message": "Use this DXF structural drawing of the triangular truss to build the calculation model and run analysis. Use a pinned support at the left end, a roller support at the right end, and 10 kN downward nodal loads at the loaded lower chord panel points shown in the drawing.",
   "locale": "en",
   "maxRetries": 0,
   "attachments": [

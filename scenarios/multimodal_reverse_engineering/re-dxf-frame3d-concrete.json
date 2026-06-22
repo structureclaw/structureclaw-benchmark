@@ -22,7 +22,7 @@
     "dxf",
     "zh"
   ],
-  "message": "请根据这个DXF空间混凝土框架图建立3D计算模型并进行分析",
+  "message": "请根据这个DXF空间混凝土框架图建立2层3D计算模型并进行分析。柱脚按固定支座处理；楼面面荷载第一层12kN/m²、第二层10kN/m²，等效到X向梁的向下均布线荷载分别为30kN/m和25kN/m。",
   "locale": "zh",
   "maxRetries": 0,
   "attachments": [

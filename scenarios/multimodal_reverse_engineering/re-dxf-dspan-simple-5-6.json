@@ -21,7 +21,7 @@
     "dxf",
     "zh"
   ],
-  "message": "请根据这个DXF结构图纸建立计算模型并进行分析",
+  "message": "请根据这个DXF结构图纸建立5m+6m两跨连续梁计算模型并进行分析。采用左端铰支座、中间支座、右端滚支座，并按图中标注施加向下均布荷载12kN/m。",
   "locale": "zh",
   "maxRetries": 0,
   "attachments": [

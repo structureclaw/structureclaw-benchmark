@@ -22,7 +22,7 @@
     "dxf",
     "en"
   ],
-  "message": "Use this architectural DXF of a 2-story 2-bay frame building to extract the structural members and run analysis, ignoring walls, doors, windows, furniture, and stairs.",
+  "message": "Use this architectural DXF of a 2-story 2-bay steel frame building to extract the structural members and run analysis, ignoring walls, doors, windows, furniture, and stairs. Use fixed column bases; apply downward line loads of 10 kN/m dead load and 8 kN/m live load on each floor beam.",
   "locale": "en",
   "maxRetries": 0,
   "attachments": [

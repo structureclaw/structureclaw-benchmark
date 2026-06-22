@@ -21,7 +21,7 @@
     "dxf",
     "en"
   ],
-  "message": "Use this DXF structural drawing of the 18m portal frame to build the calculation model and run analysis.",
+  "message": "Use this DXF structural drawing of the 18m portal frame to build the calculation model and run analysis. Use fixed column bases and the 6 kN/m downward roof beam line load shown in the drawing.",
   "locale": "en",
   "maxRetries": 0,
   "attachments": [
