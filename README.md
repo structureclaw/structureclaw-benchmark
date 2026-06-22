@@ -66,6 +66,13 @@ The default is 900000 ms (15 minutes) and can be overridden with
 timeout records the run as an execution failure; it does not change scoring
 thresholds for normal tool usage.
 
+The experiment wrapper runs cases in supervised mode by default. In supervised
+mode each scenario uses a separate child process, so a timed-out case is
+isolated from later cases even if an in-flight model request keeps running.
+The supervising parent gives the child process an additional grace window after
+the case timeout so the child can write its failure result before being killed.
+Use `--no-supervise` only for single-process debugging.
+
 - `Pass@1` — passed on the single scenario attempt
 - `averageToolCalls` — average agent tool calls per scenario run; this is an
   efficiency signal only, with no pass/fail threshold

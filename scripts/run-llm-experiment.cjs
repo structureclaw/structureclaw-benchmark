@@ -11,6 +11,7 @@ const RUNTIME_ROOT = path.join(BENCH_ROOT, "runtime");
 const DEFAULT_DEFAULTS = {
   suite: "smoke-text",
   mode: "auto",
+  supervise: true,
   outputDir: "results",
 };
 
@@ -89,6 +90,7 @@ function usage() {
     "  --multimodal-model <key>    Override roles.multimodal.",
     "  --judge-model <key>         Override roles.judge.",
     "  --dry-run                   Print the resolved command without running it.",
+    "  --no-supervise              Run all cases in one process for debugging. Experiments supervise by default.",
     "  --list                      List configured models and suites.",
     "",
     "Runner flags passed through:",
@@ -115,6 +117,7 @@ function parseArgs(argv) {
     roleOverrides: {},
     runnerArgs: [],
     dryRun: false,
+    noSupervise: false,
     list: false,
     init: false,
   };
@@ -139,6 +142,8 @@ function parseArgs(argv) {
       options.roleOverrides.judge = requireValue(argv, ++i, arg);
     } else if (arg === "--dry-run") {
       options.dryRun = true;
+    } else if (arg === "--no-supervise") {
+      options.noSupervise = true;
     } else if (arg === "--list") {
       options.list = true;
     } else if (arg === "--init") {
@@ -345,15 +350,24 @@ function resolveRunnerCwd(runnerArgs) {
   return path.resolve(BENCH_ROOT, "../..");
 }
 
-function buildRunnerArgs(config, suite, suiteName, primary, judge, cliRunnerArgs) {
-  const runnerArgs = [
+function buildRunnerArgs(config, suite, suiteName, primary, judge, cliRunnerArgs, experimentOptions = {}) {
+  let runnerArgs = [
     ...(Array.isArray(suite.runnerArgs) ? suite.runnerArgs : []),
     ...cliRunnerArgs,
   ];
 
+  if (experimentOptions.noSupervise) {
+    runnerArgs = runnerArgs.filter((arg) => arg !== "--supervise");
+  }
+
   const defaultMode = config.defaults?.mode;
   if (defaultMode && !hasFlag(runnerArgs, "--mode")) {
     runnerArgs.push("--mode", String(defaultMode));
+  }
+
+  const supervise = suite.supervise ?? config.defaults?.supervise;
+  if (supervise !== false && !experimentOptions.noSupervise && !hasFlag(runnerArgs, "--supervise")) {
+    runnerArgs.push("--supervise");
   }
 
   const defaultCaseTimeoutMs = config.defaults?.caseTimeoutMs;
@@ -502,7 +516,7 @@ async function main(argv) {
   const judgeModelKey = resolveRoleKey(config, "judge", options.roleOverrides) || primaryModelKey;
   const primary = resolveModel(config, primaryModelKey, `suite '${suiteName}' primary role '${modelRole}'`, !options.dryRun);
   const judge = resolveModel(config, judgeModelKey, "judge", !options.dryRun);
-  const runnerArgs = buildRunnerArgs(config, suite, suiteName, primary, judge, options.runnerArgs);
+  const runnerArgs = buildRunnerArgs(config, suite, suiteName, primary, judge, options.runnerArgs, options);
   const runnerCwd = resolveRunnerCwd(runnerArgs);
 
   printResolvedRun({ configPath, suiteName, suite, primary, judge, runnerArgs, runnerCwd, dryRun: options.dryRun });

@@ -49,6 +49,7 @@
   "defaults": {
     "suite": "smoke-text",
     "mode": "auto",
+    "supervise": true,
     "caseTimeoutMs": 900000,
     "outputDir": "results"
   }

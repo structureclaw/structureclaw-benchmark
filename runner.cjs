@@ -16,6 +16,7 @@ const SCLAW_ROOT = process.env.SCLAW_ROOT
 const BENCHMARK_MODES = ["auto", "oracle-specialist", "generic-only"];
 const EXECUTION_MODES = ["web-stream", "full"];
 const DEFAULT_CASE_TIMEOUT_MS = 15 * 60 * 1000;
+const SUPERVISED_HARD_TIMEOUT_GRACE_MS = 3 * 60 * 1000;
 const BENCHMARK_UTILITY_SKILL_IDS = [
   "validation-structure-model",
   "report-export-builtin",
@@ -679,7 +680,10 @@ async function runSupervisedBenchmark(options, sutRoot, scenarios) {
   process.stdout.write(`${"=".repeat(60)}\n`);
 
   const results = [];
-  const hardTimeoutMs = options.caseTimeoutMs + 30_000;
+  const hardTimeoutMs = Math.max(
+    options.caseTimeoutMs + SUPERVISED_HARD_TIMEOUT_GRACE_MS,
+    Math.ceil(options.caseTimeoutMs * 1.2),
+  );
   for (const scenario of scenarios) {
     const caseOutput = supervisedOutputPath(options.outputPath, scenario);
     fs.rmSync(caseOutput, { force: true });
