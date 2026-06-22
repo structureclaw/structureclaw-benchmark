@@ -21,6 +21,16 @@ const BENCHMARK_UTILITY_SKILL_IDS = [
   "validation-structure-model",
   "report-export-builtin",
 ];
+const VISION_REQUEST_TIMEOUT_MS = 120000;
+const VISION_MAX_IMAGE_BYTES = 8 * 1024 * 1024;
+const IMAGE_MIME_BY_EXT = {
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".gif": "image/gif",
+  ".bmp": "image/bmp",
+};
 
 const DEFAULT_MODES_BY_TASK_FAMILY = {
   standard_workflow: BENCHMARK_MODES,
@@ -293,6 +303,196 @@ function runtimeUploadRoot() {
 function safeAttachmentName(value, fallback) {
   const raw = String(value || fallback || "attachment").replace(/[^A-Za-z0-9._-]/g, "-");
   return raw && raw !== "." && raw !== ".." ? raw : "attachment";
+}
+
+function isImageAttachment(attachment) {
+  const mimeType = String(attachment?.mimeType || "");
+  if (mimeType.startsWith("image/")) return true;
+  const ext = path.extname(String(attachment?.relPath || attachment?.originalName || "")).toLowerCase();
+  return Object.prototype.hasOwnProperty.call(IMAGE_MIME_BY_EXT, ext);
+}
+
+function imageMimeType(attachment, filePath) {
+  const mimeType = String(attachment?.mimeType || "");
+  if (mimeType.startsWith("image/")) return mimeType;
+  return IMAGE_MIME_BY_EXT[path.extname(filePath).toLowerCase()] || "image/png";
+}
+
+function filterImageAttachments(attachments) {
+  if (!Array.isArray(attachments)) return attachments;
+  return attachments.filter((attachment) => !isImageAttachment(attachment));
+}
+
+function attachmentPathForVision(attachment) {
+  const relPath = String(attachment?.relPath || "");
+  if (path.isAbsolute(relPath)) return relPath;
+  if (relPath.startsWith(".uploads/") || relPath.startsWith(".uploads\\")) {
+    const dataDir = process.env.SCLAW_DATA_DIR;
+    if (!dataDir) {
+      throw new Error("SCLAW_DATA_DIR is required to resolve runtime upload attachments");
+    }
+    return path.resolve(dataDir, relPath);
+  }
+  return path.resolve(BENCH_ROOT, relPath.replace(/^tests\/llm-benchmark\//, ""));
+}
+
+function visionConfig() {
+  const model = process.env.LLM_VISION_MODEL;
+  const baseUrl = process.env.LLM_VISION_BASE_URL;
+  const apiKey = process.env.LLM_VISION_API_KEY;
+  if (!model && !baseUrl && !apiKey) return null;
+  if (!model || !baseUrl || !apiKey) {
+    throw new Error("LLM_VISION_MODEL, LLM_VISION_BASE_URL, and LLM_VISION_API_KEY must be set together");
+  }
+  return { model, baseUrl, apiKey };
+}
+
+function chatCompletionsUrl(baseUrl) {
+  const trimmed = String(baseUrl || "").replace(/\/+$/, "");
+  return `${trimmed}/chat/completions`;
+}
+
+async function fetchWithTimeout(url, init, timeoutMs, signal) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => {
+    controller.abort(new Error(`vision request timed out after ${timeoutMs}ms`));
+  }, timeoutMs);
+  if (typeof timeout.unref === "function") timeout.unref();
+  const onAbort = () => controller.abort(abortReason(signal));
+  try {
+    if (signal) {
+      if (signal.aborted) throw abortReason(signal);
+      signal.addEventListener("abort", onAbort, { once: true });
+    }
+    return await fetch(url, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+    if (signal) signal.removeEventListener("abort", onAbort);
+  }
+}
+
+function contentTextFromOpenAiMessage(message) {
+  const content = message?.content;
+  if (typeof content === "string") return content.trim();
+  if (Array.isArray(content)) {
+    return content
+      .map((item) => {
+        if (typeof item === "string") return item;
+        if (item && typeof item === "object" && typeof item.text === "string") return item.text;
+        return "";
+      })
+      .filter(Boolean)
+      .join("\n")
+      .trim();
+  }
+  const reasoning = message?.reasoning_content || message?.provider_specific_fields?.reasoning_content;
+  return typeof reasoning === "string" ? reasoning.trim() : "";
+}
+
+function buildVisionPrompt({ attachment, message, locale }) {
+  const base = locale === "en"
+    ? [
+      "You are the vision parser for a structural engineering benchmark.",
+      "Extract only information visible in the image. Do not invent missing dimensions, loads, material grades, or supports.",
+      "Return compact JSON only, without markdown fences.",
+      "Schema: {\"structuralType\": string|null, \"geometry\": string[], \"loads\": string[], \"supports\": string[], \"materialsOrSections\": string[], \"missingOrUnclear\": string[], \"notes\": string[]}.",
+      `Attachment: ${attachment.originalName || attachment.relPath}`,
+      `User task: ${message}`,
+    ]
+    : [
+      "你是结构工程 benchmark 的图片解析器。",
+      "只提取图片中可见的文字、标注和几何关系；不要臆测缺失的尺寸、荷载、材料等级或边界条件。",
+      "只返回紧凑 JSON，不要使用 markdown 代码块。",
+      "Schema: {\"structuralType\": string|null, \"geometry\": string[], \"loads\": string[], \"supports\": string[], \"materialsOrSections\": string[], \"missingOrUnclear\": string[], \"notes\": string[]}.",
+      `附件: ${attachment.originalName || attachment.relPath}`,
+      `用户任务: ${message}`,
+    ];
+  return base.join("\n");
+}
+
+async function parseImageAttachmentWithVision(attachment, message, locale, signal) {
+  const cfg = visionConfig();
+  if (!cfg) {
+    throw new Error("Image benchmark scenario requires LLM_VISION_MODEL/BASE_URL/API_KEY");
+  }
+
+  const filePath = attachmentPathForVision(attachment);
+  const stat = fs.statSync(filePath);
+  if (stat.size > VISION_MAX_IMAGE_BYTES) {
+    throw new Error(`Image attachment is too large for benchmark vision parsing: ${attachment.originalName || filePath}`);
+  }
+  const dataUri = `data:${imageMimeType(attachment, filePath)};base64,${fs.readFileSync(filePath).toString("base64")}`;
+  const body = {
+    model: cfg.model,
+    temperature: 0,
+    messages: [
+      {
+        role: "user",
+        content: [
+          { type: "image_url", image_url: { url: dataUri } },
+          { type: "text", text: buildVisionPrompt({ attachment, message, locale }) },
+        ],
+      },
+    ],
+  };
+  const response = await fetchWithTimeout(
+    chatCompletionsUrl(cfg.baseUrl),
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cfg.apiKey}`,
+      },
+      body: JSON.stringify(body),
+    },
+    VISION_REQUEST_TIMEOUT_MS,
+    signal,
+  );
+  const text = await response.text();
+  if (!response.ok) {
+    throw new Error(`Vision API returned HTTP ${response.status}: ${text.slice(0, 300)}`);
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    throw new Error(`Vision API returned non-JSON response: ${text.slice(0, 300)}`);
+  }
+  const summary = contentTextFromOpenAiMessage(parsed.choices?.[0]?.message);
+  if (!summary) {
+    throw new Error("Vision API returned an empty summary");
+  }
+  return {
+    attachmentName: attachment.originalName || path.basename(filePath),
+    relPath: attachment.relPath,
+    model: cfg.model,
+    summary,
+  };
+}
+
+async function buildVisionSummaries(attachments, message, locale, signal) {
+  const imageAttachments = Array.isArray(attachments) ? attachments.filter(isImageAttachment) : [];
+  const summaries = [];
+  for (const attachment of imageAttachments) {
+    summaries.push(await parseImageAttachmentWithVision(attachment, message, locale, signal));
+  }
+  return summaries;
+}
+
+function attachVisionSummariesToMessage(message, summaries, locale) {
+  if (!summaries.length) return message;
+  const header = locale === "en"
+    ? "[Benchmark vision attachment summaries]"
+    : "[Benchmark 多模态附件解析结果]";
+  const instruction = locale === "en"
+    ? "The following image/drawing information was extracted by the configured vision model before the agent run. Do not call analyze_file for these image attachments again; continue with skill routing, parameter extraction, model building, analysis, and reporting using this summary plus the user task."
+    : "以下图片/图纸信息已由配置的多模态模型在 agent 运行前解析。不要再对这些图片附件调用 analyze_file；请基于这些摘要和用户任务继续完成 skill 路由、参数抽取、建模、分析和报告。";
+  const blocks = summaries.map((item, index) => [
+    `#${index + 1} ${item.attachmentName}`,
+    `visionModel: ${item.model}`,
+    item.summary,
+  ].join("\n"));
+  return `${header}\n${instruction}\n\n${blocks.join("\n\n")}\n\n[User task]\n${message}`;
 }
 
 function copyAttachmentsToRuntimeUploads(attachments, conversationId) {
@@ -635,6 +835,7 @@ function failedSupervisedEvaluation(scenario, actual, durationMs, options) {
       enabledToolIds: [],
       sourceDataDir: process.env.SCLAW_BENCHMARK_SOURCE_DATA_DIR || null,
       runtimeDataDir: process.env.SCLAW_DATA_DIR || null,
+      visionModel: process.env.LLM_VISION_MODEL || null,
       analysisSkillTarget: scenario.analysisSkillTarget || "opensees-static",
       caseTimeoutMs: options.caseTimeoutMs,
       supervised: true,
@@ -818,12 +1019,27 @@ async function runBenchmark(args) {
             const messageWithFeedback = (i === 0 && feedbackPrefix)
               ? feedbackPrefix + "\n\n" + turn.message
               : turn.message;
+            const turnContext = buildTurnContext({ scenario: runScenario, turn, benchmarkContext, skillIds });
+            const visionSummaries = await buildVisionSummaries(
+              turnContext.attachments,
+              messageWithFeedback,
+              scenario.locale || "zh",
+              caseTimeout.signal,
+            );
+            if (visionSummaries.length > 0) {
+              turnContext.attachments = filterImageAttachments(turnContext.attachments);
+            }
+            const messageWithVision = attachVisionSummariesToMessage(
+              messageWithFeedback,
+              visionSummaries,
+              scenario.locale || "zh",
+            );
 
             const state = await runAgentForBenchmark(service, {
-              message: messageWithFeedback,
+              message: messageWithVision,
               conversationId,
               signal: caseTimeout.signal,
-              context: buildTurnContext({ scenario: runScenario, turn, benchmarkContext, skillIds }),
+              context: turnContext,
             }, options.execution);
 
             const turnDurationMs = Date.now() - turnStart;
@@ -894,6 +1110,7 @@ async function runBenchmark(args) {
         enabledToolIds: benchmarkContext.enabledToolIds,
         sourceDataDir: process.env.SCLAW_BENCHMARK_SOURCE_DATA_DIR || null,
         runtimeDataDir: process.env.SCLAW_DATA_DIR || null,
+        visionModel: process.env.LLM_VISION_MODEL || null,
         analysisSkillTarget: scenario.analysisSkillTarget || "opensees-static",
         caseTimeoutMs: options.caseTimeoutMs,
       };

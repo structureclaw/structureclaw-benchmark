@@ -165,10 +165,11 @@ edit only these three selectors in `experiments/llm-experiments.local.json`:
 }
 ```
 
-- `test` — the main text model used by standard and interactive suites.
-- `multimodal` — the main model used by multimodal suites. StructureClaw currently
-  receives image inputs through the same agent LLM path, so this role is mapped to
-  `LLM_MODEL`, `LLM_BASE_URL`, and `LLM_API_KEY` when a multimodal suite runs.
+- `test` — the main agent model used by standard, interactive, and multimodal suites.
+- `multimodal` — the vision parser used only before image/drawing scenarios. Its
+  output is injected as an attachment summary, then the `test` model runs the
+  normal StructureClaw agent/tool workflow. This role maps to `LLM_VISION_MODEL`,
+  `LLM_VISION_BASE_URL`, and `LLM_VISION_API_KEY`.
 - `judge` — the LLM-as-Judge model, mapped to `LLM_JUDGE_MODEL`,
   `LLM_JUDGE_BASE_URL`, and `LLM_JUDGE_API_KEY`.
 
@@ -192,8 +193,8 @@ npm run experiment -- --suite multimodal --multimodal-model glm-4.5V --judge-mod
 
 Available suite names in the example config are `smoke-text`,
 `smoke-multimodal`, `standard`, `interactive`, `core`, `multimodal`,
-`all-auto`, and `all-modes`. The full-corpus suites use the `multimodal` role
-because they include image tasks. Additional runner filters can be appended, for
+`all-auto`, and `all-modes`. Suites containing image tasks use the `multimodal`
+role only for pre-agent vision parsing. Additional runner filters can be appended, for
 example:
 
 ```bash

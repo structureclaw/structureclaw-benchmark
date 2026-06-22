@@ -22,8 +22,9 @@ const DEFAULT_SUITES = {
     runnerArgs: ["--scenario", "std-beam-4m-point-mid"],
   },
   "smoke-multimodal": {
-    description: "One image scenario for checking the multimodal model path.",
-    modelRole: "multimodal",
+    description: "One image scenario. The vision role parses images; the test role runs the StructureClaw agent.",
+    modelRole: "test",
+    visionRole: "multimodal",
     runnerArgs: ["--scenario", "image-beam-sketch"],
   },
   standard: {
@@ -42,18 +43,21 @@ const DEFAULT_SUITES = {
     runnerArgs: ["--split", "core"],
   },
   multimodal: {
-    description: "All multimodal reverse-engineering scenarios.",
-    modelRole: "multimodal",
+    description: "All multimodal reverse-engineering scenarios. The vision role parses images; the test role runs the agent.",
+    modelRole: "test",
+    visionRole: "multimodal",
     runnerArgs: ["--family", "multimodal_reverse_engineering"],
   },
   "all-auto": {
-    description: "All scenarios in auto routing mode. Uses the multimodal role because the corpus includes image tasks.",
-    modelRole: "multimodal",
+    description: "All scenarios in auto routing mode. Image tasks use the vision role for attachment parsing.",
+    modelRole: "test",
+    visionRole: "multimodal",
     runnerArgs: [],
   },
   "all-modes": {
-    description: "All scenarios expanded across benchmark skill modes. Uses the multimodal role because the corpus includes image tasks.",
-    modelRole: "multimodal",
+    description: "All scenarios expanded across benchmark skill modes. Image tasks use the vision role for attachment parsing.",
+    modelRole: "test",
+    visionRole: "multimodal",
     runnerArgs: ["--mode", "all"],
   },
 };
@@ -234,8 +238,10 @@ function listConfig(config, configPath) {
   process.stdout.write("\nSuites:\n");
   for (const [key, suite] of Object.entries(config.suites || {})) {
     const role = suite.modelRole || "test";
+    const visionRole = suite.visionRole || "";
     const args = Array.isArray(suite.runnerArgs) ? suite.runnerArgs.join(" ") : "";
-    process.stdout.write(`  ${key.padEnd(18)} role:${role.padEnd(10)} ${args}\n`);
+    const visionPart = visionRole ? ` vision:${visionRole.padEnd(10)}` : "";
+    process.stdout.write(`  ${key.padEnd(18)} role:${role.padEnd(10)}${visionPart} ${args}\n`);
     if (suite.description) {
       process.stdout.write(`    ${suite.description}\n`);
     }
@@ -310,7 +316,7 @@ function timestampForFile() {
   return new Date().toISOString().replace(/[:.]/g, "-");
 }
 
-function resolveOutputPath(config, suiteName, primary, judge, runnerArgs) {
+function resolveOutputPath(config, suiteName, primary, judge, runnerArgs, vision) {
   const outputIndex = runnerArgs.indexOf("--output");
   if (outputIndex >= 0 && runnerArgs[outputIndex + 1]) {
     const outputPath = absoluteBenchPath(runnerArgs[outputIndex + 1]);
@@ -323,6 +329,7 @@ function resolveOutputPath(config, suiteName, primary, judge, runnerArgs) {
   const fileName = [
     sanitizeFilePart(suiteName),
     sanitizeFilePart(primary.key),
+    ...(vision ? [`vision-${sanitizeFilePart(vision.key)}`] : []),
     `judge-${sanitizeFilePart(judge.key)}`,
     timestampForFile(),
   ].join("__") + ".json";
@@ -350,7 +357,7 @@ function resolveRunnerCwd(runnerArgs) {
   return path.resolve(BENCH_ROOT, "../..");
 }
 
-function buildRunnerArgs(config, suite, suiteName, primary, judge, cliRunnerArgs, experimentOptions = {}) {
+function buildRunnerArgs(config, suite, suiteName, primary, judge, vision, cliRunnerArgs, experimentOptions = {}) {
   let runnerArgs = [
     ...(Array.isArray(suite.runnerArgs) ? suite.runnerArgs : []),
     ...cliRunnerArgs,
@@ -376,15 +383,15 @@ function buildRunnerArgs(config, suite, suiteName, primary, judge, cliRunnerArgs
   }
 
   if (!hasFlag(runnerArgs, "--output")) {
-    runnerArgs.push("--output", resolveOutputPath(config, suiteName, primary, judge, runnerArgs));
+    runnerArgs.push("--output", resolveOutputPath(config, suiteName, primary, judge, runnerArgs, vision));
   } else {
-    resolveOutputPath(config, suiteName, primary, judge, runnerArgs);
+    resolveOutputPath(config, suiteName, primary, judge, runnerArgs, vision);
   }
 
   return runnerArgs;
 }
 
-function buildExperimentEnv(config, suite, primary, judge) {
+function buildExperimentEnv(config, suite, primary, judge, vision) {
   const rootEnv = config.environment && typeof config.environment === "object" ? config.environment : {};
   const suiteEnv = suite.environment && typeof suite.environment === "object" ? suite.environment : {};
   const runtimeDir = path.join(RUNTIME_ROOT, sanitizeFilePart(primary.key));
@@ -402,6 +409,12 @@ function buildExperimentEnv(config, suite, primary, judge) {
     LLM_JUDGE_BASE_URL: judge.baseUrl,
     LLM_JUDGE_API_KEY: judge.apiKey,
     ...stringifyEnv(judge.extraEnv),
+    ...(vision ? {
+      ...stringifyEnv(vision.extraEnv),
+      LLM_VISION_MODEL: vision.model,
+      LLM_VISION_BASE_URL: vision.baseUrl,
+      LLM_VISION_API_KEY: vision.apiKey,
+    } : {}),
     ...stringifyEnv(suiteEnv),
     SCLAW_DATA_DIR: runtimeDir,
     ...(sourceDataDir ? { SCLAW_BENCHMARK_SOURCE_DATA_DIR: sourceDataDir } : {}),
@@ -456,7 +469,7 @@ function stringifyEnv(values) {
   );
 }
 
-function printResolvedRun({ configPath, suiteName, suite, primary, judge, runnerArgs, runnerCwd, dryRun }) {
+function printResolvedRun({ configPath, suiteName, suite, primary, judge, vision, runnerArgs, runnerCwd, dryRun }) {
   const prefix = dryRun ? "Dry run" : "Experiment";
   process.stdout.write(`${prefix}: ${suiteName}\n`);
   process.stdout.write(`Config: ${configPath}\n`);
@@ -465,6 +478,10 @@ function printResolvedRun({ configPath, suiteName, suite, primary, judge, runner
   }
   process.stdout.write(`Primary model: ${primary.key} -> ${primary.model} (${primary.baseUrl})\n`);
   process.stdout.write(`Primary key env: ${primary.apiKeyEnv} (${primary.apiKey ? "set" : "missing"})\n`);
+  if (vision) {
+    process.stdout.write(`Vision model: ${vision.key} -> ${vision.model} (${vision.baseUrl})\n`);
+    process.stdout.write(`Vision key env: ${vision.apiKeyEnv} (${vision.apiKey ? "set" : "missing"})\n`);
+  }
   process.stdout.write(`Judge model: ${judge.key} -> ${judge.model} (${judge.baseUrl})\n`);
   process.stdout.write(`Judge key env: ${judge.apiKeyEnv} (${judge.apiKey ? "set" : "missing"})\n`);
   process.stdout.write(`Runner cwd: ${runnerCwd}\n`);
@@ -511,20 +528,25 @@ async function main(argv) {
 
   const { suiteName, suite } = resolveSuite(config, options.suiteName);
   const modelRole = suite.modelRole || "test";
+  const visionRole = suite.visionRole || null;
   const primaryModelKey =
     options.primaryModelKey || resolveRoleKey(config, modelRole, options.roleOverrides);
   const judgeModelKey = resolveRoleKey(config, "judge", options.roleOverrides) || primaryModelKey;
+  const visionModelKey = visionRole ? resolveRoleKey(config, visionRole, options.roleOverrides) : null;
   const primary = resolveModel(config, primaryModelKey, `suite '${suiteName}' primary role '${modelRole}'`, !options.dryRun);
   const judge = resolveModel(config, judgeModelKey, "judge", !options.dryRun);
-  const runnerArgs = buildRunnerArgs(config, suite, suiteName, primary, judge, options.runnerArgs, options);
+  const vision = visionModelKey
+    ? resolveModel(config, visionModelKey, `suite '${suiteName}' vision role '${visionRole}'`, !options.dryRun)
+    : null;
+  const runnerArgs = buildRunnerArgs(config, suite, suiteName, primary, judge, vision, options.runnerArgs, options);
   const runnerCwd = resolveRunnerCwd(runnerArgs);
 
-  printResolvedRun({ configPath, suiteName, suite, primary, judge, runnerArgs, runnerCwd, dryRun: options.dryRun });
+  printResolvedRun({ configPath, suiteName, suite, primary, judge, vision, runnerArgs, runnerCwd, dryRun: options.dryRun });
   if (options.dryRun) {
     return 0;
   }
 
-  const env = buildExperimentEnv(config, suite, primary, judge);
+  const env = buildExperimentEnv(config, suite, primary, judge, vision);
   return await runChild(runnerArgs, env, runnerCwd);
 }
 
