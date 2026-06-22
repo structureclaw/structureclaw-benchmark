@@ -23,7 +23,7 @@
     "dxf",
     "en"
   ],
-  "message": "Use this architectural DXF to build a 2-story 3D reinforced concrete frame calculation model and run analysis, filtering out non-structural building elements. Use fixed column bases; apply floor area loads of 12 kN/m² on the first story and 10 kN/m² on the second story.",
+  "message": "Use this architectural DXF to build a 2-story 3D reinforced concrete frame calculation model and run analysis, filtering out non-structural building elements. Use 3.6 m story height for both stories and fixed column bases; apply floor area loads of 12 kN/m² on the first story and 10 kN/m² on the second story.",
   "locale": "en",
   "maxRetries": 0,
   "attachments": [

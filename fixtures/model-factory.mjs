@@ -91,7 +91,7 @@ models.push({
 models.push({
   id: "frame-simple-1s1b",
   inferredType: "frame",
-  description: "单层单跨钢框架，H=4.5m，L=6m，屋面荷载8kN/m2",
+  description: "单层单跨钢框架，H=4.5m，L=6m，屋面梁线荷载48kN/m",
   model: {
     schema_version: "2.0.0", unit_system: "SI",
     nodes: [

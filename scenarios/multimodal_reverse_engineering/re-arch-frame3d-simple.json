@@ -23,7 +23,7 @@
     "dxf",
     "en"
   ],
-  "message": "Use this architectural DXF to build a 3D calculation model for the simple 2-story steel frame, filtering out walls, doors, windows, and furniture. Use fixed column bases; apply 10 kN/m² floor area load on both stories.",
+  "message": "Use this architectural DXF to build a 3D calculation model for the simple 2-story steel frame, filtering out walls, doors, windows, and furniture. Use 3.6 m story height for both stories and fixed column bases; apply 10 kN/m² floor area load on both stories.",
   "locale": "en",
   "maxRetries": 0,
   "attachments": [

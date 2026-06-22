@@ -19,7 +19,7 @@
     "image",
     "en"
   ],
-  "message": "Review this frame sketch and decide whether enough dimensions are available for structural analysis.",
+  "message": "Review this frame sketch and decide whether enough dimensions are available for structural analysis. If information is missing, ask the user specific follow-up questions instead of building or analyzing a model.",
   "locale": "en",
   "maxRetries": 0,
   "attachments": [

@@ -106,6 +106,26 @@ function dimLine(x1, y1, x2, y2, label, offset = 25) {
     <text x="${dx - 8}" y="${my + 4}" text-anchor="end" font-size="13" fill="${COLORS.dim}" font-weight="bold">${label}</text>`;
 }
 
+function groupedDistributedLoads(model) {
+  const groups = new Map();
+  for (const lc of model.load_cases || []) {
+    for (const load of lc.loads || []) {
+      if (load.type !== "distributed") continue;
+      const elementId = load.element;
+      const w = Math.abs(load.wz || load.wy || 0);
+      if (!elementId || w <= 0) continue;
+      if (!groups.has(elementId)) groups.set(elementId, { elementId, loads: [] });
+      groups.get(elementId).loads.push({ caseId: lc.id, w });
+    }
+  }
+  return [...groups.values()];
+}
+
+function distributedLoadLabel(loads) {
+  if (loads.length === 1) return `${fmt(loads[0].w)} kN/m`;
+  return `${fmt(loads.reduce((sum, load) => sum + load.w, 0))} kN/m`;
+}
+
 // --- Style A: Construction Plan ---
 
 function renderConstructionPlan(entry) {
@@ -177,28 +197,30 @@ function renderConstructionPlan(entry) {
     body += `<text x="${mx}" y="${my + offsetY + 3}" text-anchor="middle" font-size="${fs}" fill="${COLORS.section}">${name}</text>`;
   }
 
-  // Loads
+  // Distributed loads
+  for (const group of groupedDistributedLoads(model)) {
+    const el = model.elements.find(e => e.id === group.elementId);
+    if (!el) continue;
+    const n1 = nodeMap.get(el.nodes[0]);
+    const n2 = nodeMap.get(el.nodes[1]);
+    const x1 = t.tx(n1.x), y1 = t.tz(n1.z);
+    const x2 = t.tx(n2.x), y2 = t.tz(n2.z);
+    const count = Math.max(3, Math.min(8, Math.round(Math.hypot(x2 - x1, y2 - y1) / 30)));
+    for (let i = 0; i <= count; i++) {
+      const frac = i / count;
+      const ax = x1 + (x2 - x1) * frac;
+      const ay = y1 + (y2 - y1) * frac;
+      body += `<line x1="${ax}" y1="${ay - 30}" x2="${ax}" y2="${ay - 4}" stroke="${COLORS.loadArrow}" stroke-width="1.5"/>`;
+      body += `<polygon points="${ax - 3},${ay - 8} ${ax + 3},${ay - 8} ${ax},${ay - 2}" fill="${COLORS.loadArrow}"/>`;
+    }
+    const lx = (x1 + x2) / 2, ly = (y1 + y2) / 2 - 38;
+    body += `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="12" fill="${COLORS.load}" font-weight="bold">${distributedLoadLabel(group.loads)}</text>`;
+  }
+
+  // Point loads
   for (const lc of model.load_cases || []) {
     for (const load of lc.loads || []) {
-      if (load.type === "distributed") {
-        const el = model.elements.find(e => e.id === load.element);
-        if (!el) continue;
-        const n1 = nodeMap.get(el.nodes[0]);
-        const n2 = nodeMap.get(el.nodes[1]);
-        const x1 = t.tx(n1.x), y1 = t.tz(n1.z);
-        const x2 = t.tx(n2.x), y2 = t.tz(n2.z);
-        const w = Math.abs(load.wz || load.wy || 0);
-        const count = Math.max(3, Math.min(8, Math.round(Math.hypot(x2 - x1, y2 - y1) / 30)));
-        for (let i = 0; i <= count; i++) {
-          const frac = i / count;
-          const ax = x1 + (x2 - x1) * frac;
-          const ay = y1 + (y2 - y1) * frac;
-          body += `<line x1="${ax}" y1="${ay - 30}" x2="${ax}" y2="${ay - 4}" stroke="${COLORS.loadArrow}" stroke-width="1.5"/>`;
-          body += `<polygon points="${ax - 3},${ay - 8} ${ax + 3},${ay - 8} ${ax},${ay - 2}" fill="${COLORS.loadArrow}"/>`;
-        }
-        const lx = (x1 + x2) / 2, ly = (y1 + y2) / 2 - 38;
-        body += `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="12" fill="${COLORS.load}" font-weight="bold">${fmt(w)} kN/m</text>`;
-      } else if (load.node) {
+      if (load.node) {
         const n = nodeMap.get(load.node);
         if (!n) continue;
         const sx = t.tx(n.x), sy = t.tz(n.z);
@@ -269,29 +291,31 @@ function renderMechanicsDiagram(entry) {
     else if (isRoller) body += rollerSupport(sx, sy);
   }
 
-  // Loads
+  // Distributed loads
+  for (const group of groupedDistributedLoads(model)) {
+    const el = model.elements.find(e => e.id === group.elementId);
+    if (!el) continue;
+    const n1 = nodeMap.get(el.nodes[0]);
+    const n2 = nodeMap.get(el.nodes[1]);
+    const x1 = t.tx(n1.x), y1 = t.tz(n1.z);
+    const x2 = t.tx(n2.x), y2 = t.tz(n2.z);
+    const count = Math.max(2, Math.min(6, Math.round(Math.hypot(x2 - x1, y2 - y1) / 40)));
+    for (let i = 0; i <= count; i++) {
+      const frac = i / count;
+      const ax = x1 + (x2 - x1) * frac;
+      const ay = y1 + (y2 - y1) * frac;
+      body += `<line x1="${ax}" y1="${ay - 28}" x2="${ax}" y2="${ay - 4}" stroke="${COLORS.loadArrow}" stroke-width="1.5"/>`;
+      body += `<polygon points="${ax - 3},${ay - 8} ${ax + 3},${ay - 8} ${ax},${ay - 2}" fill="${COLORS.loadArrow}"/>`;
+    }
+    body += `<line x1="${x1}" y1="${y1 - 28}" x2="${x2}" y2="${y2 - 28}" stroke="${COLORS.loadArrow}" stroke-width="1"/>`;
+    const lx = (x1 + x2) / 2, ly = Math.min(y1, y2) - 36;
+    body += `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="12" fill="${COLORS.load}" font-weight="bold">${distributedLoadLabel(group.loads)}</text>`;
+  }
+
+  // Point loads
   for (const lc of model.load_cases || []) {
     for (const load of lc.loads || []) {
-      if (load.type === "distributed") {
-        const el = model.elements.find(e => e.id === load.element);
-        if (!el) continue;
-        const n1 = nodeMap.get(el.nodes[0]);
-        const n2 = nodeMap.get(el.nodes[1]);
-        const x1 = t.tx(n1.x), y1 = t.tz(n1.z);
-        const x2 = t.tx(n2.x), y2 = t.tz(n2.z);
-        const w = Math.abs(load.wz || load.wy || 0);
-        const count = Math.max(2, Math.min(6, Math.round(Math.hypot(x2 - x1, y2 - y1) / 40)));
-        for (let i = 0; i <= count; i++) {
-          const frac = i / count;
-          const ax = x1 + (x2 - x1) * frac;
-          const ay = y1 + (y2 - y1) * frac;
-          body += `<line x1="${ax}" y1="${ay - 28}" x2="${ax}" y2="${ay - 4}" stroke="${COLORS.loadArrow}" stroke-width="1.5"/>`;
-          body += `<polygon points="${ax - 3},${ay - 8} ${ax + 3},${ay - 8} ${ax},${ay - 2}" fill="${COLORS.loadArrow}"/>`;
-        }
-        body += `<line x1="${x1}" y1="${y1 - 28}" x2="${x2}" y2="${y2 - 28}" stroke="${COLORS.loadArrow}" stroke-width="1"/>`;
-        const lx = (x1 + x2) / 2, ly = Math.min(y1, y2) - 36;
-        body += `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="12" fill="${COLORS.load}" font-weight="bold">${fmt(w)} kN/m</text>`;
-      } else if (load.node) {
+      if (load.node) {
         const n = nodeMap.get(load.node);
         if (!n) continue;
         const sx = t.tx(n.x), sy = t.tz(n.z);

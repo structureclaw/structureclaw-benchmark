@@ -234,6 +234,26 @@ function storyLoadLabel(model, story) {
   return "";
 }
 
+function groupedDistributedLoads(model) {
+  const groups = new Map();
+  for (const lc of model.load_cases || []) {
+    for (const load of lc.loads || []) {
+      if (load.type !== "distributed") continue;
+      const elementId = load.element;
+      const w = Math.abs(load.wz || load.wy || 0);
+      if (!elementId || w <= 0) continue;
+      if (!groups.has(elementId)) groups.set(elementId, { elementId, loads: [] });
+      groups.get(elementId).loads.push({ caseId: lc.id, w });
+    }
+  }
+  return [...groups.values()];
+}
+
+function distributedLoadLabel(loads) {
+  if (loads.length === 1) return `${fmt(loads[0].w)} kN/m`;
+  return `${fmt(loads.reduce((sum, load) => sum + load.w, 0))} kN/m`;
+}
+
 // --- Render 2D models to DXF ---
 
 function render2dDxf(entry) {
@@ -284,18 +304,18 @@ function render2dDxf(entry) {
   }
 
   // Load annotations
+  for (const group of groupedDistributedLoads(model)) {
+    const el = model.elements.find(e => e.id === group.elementId);
+    if (!el) continue;
+    const n1 = nodeMap.get(el.nodes[0]);
+    const n2 = nodeMap.get(el.nodes[1]);
+    const mx = (n1.x + n2.x) / 2;
+    const mz = Math.max(n1.z, n2.z);
+    entities.push(dxfText(mx, mz + 1, 0.5, distributedLoadLabel(group.loads), "LOAD"));
+  }
   for (const lc of model.load_cases || []) {
     for (const load of lc.loads || []) {
-      if (load.type === "distributed") {
-        const el = model.elements.find(e => e.id === load.element);
-        if (!el) continue;
-        const n1 = nodeMap.get(el.nodes[0]);
-        const n2 = nodeMap.get(el.nodes[1]);
-        const w = Math.abs(load.wz || load.wy || 0);
-        const mx = (n1.x + n2.x) / 2;
-        const mz = Math.max(n1.z, n2.z);
-        entities.push(dxfText(mx, mz + 1, 0.5, `${fmt(w)} kN/m`, "LOAD"));
-      } else if (load.node) {
+      if (load.node) {
         const n = nodeMap.get(load.node);
         if (!n) continue;
         const fz = Math.abs(load.fz || 0);
