@@ -1077,7 +1077,7 @@ LOAD
 40
 0.40
 1
-10 kN/m
+F1 floor load 10 kN/m2
 0
 TEXT
 8
@@ -1085,13 +1085,13 @@ LOAD
 10
 0.8660
 20
-9.9000
+13.5000
 30
 0
 40
 0.40
 1
-8 kN/m
+F2 floor load 8 kN/m2
 0
 TEXT
 8

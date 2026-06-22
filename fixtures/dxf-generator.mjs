@@ -201,6 +201,39 @@ function is3dModel(entry) {
     || entry.model.nodes.some(n => n.y !== 0);
 }
 
+function storyTops(model) {
+  let z = 0;
+  return (model.stories || []).map((story) => {
+    z += Number(story.height) || 0;
+    return { ...story, topZ: z };
+  });
+}
+
+function equivalentLineLoadForStory(model, storyId) {
+  const storyElements = new Set(
+    (model.elements || [])
+      .filter((element) => element.story === storyId)
+      .map((element) => element.id)
+  );
+  for (const loadCase of model.load_cases || []) {
+    for (const load of loadCase.loads || []) {
+      if (load.type === "distributed" && storyElements.has(load.element)) {
+        const value = Math.abs(load.wz || load.wy || 0);
+        if (value > 0) return value;
+      }
+    }
+  }
+  return 0;
+}
+
+function storyLoadLabel(model, story) {
+  const areaLoad = Math.abs(Number(story.floorLoad) || 0);
+  const lineLoad = equivalentLineLoadForStory(model, story.id);
+  if (areaLoad > 0) return `${story.id} floor load ${fmt(areaLoad)} kN/m2`;
+  if (lineLoad > 0) return `${story.id} X-beam UDL ${fmt(lineLoad)} kN/m`;
+  return "";
+}
+
 // --- Render 2D models to DXF ---
 
 function render2dDxf(entry) {
@@ -352,13 +385,12 @@ function render3dDxf(entry) {
     }
   }
 
-  // Floor load labels
-  const stories = model.stories || [];
-  for (const s of stories) {
-    if (s.floorLoad > 0) {
-      const pm = isoProject(xMax / 2, yMax / 2, s.height);
-      entities.push(dxfText(pm.ix, pm.iy + 0.8, 0.4, `${fmt(s.floorLoad)} kN/m`, "LOAD"));
-    }
+  // Floor load labels, one per story at the cumulative floor elevation.
+  for (const story of storyTops(model)) {
+    const label = storyLoadLabel(model, story);
+    if (!label) continue;
+    const pm = isoProject(xMax / 2, yMax / 2, story.topZ);
+    entities.push(dxfText(pm.ix, pm.iy + 0.8, 0.4, label, "LOAD"));
   }
 
   // Title (ASCII-safe)

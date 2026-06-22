@@ -320,11 +320,44 @@ function renderMechanicsDiagram(entry) {
 
 // --- 3D Isometric Rendering ---
 
-/** Isometric projection: x-right-down, y-left-down, z-up */
+/** Isometric projection in SVG screen coordinates: x-right-down, y-left-down, z-up */
 function isoProject(x, y, z) {
   const ix = (x - y) * Math.cos(Math.PI / 6);
-  const iy = -(x + y) * Math.sin(Math.PI / 6) + z;
+  const iy = (x + y) * Math.sin(Math.PI / 6) - z;
   return { ix, iy };
+}
+
+function storyTops(model) {
+  let z = 0;
+  return (model.stories || []).map((story) => {
+    z += Number(story.height) || 0;
+    return { ...story, topZ: z };
+  });
+}
+
+function equivalentLineLoadForStory(model, storyId) {
+  const storyElements = new Set(
+    (model.elements || [])
+      .filter((element) => element.story === storyId)
+      .map((element) => element.id)
+  );
+  for (const loadCase of model.load_cases || []) {
+    for (const load of loadCase.loads || []) {
+      if (load.type === "distributed" && storyElements.has(load.element)) {
+        const value = Math.abs(load.wz || load.wy || 0);
+        if (value > 0) return value;
+      }
+    }
+  }
+  return 0;
+}
+
+function storyLoadLabel(model, story) {
+  const areaLoad = Math.abs(Number(story.floorLoad) || 0);
+  const lineLoad = equivalentLineLoadForStory(model, story.id);
+  if (areaLoad > 0) return `${story.id} floor load ${fmt(areaLoad)} kN/m2`;
+  if (lineLoad > 0) return `${story.id} X-beam UDL ${fmt(lineLoad)} kN/m`;
+  return "";
 }
 
 function make3dTransform(nodes, padding = { l: 120, r: 140, t: 75, b: 140 }, w = 960, h = 640) {
@@ -419,15 +452,14 @@ function render3dConstruction(entry) {
     body += `<line x1="${sx - 8}" y1="${sy + 10}" x2="${sx + 8}" y2="${sy + 10}" stroke="${COLORS.support}" stroke-width="2"/>`;
   }
 
-  // Floor load labels on top beams
-  const topZ = zMax;
-  const loadPerArea = model.stories?.find(s => Math.abs(s.height - topZ) < 0.01)?.floorLoad
-    || model.load_cases?.[0]?.loads?.find(l => l.wz)?.wz
-    || 0;
-  if (loadPerArea > 0) {
+  // Floor load labels, one per story at the cumulative floor elevation.
+  for (const story of storyTops(model)) {
+    const label = storyLoadLabel(model, story);
+    if (!label) continue;
     const midX = xMax / 2, midY = yMax / 2;
-    const lx = t.tx(midX, midY, topZ), ly = t.ty(midX, midY, topZ);
-    body += `<text x="${lx}" y="${ly - 16}" text-anchor="middle" font-size="12" fill="${COLORS.load}" font-weight="bold">${fmt(Math.abs(loadPerArea))} kN/m</text>`;
+    const lx = t.tx(midX, midY, story.topZ);
+    const ly = t.ty(midX, midY, story.topZ);
+    body += `<text x="${lx}" y="${ly - 16}" text-anchor="middle" font-size="12" fill="${COLORS.load}" font-weight="bold">${label}</text>`;
   }
 
   // Dimension annotations
@@ -447,10 +479,10 @@ function render3dConstruction(entry) {
 
   // Height
   const hxStart = t.tx(xMax, 0, 0);
-  const hxEnd = t.tx(xMax, 0, topZ);
+  const hxEnd = t.tx(xMax, 0, zMax);
   const hyStart = t.ty(xMax, 0, 0);
-  const hyEnd = t.ty(xMax, 0, topZ);
-  body += `<text x="${hxEnd + 30}" y="${(hyStart + hyEnd) / 2 + 4}" text-anchor="middle" font-size="12" fill="${COLORS.dim}" font-weight="bold">H: ${fmt(topZ)}m</text>`;
+  const hyEnd = t.ty(xMax, 0, zMax);
+  body += `<text x="${hxEnd + 30}" y="${(hyStart + hyEnd) / 2 + 4}" text-anchor="middle" font-size="12" fill="${COLORS.dim}" font-weight="bold">H: ${fmt(zMax)}m</text>`;
 
   return svgWrap(t.w, t.h, body);
 }
@@ -512,6 +544,24 @@ function render3dMechanics(entry) {
 
   const lx3 = t.tx(xMax, 0, zMax / 2), ly3 = t.ty(xMax, 0, zMax / 2);
   body += `<text x="${lx3 + 25}" y="${ly3 + 4}" text-anchor="middle" font-size="12" fill="${COLORS.dim}" font-weight="bold">${fmt(zMax)}m</text>`;
+
+  // Floor loads
+  for (const story of storyTops(model)) {
+    const label = storyLoadLabel(model, story);
+    if (!label) continue;
+    const midX = xMax / 2;
+    const midY = yMax / 2;
+    const lx = t.tx(midX, midY, story.topZ);
+    const ly = t.ty(midX, midY, story.topZ);
+    body += `<text x="${lx}" y="${ly - 18}" text-anchor="middle" font-size="12" fill="${COLORS.load}" font-weight="bold">${label}</text>`;
+    for (const xFrac of [0.25, 0.5, 0.75]) {
+      const ax = t.tx(xMax * xFrac, midY, story.topZ + 0.65);
+      const ay1 = t.ty(xMax * xFrac, midY, story.topZ + 0.65);
+      const ay2 = t.ty(xMax * xFrac, midY, story.topZ + 0.08);
+      body += `<line x1="${ax}" y1="${ay1}" x2="${ax}" y2="${ay2}" stroke="${COLORS.loadArrow}" stroke-width="1.5"/>`;
+      body += `<polygon points="${ax - 3},${ay2 - 6} ${ax + 3},${ay2 - 6} ${ax},${ay2}" fill="${COLORS.loadArrow}"/>`;
+    }
+  }
 
   return svgWrap(t.w, t.h, body);
 }

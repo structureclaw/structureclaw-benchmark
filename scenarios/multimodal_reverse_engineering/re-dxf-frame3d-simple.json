@@ -22,7 +22,7 @@
     "dxf",
     "en"
   ],
-  "message": "Use this DXF drawing of the simple 2-story 3D steel frame to build a 3D calculation model and run analysis. Use fixed column bases; apply 10 kN/m² floor area load on both stories, equivalent to 25 kN/m downward line load on each X-direction floor beam.",
+  "message": "Use this DXF drawing of the simple 2-story 3D steel frame to build a 3D calculation model and run analysis. Use fixed column bases; apply 10 kN/m² floor area load on both stories.",
   "locale": "en",
   "maxRetries": 0,
   "attachments": [
