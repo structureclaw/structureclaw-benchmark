@@ -82,12 +82,12 @@ The standard executable workflow split is balanced by `benchmarkStructureType`:
 
 | Benchmark structure type | Count |
 | --- | ---: |
-| `beam` | 10 |
+| `beam` | 9 |
 | `steel-frame` | 12 |
 | `concrete-frame` | 6 |
 | `truss` | 8 |
 | `portal-frame` | 6 |
-| `continuous-beam` | 4 |
+| `continuous-beam` | 5 |
 | `column` | 3 |
 | `generic` | 1 |
 
