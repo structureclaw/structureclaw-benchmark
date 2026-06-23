@@ -412,6 +412,7 @@
           "height": 4.5,
           "floorLoad": 8,
           "floorLoadUnit": "kN/m2",
+          "tributaryWidthM": 6,
           "equivalentLineLoad": 48
         }
       ],
@@ -442,6 +443,8 @@
         "inferredType": "frame",
         "frameDimension": "2d",
         "floorLoadUnit": "kN/m2",
+        "tributaryWidthM": 6,
+        "equivalentLineLoad": 48,
         "storyCount": 1,
         "bayCount": 1,
         "geometry": {
@@ -458,7 +461,7 @@
   {
     "id": "frame-complex-2s2b",
     "inferredType": "frame",
-    "description": "2层2跨钢框架，层高3.6m，跨度5.4m+6m",
+    "description": "2层2跨钢框架，层高3.6m，跨度5.4m+6m，梁线恒载10kN/m、活载8kN/m",
     "model": {
       "schema_version": "2.0.0",
       "unit_system": "SI",
@@ -715,12 +718,20 @@
         {
           "id": "F1",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m",
+          "liveLoad": 8,
+          "liveLoadUnit": "kN/m",
+          "equivalentLineLoad": 18
         },
         {
           "id": "F2",
           "height": 3.6,
-          "floorLoad": 10
+          "floorLoad": 10,
+          "floorLoadUnit": "kN/m",
+          "liveLoad": 8,
+          "liveLoadUnit": "kN/m",
+          "equivalentLineLoad": 18
         }
       ],
       "load_cases": [
@@ -798,6 +809,10 @@
         "source": "ground-truth",
         "inferredType": "frame",
         "frameDimension": "2d",
+        "floorLoadUnit": "kN/m",
+        "deadLineLoad": 10,
+        "liveLineLoad": 8,
+        "totalBeamLineLoad": 18,
         "storyCount": 2,
         "bayCount": 2,
         "geometry": {
@@ -11294,7 +11309,7 @@
   {
     "id": "portal-mezzanine-18m-7m",
     "inferredType": "portal-frame",
-    "description": "18m门式刚架，一侧3m夹层，屋面荷载6kN/m，夹层荷载4kN/m2",
+    "description": "18m门式刚架，一侧3m夹层，屋面荷载6kN/m，夹层梁线荷载4kN/m",
     "model": {
       "schema_version": "2.0.0",
       "unit_system": "SI",
@@ -11469,7 +11484,9 @@
       "metadata": {
         "source": "ground-truth",
         "inferredType": "portal-frame",
-        "frameDimension": "2d"
+        "frameDimension": "2d",
+        "roofLineLoad": 6,
+        "mezzanineLineLoad": 4
       }
     }
   },

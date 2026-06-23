@@ -24,7 +24,7 @@
     "static",
     "en"
   ],
-  "message": "Use YJK to run static analysis for a single-story single-bay steel frame with a 6m span, 4.5m height, and 8kN/m2 roof load.",
+  "message": "Use YJK to run static analysis for a single-story single-bay steel frame with a 6m span, 4.5m height, and 8kN/m2 roof load converted with a 6m tributary width to a 48kN/m roof beam line load.",
   "locale": "en",
   "maxRetries": 0,
   "expect": {

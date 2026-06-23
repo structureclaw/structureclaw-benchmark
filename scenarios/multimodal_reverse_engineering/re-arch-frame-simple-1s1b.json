@@ -1,6 +1,6 @@
 {
   "id": "re-arch-frame-simple-1s1b",
-  "description": "建筑平面图反问题：单层单跨框架办公楼",
+  "description": "建筑立面DXF反问题：单层单跨框架办公楼",
   "split": "auxiliary",
   "taskFamily": "multimodal_reverse_engineering",
   "inputModality": "dxf",
@@ -19,10 +19,11 @@
     "reverse-engineering",
     "frame",
     "architectural",
+    "architectural-elevation",
     "dxf",
     "zh"
   ],
-  "message": "请根据这张建筑平面图DXF建立单层单跨钢框架结构计算模型并进行分析，图中有墙体、门窗、家具等建筑元素，请从中提取结构构件信息。框架高度4.5m；柱脚按固定支座处理；屋面梁施加向下均布线荷载48kN/m。",
+  "message": "请根据这张建筑立面DXF建立单层单跨钢框架结构计算模型并进行分析，图中有墙体、门窗、轴网和尺寸标注等建筑元素，请从中提取结构构件信息。框架高度4.5m；柱脚按固定支座处理；屋面梁施加向下均布线荷载48kN/m。",
   "locale": "zh",
   "maxRetries": 0,
   "attachments": [

@@ -114,7 +114,7 @@ models.push({
         shape: { kind: "H", H: 0.4, B: 0.2, tw: 0.008, tf: 0.013 },
         properties: { A: 0.008, Iy: 0.0002, Iz: 0.00003, J: 0.000005, G: 79000 } },
     ],
-    stories: [{ id: "F1", height: 4.5, floorLoad: 8, floorLoadUnit: "kN/m2", equivalentLineLoad: 48 }],
+    stories: [{ id: "F1", height: 4.5, floorLoad: 8, floorLoadUnit: "kN/m2", tributaryWidthM: 6, equivalentLineLoad: 48 }],
     load_cases: [
       { id: "D", type: "dead", loads: [{ type: "distributed", element: "B1", wz: -48, wy: 0 }] },
     ],
@@ -122,6 +122,8 @@ models.push({
     metadata: {
       source: "ground-truth", inferredType: "frame", frameDimension: "2d",
       floorLoadUnit: "kN/m2",
+      tributaryWidthM: 6,
+      equivalentLineLoad: 48,
       storyCount: 1, bayCount: 1,
       geometry: { storyHeightsM: [4.5], bayWidthsM: [6] },
     },
@@ -132,7 +134,7 @@ models.push({
 models.push({
   id: "frame-complex-2s2b",
   inferredType: "frame",
-  description: "2层2跨钢框架，层高3.6m，跨度5.4m+6m",
+  description: "2层2跨钢框架，层高3.6m，跨度5.4m+6m，梁线恒载10kN/m、活载8kN/m",
   model: {
     schema_version: "2.0.0", unit_system: "SI",
     nodes: [
@@ -172,8 +174,8 @@ models.push({
         properties: { A: 0.011, Iy: 0.0004, Iz: 0.00004, J: 0.000008, G: 79000 } },
     ],
     stories: [
-      { id: "F1", height: 3.6, floorLoad: 10 },
-      { id: "F2", height: 3.6, floorLoad: 10 },
+      { id: "F1", height: 3.6, floorLoad: 10, floorLoadUnit: "kN/m", liveLoad: 8, liveLoadUnit: "kN/m", equivalentLineLoad: 18 },
+      { id: "F2", height: 3.6, floorLoad: 10, floorLoadUnit: "kN/m", liveLoad: 8, liveLoadUnit: "kN/m", equivalentLineLoad: 18 },
     ],
     load_cases: [
       { id: "D", type: "dead", loads: [
@@ -192,6 +194,10 @@ models.push({
     load_combinations: [{ id: "ULS", factors: { D: 1.2, L: 1.4 } }],
     metadata: {
       source: "ground-truth", inferredType: "frame", frameDimension: "2d",
+      floorLoadUnit: "kN/m",
+      deadLineLoad: 10,
+      liveLineLoad: 8,
+      totalBeamLineLoad: 18,
       storyCount: 2, bayCount: 2,
       geometry: { storyHeightsM: [3.6, 3.6], bayWidthsM: [5.4, 6] },
     },
@@ -966,7 +972,7 @@ function buildMezzaninePortal() {
   return {
     id: "portal-mezzanine-18m-7m",
     inferredType: "portal-frame",
-    description: "18m门式刚架，一侧3m夹层，屋面荷载6kN/m，夹层荷载4kN/m2",
+    description: "18m门式刚架，一侧3m夹层，屋面荷载6kN/m，夹层梁线荷载4kN/m",
     model: {
       schema_version: "2.0.0",
       unit_system: "SI",
@@ -992,7 +998,13 @@ function buildMezzaninePortal() {
         { type: "distributed", element: "M1", wz: -4, wy: 0 },
       ] }],
       load_combinations: [{ id: "ULS", factors: { LC1: 1.0 } }],
-      metadata: { source: "ground-truth", inferredType: "portal-frame", frameDimension: "2d" },
+      metadata: {
+        source: "ground-truth",
+        inferredType: "portal-frame",
+        frameDimension: "2d",
+        roofLineLoad: 6,
+        mezzanineLineLoad: 4,
+      },
     },
   };
 }

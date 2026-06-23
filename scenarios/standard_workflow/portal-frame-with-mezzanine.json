@@ -21,7 +21,7 @@
     "zh",
     "mezzanine"
   ],
-  "message": "门式刚架，跨度18m，檐口高度7m，一侧设3m高夹层，屋面荷载6kN/m，夹层荷载4kN/m2，做静力分析",
+  "message": "门式刚架，跨度18m，檐口高度7m，一侧设3m高夹层，屋面梁线荷载6kN/m，夹层梁线荷载4kN/m，做静力分析",
   "locale": "zh",
   "maxRetries": 0,
   "expect": {

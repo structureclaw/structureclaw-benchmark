@@ -23,7 +23,7 @@
     "static",
     "en"
   ],
-  "message": "Use OpenSees to run static analysis for a 3-story concrete frame with 3.3m story height, 6m bay width, C35 concrete, and 10kN/m2 floor load.",
+  "message": "Use OpenSees to run static analysis for a 3-story concrete frame with 3.3m story height, 6m bay width, C35 concrete, and 10kN/m2 floor load converted with a 6m tributary width to a 60kN/m beam line load.",
   "locale": "en",
   "maxRetries": 0,
   "expect": {

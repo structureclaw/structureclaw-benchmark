@@ -24,7 +24,7 @@
     "static",
     "zh"
   ],
-  "message": "2层混凝土框架，层高3.6m，跨度6m，C30混凝土，每层楼面荷载12kN/m2，请使用OpenSees进行静力分析",
+  "message": "2层混凝土框架，层高3.6m，跨度6m，C30混凝土，每层楼面荷载12kN/m2按6m等效受荷宽度折算为梁线荷载72kN/m，请使用OpenSees进行静力分析",
   "locale": "zh",
   "maxRetries": 0,
   "expect": {

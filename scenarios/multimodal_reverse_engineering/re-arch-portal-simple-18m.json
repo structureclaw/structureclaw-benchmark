@@ -1,6 +1,6 @@
 {
   "id": "re-arch-portal-simple-18m",
-  "description": "建筑平面图反问题：单层工业厂房",
+  "description": "建筑立面DXF反问题：单层工业厂房",
   "split": "auxiliary",
   "taskFamily": "multimodal_reverse_engineering",
   "inputModality": "dxf",
@@ -19,10 +19,11 @@
     "reverse-engineering",
     "portal-frame",
     "architectural",
+    "architectural-elevation",
     "dxf",
     "zh"
   ],
-  "message": "请根据这张单层工业厂房建筑平面图DXF建立18m跨、7m高的门式刚架结构计算模型并进行分析，图中有吊车、设备等工业元素。柱脚按固定支座处理；屋面梁施加向下均布线荷载6kN/m。",
+  "message": "请根据这张单层工业厂房建筑立面DXF建立18m跨、7m高的门式刚架结构计算模型并进行分析，图中有吊车、设备、门窗、轴网和尺寸标注等元素。柱脚按固定支座处理；屋面梁施加向下均布线荷载6kN/m。",
   "locale": "zh",
   "maxRetries": 0,
   "attachments": [

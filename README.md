@@ -9,7 +9,7 @@ StructureClaw checkout.
 ## What it does
 
 Runs the LangGraph ReAct agent end-to-end across a corpus of structural-engineering
-scenarios (text, multimodal images, DXF reverse-engineering, architectural plans)
+scenarios (text, multimodal images, DXF reverse-engineering, architectural plans/elevations)
 and evaluates them with a compact task taxonomy:
 
 | Task family | Count | Purpose |

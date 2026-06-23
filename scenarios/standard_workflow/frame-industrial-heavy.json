@@ -24,7 +24,7 @@
     "zh",
     "industrial"
   ],
-  "message": "单层工业重型厂房钢框架，跨度24m，高度12m，设10t吊车，屋面荷载1.5kN/m2，请使用OpenSees进行静力分析",
+  "message": "单层工业重型厂房钢框架，跨度24m，高度12m；屋面荷载1.5kN/m2按24m等效受荷宽度折算为屋面梁线荷载36kN/m；10t吊车按柱顶等效竖向荷载98kN和水平荷载10kN考虑，请使用OpenSees进行静力分析",
   "locale": "zh",
   "maxRetries": 0,
   "expect": {

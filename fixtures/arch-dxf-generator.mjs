@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-// Generates realistic architectural floor plan DXF files from ground-truth models.
-// Adds walls, doors, windows, furniture, room labels, dimensions, and grid axes
-// around the structural members to simulate real-world CAD drawings.
+// Generates architectural DXF files from ground-truth models.
+// 2D frame/portal models are drawn as architectural elevations so their
+// attachments match the 2D structural ground truth. 3D frame models are drawn
+// as floor plans, where the plan view is the natural drawing representation.
 // Usage: node tests/llm-benchmark/fixtures/arch-dxf-generator.mjs
 
 import { writeFileSync, readFileSync, mkdirSync } from "node:fs";
@@ -16,7 +17,7 @@ mkdirSync(outDir, { recursive: true });
 
 const models = JSON.parse(readFileSync(modelsPath, "utf-8"));
 
-// Select models suitable for architectural floor plans (frames and portal-frames)
+// Select frame and portal models suitable for architectural DXF fixtures.
 const selectedIds = [
   "frame-simple-1s1b",
   "frame-complex-2s2b",
@@ -206,7 +207,89 @@ function addBathtub(e, x, y, w = 1.7, h = 0.8) {
   addRect(e, x + 0.05, y + 0.05, w - 0.1, h - 0.1, "FURN");
 }
 
-// --- Plan generators ---
+// --- Plan/elevation generators ---
+
+function nodeMap(model) {
+  return new Map(model.nodes.map((node) => [node.id, node]));
+}
+
+function modelExtents(model) {
+  const xs = model.nodes.map((node) => node.x ?? 0);
+  const zs = model.nodes.map((node) => node.z ?? 0);
+  return {
+    xMin: Math.min(...xs),
+    xMax: Math.max(...xs),
+    zMin: Math.min(...zs),
+    zMax: Math.max(...zs),
+  };
+}
+
+function render2dArchitecturalElevation(entry, title, options = {}) {
+  const model = entry.model;
+  const e = [];
+  const { xMin, xMax, zMin, zMax } = modelExtents(model);
+  const off = options.offset ?? 0.5;
+  const wallT = options.wallThickness ?? 0.18;
+  const nm = nodeMap(model);
+
+  addWall(e, xMin - off, zMin, xMax + off, zMin, wallT);
+  addWall(e, xMin - off, zMax + off, xMax + off, zMax + off, wallT);
+  addWall(e, xMin - off, zMin, xMin - off, zMax + off, wallT);
+  addWall(e, xMax + off, zMin, xMax + off, zMax + off, wallT);
+
+  for (const element of model.elements) {
+    const n1 = nm.get(element.nodes[0]);
+    const n2 = nm.get(element.nodes[1]);
+    if (!n1 || !n2) continue;
+    if (element.type === "column") e.push(dxfLine(n1.x, n1.z, n2.x, n2.z, "COLUMN"));
+    if (element.type === "beam") e.push(dxfLine(n1.x, n1.z, n2.x, n2.z, "BEAM"));
+  }
+
+  const xCoords = [...new Set(model.nodes.map((node) => node.x ?? 0))].sort((a, b) => a - b);
+  const zCoords = [...new Set(model.nodes.map((node) => node.z ?? 0))].sort((a, b) => a - b);
+
+  for (let i = 0; i < xCoords.length - 1; i++) {
+    const x0 = xCoords[i], x1 = xCoords[i + 1];
+    const cx = (x0 + x1) / 2;
+    const width = Math.min(1.6, Math.max(0.8, (x1 - x0) * 0.35));
+    for (let s = 0; s < zCoords.length - 1; s++) {
+      const z0 = zCoords[s], z1 = zCoords[s + 1];
+      const cz = z0 + (z1 - z0) * 0.58;
+      addWindow(e, cx - width / 2, cz, cx + width / 2, cz);
+      addRect(e, cx - width / 2, cz - 0.55, width, 1.1, "WINDOW");
+    }
+    e.push(dxfLine(x0, zMin - 1.2, x1, zMin - 1.2, "DIM"));
+    e.push(dxfText(cx, zMin - 1.7, 0.35, String(Math.round((x1 - x0) * 1000)), "DIM", 1));
+  }
+
+  for (let s = 0; s < zCoords.length - 1; s++) {
+    const z0 = zCoords[s], z1 = zCoords[s + 1];
+    e.push(dxfLine(xMin - 1.2, z0, xMin - 1.2, z1, "DIM"));
+    e.push(dxfText(xMin - 1.8, (z0 + z1) / 2, 0.35, String(Math.round((z1 - z0) * 1000)), "DIM", 1));
+  }
+
+  for (const x of xCoords) {
+    e.push(dxfLine(x, zMin - 2.4, x, zMax + 2.2, "GRID"));
+    e.push(dxfText(x, zMin - 2.8, 0.45, String(xCoords.indexOf(x) + 1), "GRID", 1));
+  }
+  for (const z of zCoords) {
+    e.push(dxfLine(xMin - 2.4, z, xMax + 2.2, z, "GRID"));
+    e.push(dxfText(xMin - 2.8, z, 0.45, String.fromCharCode(65 + zCoords.indexOf(z)), "GRID", 2));
+  }
+
+  if (options.industrial) {
+    e.push(dxfLine(xMin + 4, zMax * 0.65, xMax - 4, zMax * 0.65, "FURN"));
+    e.push(dxfText((xMin + xMax) / 2, zMax * 0.7, 0.45, "CRANE / EQUIPMENT ZONE", "ROOM", 1));
+    addRect(e, xMin + 2, zMin + 0.2, 3.5, 1.5, "FURN");
+    addRect(e, xMax - 5.5, zMin + 0.2, 3.5, 1.5, "FURN");
+  } else {
+    addDoor(e, xMin + Math.min(2, (xMax - xMin) * 0.25), zMin, 1.0, 0);
+    e.push(dxfText((xMin + xMax) / 2, (zMin + zMax) / 2, 0.45, "ELEVATION", "ROOM", 1));
+  }
+
+  e.push(dxfText((xMin + xMax) / 2, zMax + 2.8, 0.5, title, "DIM", 1));
+  return e;
+}
 
 function renderFrame1s1bFloor(entry) {
   const model = entry.model;
@@ -602,12 +685,12 @@ const layers = [
 ];
 
 const renderers = {
-  "frame-simple-1s1b": renderFrame1s1bFloor,
-  "frame-complex-2s2b": renderFrame2s2bFloor,
+  "frame-simple-1s1b": (entry) => render2dArchitecturalElevation(entry, "ARCHITECTURAL ELEVATION  1:100"),
+  "frame-complex-2s2b": (entry) => render2dArchitecturalElevation(entry, "ARCHITECTURAL ELEVATION  1:100"),
   "frame3d-simple": render3dFloorPlan,
   "frame3d-complex": render3dFloorPlan,
   "frame3d-concrete": render3dFloorPlan,
-  "portal-simple-18m": renderPortalFloorPlan,
+  "portal-simple-18m": (entry) => render2dArchitecturalElevation(entry, "INDUSTRIAL BUILDING ELEVATION  1:100", { industrial: true }),
 };
 
 for (const model of models) {
