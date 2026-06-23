@@ -24,7 +24,9 @@
   "locale": "en",
   "maxRetries": 0,
   "benchmarkModes": [
-    "auto"
+    "auto",
+    "oracle-specialist",
+    "generic-only"
   ],
   "attachments": [
     {
