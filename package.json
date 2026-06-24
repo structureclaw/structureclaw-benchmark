@@ -13,6 +13,7 @@
     "benchmark:single": "node runner.cjs --scenario",
     "benchmark:all-modes": "node runner.cjs --mode all",
     "experiment": "node scripts/run-llm-experiment.cjs",
+    "experiment:batch": "node scripts/run-llm-experiment-batch.cjs",
     "experiment:init": "node scripts/run-llm-experiment.cjs --init",
     "experiment:list": "node scripts/run-llm-experiment.cjs --list",
     "validate:scenarios": "node lib/validate-scenarios.cjs",

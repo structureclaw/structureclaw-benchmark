@@ -205,6 +205,18 @@ Results are written under `results/` by default, with the suite, primary model,
 judge model, and timestamp in the file name. Use `--output <file>` to override
 the path.
 
+For sequential multi-model comparisons, use the batch wrapper. It expands
+`models × modes`, calls the normal experiment wrapper for each pair, writes one
+UTF-8 log, and updates a summary JSON after each pair completes:
+
+```bash
+npm run experiment:batch -- --suite standard \
+  --models glm-5-turbo,glm-5.2,DeepSeek-V4-Pro \
+  --modes auto,generic-only \
+  --case-timeout-ms 300000 \
+  --name standard-domestic-text-all
+```
+
 ## Regenerating fixtures
 
 Ground-truth models and rendered drawings are committed for reproducibility.
