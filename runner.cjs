@@ -23,6 +23,9 @@ const BENCHMARK_UTILITY_SKILL_IDS = [
 ];
 const VISION_REQUEST_TIMEOUT_MS = 120000;
 const VISION_MAX_IMAGE_BYTES = 8 * 1024 * 1024;
+if (process.env.YJK_CLOSE_AFTER_RUN === undefined) {
+  process.env.YJK_CLOSE_AFTER_RUN = "1";
+}
 const IMAGE_MIME_BY_EXT = {
   ".png": "image/png",
   ".jpg": "image/jpeg",
@@ -838,6 +841,7 @@ function failedSupervisedEvaluation(scenario, actual, durationMs, options) {
       visionModel: process.env.LLM_VISION_MODEL || null,
       analysisSkillTarget: scenario.analysisSkillTarget || "opensees-static",
       caseTimeoutMs: options.caseTimeoutMs,
+      yjkCloseAfterRun: process.env.YJK_CLOSE_AFTER_RUN || null,
       supervised: true,
     },
   };
@@ -1113,6 +1117,7 @@ async function runBenchmark(args) {
         visionModel: process.env.LLM_VISION_MODEL || null,
         analysisSkillTarget: scenario.analysisSkillTarget || "opensees-static",
         caseTimeoutMs: options.caseTimeoutMs,
+        yjkCloseAfterRun: process.env.YJK_CLOSE_AFTER_RUN || null,
       };
       const attempts = attemptRounds.length;
       lastEvaluation.retries = {
