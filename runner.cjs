@@ -17,6 +17,7 @@ const BENCHMARK_MODES = ["auto", "oracle-specialist", "generic-only"];
 const EXECUTION_MODES = ["web-stream", "full"];
 const DEFAULT_CASE_TIMEOUT_MS = 15 * 60 * 1000;
 const SUPERVISED_HARD_TIMEOUT_GRACE_MS = 3 * 60 * 1000;
+const DEFAULT_PROVIDER_RATE_LIMIT_RERUNS = 5;
 const BENCHMARK_UTILITY_SKILL_IDS = [
   "validation-structure-model",
   "report-export-builtin",
@@ -847,6 +848,16 @@ function failedSupervisedEvaluation(scenario, actual, durationMs, options) {
   };
 }
 
+function isProviderRateLimitEvaluation(evaluation) {
+  const text = JSON.stringify(evaluation?.metrics || []);
+  return /(?:\b429\b|MODEL_RATE_LIMIT|rate\s*limit|rate[-_\s]?limited|访问量过大)/i.test(text);
+}
+
+function maxProviderRateLimitReruns() {
+  const value = Number(process.env.LLM_BENCHMARK_RATE_LIMIT_RERUNS || DEFAULT_PROVIDER_RATE_LIMIT_RERUNS);
+  return Number.isFinite(value) && value >= 0 ? Math.floor(value) : DEFAULT_PROVIDER_RATE_LIMIT_RERUNS;
+}
+
 function readSingleScenarioResult(outputPath) {
   if (!fs.existsSync(outputPath)) return null;
   const record = JSON.parse(fs.readFileSync(outputPath, "utf8"));
@@ -891,28 +902,49 @@ async function runSupervisedBenchmark(options, sutRoot, scenarios) {
   );
   for (const scenario of scenarios) {
     const caseOutput = supervisedOutputPath(options.outputPath, scenario);
-    fs.rmSync(caseOutput, { force: true });
-    process.stdout.write(`\nSupervised running: ${scenario.id}\n`);
-    const childResult = await runChildScenario(
-      childArgsForScenario(options, sutRoot, scenario, caseOutput),
-      hardTimeoutMs,
-      sutRoot,
-    );
-    let evaluation = readSingleScenarioResult(caseOutput);
-    if (!evaluation) {
-      const actual = childResult.timedOut
-        ? `case process timed out after ${hardTimeoutMs}ms`
-        : `case process exited without result (code=${childResult.code}, signal=${childResult.signal || "none"})`;
-      evaluation = failedSupervisedEvaluation(scenario, actual, childResult.durationMs, options);
-    } else {
-      evaluation.executionProfile = {
-        ...(evaluation.executionProfile || {}),
-        supervised: true,
-        processExitCode: childResult.code,
-        processSignal: childResult.signal || null,
-        processTimedOut: childResult.timedOut,
-      };
+    const rateLimitRerunLimit = maxProviderRateLimitReruns();
+    let providerRateLimitReruns = 0;
+    let childResult = null;
+    let evaluation = null;
+    while (true) {
+      fs.rmSync(caseOutput, { force: true });
+      process.stdout.write(`\nSupervised running: ${scenario.id}`);
+      if (providerRateLimitReruns > 0) {
+        process.stdout.write(` (provider-rate-limit rerun ${providerRateLimitReruns}/${rateLimitRerunLimit})`);
+      }
+      process.stdout.write("\n");
+      childResult = await runChildScenario(
+        childArgsForScenario(options, sutRoot, scenario, caseOutput),
+        hardTimeoutMs,
+        sutRoot,
+      );
+      evaluation = readSingleScenarioResult(caseOutput);
+      if (!evaluation) {
+        const actual = childResult.timedOut
+          ? `case process timed out after ${hardTimeoutMs}ms`
+          : `case process exited without result (code=${childResult.code}, signal=${childResult.signal || "none"})`;
+        evaluation = failedSupervisedEvaluation(scenario, actual, childResult.durationMs, options);
+      }
+
+      if (!isProviderRateLimitEvaluation(evaluation)) break;
+
+      fs.rmSync(caseOutput, { force: true });
+      providerRateLimitReruns += 1;
+      if (providerRateLimitReruns > rateLimitRerunLimit) {
+        throw new Error(
+          `Provider rate limit persisted for ${scenario.id} after ${rateLimitRerunLimit} rerun(s); aborting without counting this case.`,
+        );
+      }
+      process.stdout.write("  provider rate limit detected; discarding this attempt and rerunning the case from scratch.\n");
     }
+    evaluation.executionProfile = {
+      ...(evaluation.executionProfile || {}),
+      supervised: true,
+      processExitCode: childResult.code,
+      processSignal: childResult.signal || null,
+      processTimedOut: childResult.timedOut,
+      providerRateLimitReruns,
+    };
     printScenarioResult(scenario, evaluation);
     results.push(evaluation);
     if (options.outputPath) {
