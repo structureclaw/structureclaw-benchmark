@@ -4,6 +4,9 @@ const { spawn } = require("node:child_process");
 
 const BENCH_ROOT = path.resolve(__dirname, "..");
 const EXPERIMENT_SCRIPT = path.join(__dirname, "run-llm-experiment.cjs");
+const LOCAL_CONFIG_PATH = path.join(BENCH_ROOT, "experiments", "llm-experiments.local.json");
+const EXAMPLE_CONFIG_PATH = path.join(BENCH_ROOT, "experiments", "llm-experiments.example.json");
+const JOB_ENV = Symbol("jobEnv");
 
 const RUNNER_VALUE_FLAGS = new Set([
   "--scenario",
@@ -152,6 +155,34 @@ function absoluteBenchPath(filePath) {
   return path.isAbsolute(filePath) ? filePath : path.resolve(BENCH_ROOT, filePath);
 }
 
+function readJson(filePath) {
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
+function resolveConfigPath(explicitPath) {
+  if (explicitPath) return path.resolve(process.cwd(), explicitPath);
+  if (fs.existsSync(LOCAL_CONFIG_PATH)) return LOCAL_CONFIG_PATH;
+  return EXAMPLE_CONFIG_PATH;
+}
+
+function resolveModelEnv(config, modelKey) {
+  const model = config.models?.[modelKey];
+  if (!model) {
+    throw new Error(`Unknown model '${modelKey}'.`);
+  }
+  if (!model.apiKeyEnv) {
+    throw new Error(`Model '${modelKey}' is missing required field 'apiKeyEnv'.`);
+  }
+  const apiKey = process.env[model.apiKeyEnv];
+  if (!apiKey) {
+    throw new Error(`Environment variable ${model.apiKeyEnv} is required for model '${modelKey}'.`);
+  }
+  return {
+    LLM_API_KEY: apiKey,
+    SCLAW_BENCHMARK_MODEL_API_KEY_ENV: model.apiKeyEnv,
+  };
+}
+
 function buildPaths(options) {
   const outputDir = absoluteBenchPath(options.outputDir);
   fs.mkdirSync(outputDir, { recursive: true });
@@ -212,11 +243,12 @@ function writeLog(logPath, line) {
   process.stdout.write(stripAnsi(text));
 }
 
-function runChild(args, logPath) {
+function runChild(args, logPath, envOverrides = {}) {
   return new Promise((resolve) => {
     const startedAt = new Date();
     const child = spawn(process.execPath, args, {
       cwd: BENCH_ROOT,
+      env: { ...process.env, ...envOverrides },
       stdio: ["ignore", "pipe", "pipe"],
     });
 
@@ -254,18 +286,23 @@ function runChild(args, logPath) {
 
 async function main(argv) {
   const options = parseArgs(argv);
+  const config = readJson(resolveConfigPath(options.configPath));
   const paths = buildPaths(options);
   const jobs = [];
   for (const mode of options.modes) {
     for (const model of options.models) {
       const outputPath = resultPath(paths, options.suite, model, mode);
-      jobs.push({
+      const env = resolveModelEnv(config, model);
+      const job = {
         model,
         mode,
         outputPath,
         args: buildChildArgs(options, outputPath, model, mode),
+        apiKeyEnv: env.SCLAW_BENCHMARK_MODEL_API_KEY_ENV,
         status: "pending",
-      });
+      };
+      job[JOB_ENV] = env;
+      jobs.push(job);
     }
   }
 
@@ -291,8 +328,9 @@ async function main(argv) {
     job.startedAt = new Date().toISOString();
     writeSummary(paths.summaryPath, summary);
     writeLog(paths.logPath, `[${job.startedAt}] BEGIN model=${job.model} mode=${job.mode} output=${job.outputPath}`);
+    writeLog(paths.logPath, `Model key env: ${job.apiKeyEnv}`);
     writeLog(paths.logPath, `Command: ${process.execPath} ${job.args.join(" ")}`);
-    const result = await runChild(job.args, paths.logPath);
+    const result = await runChild(job.args, paths.logPath, job[JOB_ENV]);
     Object.assign(job, result);
     if (options.dryRun && job.status === "passed") {
       job.status = "dry-run";
