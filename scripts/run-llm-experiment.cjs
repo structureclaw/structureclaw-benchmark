@@ -7,11 +7,13 @@ const RUNNER_PATH = path.join(BENCH_ROOT, "runner.cjs");
 const LOCAL_CONFIG_PATH = path.join(BENCH_ROOT, "experiments", "llm-experiments.local.json");
 const EXAMPLE_CONFIG_PATH = path.join(BENCH_ROOT, "experiments", "llm-experiments.example.json");
 const RUNTIME_ROOT = path.join(BENCH_ROOT, "runtime");
+const DEFAULT_CASE_TIMEOUT_MS = 15 * 60 * 1000;
 
 const DEFAULT_DEFAULTS = {
   suite: "smoke-text",
   mode: "auto",
   supervise: true,
+  caseTimeoutMs: DEFAULT_CASE_TIMEOUT_MS,
   outputDir: "results",
 };
 
@@ -357,6 +359,15 @@ function resolveRunnerCwd(runnerArgs) {
   return path.resolve(BENCH_ROOT, "../..");
 }
 
+function resolveRunnerCaseTimeoutMs(runnerArgs) {
+  const index = runnerArgs.indexOf("--case-timeout-ms");
+  if (index >= 0 && runnerArgs[index + 1]) {
+    const value = Number(runnerArgs[index + 1]);
+    if (Number.isFinite(value) && value > 0) return value;
+  }
+  return DEFAULT_CASE_TIMEOUT_MS;
+}
+
 function buildRunnerArgs(config, suite, suiteName, primary, judge, vision, cliRunnerArgs, experimentOptions = {}) {
   let runnerArgs = [
     ...(Array.isArray(suite.runnerArgs) ? suite.runnerArgs : []),
@@ -391,13 +402,14 @@ function buildRunnerArgs(config, suite, suiteName, primary, judge, vision, cliRu
   return runnerArgs;
 }
 
-function buildExperimentEnv(config, suite, primary, judge, vision) {
+function buildExperimentEnv(config, suite, primary, judge, vision, runnerArgs) {
   const rootEnv = config.environment && typeof config.environment === "object" ? config.environment : {};
   const suiteEnv = suite.environment && typeof suite.environment === "object" ? suite.environment : {};
   const runtimeDir = path.join(RUNTIME_ROOT, sanitizeFilePart(primary.key));
   fs.mkdirSync(runtimeDir, { recursive: true });
   const sourceDataDir = resolveBenchmarkSourceDataDir(rootEnv, suiteEnv);
-  syncRuntimeSettings(runtimeDir, sourceDataDir, primary);
+  const caseTimeoutMs = resolveRunnerCaseTimeoutMs(runnerArgs);
+  syncRuntimeSettings(runtimeDir, sourceDataDir, primary, caseTimeoutMs);
   const env = {
     ...process.env,
     ...stringifyEnv(rootEnv),
@@ -430,7 +442,7 @@ function resolveBenchmarkSourceDataDir(rootEnv, suiteEnv) {
   return value ? path.resolve(String(value)) : null;
 }
 
-function syncRuntimeSettings(runtimeDir, sourceDataDir, primary) {
+function syncRuntimeSettings(runtimeDir, sourceDataDir, primary, timeoutMs) {
   let settings = {};
   const sourceSettings = sourceDataDir ? path.join(sourceDataDir, "settings.json") : null;
   if (sourceSettings && fs.existsSync(sourceSettings)) {
@@ -444,8 +456,15 @@ function syncRuntimeSettings(runtimeDir, sourceDataDir, primary) {
       : {}),
     model: primary.model,
     baseUrl: primary.baseUrl,
+    timeoutMs,
   };
   delete settings.llm.apiKey;
+  if (settings.vision && typeof settings.vision === "object" && !Array.isArray(settings.vision)) {
+    settings.vision = {
+      ...settings.vision,
+      timeoutMs,
+    };
+  }
 
   const sourcePython = sourceDataDir
     ? (process.platform === "win32"
@@ -546,7 +565,7 @@ async function main(argv) {
     return 0;
   }
 
-  const env = buildExperimentEnv(config, suite, primary, judge, vision);
+  const env = buildExperimentEnv(config, suite, primary, judge, vision, runnerArgs);
   return await runChild(runnerArgs, env, runnerCwd);
 }
 

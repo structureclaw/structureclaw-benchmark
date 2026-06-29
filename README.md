@@ -169,7 +169,10 @@ edit only these three selectors in `experiments/llm-experiments.local.json`:
 - `multimodal` — the vision parser used only before image/drawing scenarios. Its
   output is injected as an attachment summary, then the `test` model runs the
   normal StructureClaw agent/tool workflow. This role maps to `LLM_VISION_MODEL`,
-  `LLM_VISION_BASE_URL`, and `LLM_VISION_API_KEY`.
+  `LLM_VISION_BASE_URL`, and `LLM_VISION_API_KEY`. Model-specific `extraEnv` may
+  also set `LLM_VISION_TEMPERATURE` for providers that require a fixed vision
+  request temperature. Vision parsing uses the scenario case timeout; it does
+  not apply a separate shorter request timeout.
 - `judge` — the LLM-as-Judge model, mapped to `LLM_JUDGE_MODEL`,
   `LLM_JUDGE_BASE_URL`, and `LLM_JUDGE_API_KEY`.
 
@@ -213,7 +216,7 @@ UTF-8 log, and updates a summary JSON after each pair completes:
 npm run experiment:batch -- --suite standard \
   --models glm-5-turbo,glm-5.2,DeepSeek-V4-Pro \
   --modes auto,generic-only \
-  --case-timeout-ms 300000 \
+  --case-timeout-ms 900000 \
   --name standard-domestic-text-all
 ```
 

@@ -22,7 +22,6 @@ const BENCHMARK_UTILITY_SKILL_IDS = [
   "validation-structure-model",
   "report-export-builtin",
 ];
-const VISION_REQUEST_TIMEOUT_MS = 120000;
 const VISION_MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 if (process.env.YJK_CLOSE_AFTER_RUN === undefined) {
   process.env.YJK_CLOSE_AFTER_RUN = "1";
@@ -344,11 +343,18 @@ function visionConfig() {
   const model = process.env.LLM_VISION_MODEL;
   const baseUrl = process.env.LLM_VISION_BASE_URL;
   const apiKey = process.env.LLM_VISION_API_KEY;
+  const temperatureText = process.env.LLM_VISION_TEMPERATURE;
   if (!model && !baseUrl && !apiKey) return null;
   if (!model || !baseUrl || !apiKey) {
     throw new Error("LLM_VISION_MODEL, LLM_VISION_BASE_URL, and LLM_VISION_API_KEY must be set together");
   }
-  return { model, baseUrl, apiKey };
+  const temperature = temperatureText === undefined || temperatureText === ""
+    ? 0
+    : Number(temperatureText);
+  if (!Number.isFinite(temperature)) {
+    throw new Error("LLM_VISION_TEMPERATURE must be a finite number when set");
+  }
+  return { model, baseUrl, apiKey, temperature };
 }
 
 function chatCompletionsUrl(baseUrl) {
@@ -356,12 +362,8 @@ function chatCompletionsUrl(baseUrl) {
   return `${trimmed}/chat/completions`;
 }
 
-async function fetchWithTimeout(url, init, timeoutMs, signal) {
+async function fetchWithAbortSignal(url, init, signal) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => {
-    controller.abort(new Error(`vision request timed out after ${timeoutMs}ms`));
-  }, timeoutMs);
-  if (typeof timeout.unref === "function") timeout.unref();
   const onAbort = () => controller.abort(abortReason(signal));
   try {
     if (signal) {
@@ -370,7 +372,6 @@ async function fetchWithTimeout(url, init, timeoutMs, signal) {
     }
     return await fetch(url, { ...init, signal: controller.signal });
   } finally {
-    clearTimeout(timeout);
     if (signal) signal.removeEventListener("abort", onAbort);
   }
 }
@@ -428,7 +429,7 @@ async function parseImageAttachmentWithVision(attachment, message, locale, signa
   const dataUri = `data:${imageMimeType(attachment, filePath)};base64,${fs.readFileSync(filePath).toString("base64")}`;
   const body = {
     model: cfg.model,
-    temperature: 0,
+    temperature: cfg.temperature,
     messages: [
       {
         role: "user",
@@ -439,7 +440,7 @@ async function parseImageAttachmentWithVision(attachment, message, locale, signa
       },
     ],
   };
-  const response = await fetchWithTimeout(
+  const response = await fetchWithAbortSignal(
     chatCompletionsUrl(cfg.baseUrl),
     {
       method: "POST",
@@ -449,7 +450,6 @@ async function parseImageAttachmentWithVision(attachment, message, locale, signa
       },
       body: JSON.stringify(body),
     },
-    VISION_REQUEST_TIMEOUT_MS,
     signal,
   );
   const text = await response.text();
